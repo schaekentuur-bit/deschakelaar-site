@@ -122,7 +122,7 @@
   --white:    #ffffff;
   --border:   rgba(27,46,75,0.1);
 }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body { font-family:'DM Sans',sans-serif; background:var(--white); color:var(--navy); font-size:16px; line-height:1.7; overflow-x:hidden; }
 
 /* PAGES */
@@ -384,6 +384,8 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   nav { padding: 0 20px; }
   .nav-audience { display: none !important; }
   .nav-links { display: none !important; }
+  .logo-nav { height: 28px; }
+  .nav-cta { padding: 7px 14px; font-size: 13px; }
 
   /* Hamburger */
   .nav-mobile-cta { display: none !important; }
@@ -446,6 +448,9 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
 
   .stats-inner { gap: 24px; }
   .stat-num { font-size: 38px; }
+
+  .zak-band-navy, .zak-band-green { padding-left: 28px !important; padding-right: 28px !important; }
+  #part-intake-cta { padding-left: 28px !important; padding-right: 28px !important; }
 
   .section { padding: 72px 28px; }
   .hero-part { padding: 96px 28px 60px; }
@@ -534,8 +539,12 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   .footer-info-row { grid-template-columns: 1fr 1fr; gap: 14px; padding: 20px 0; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; font-size: 12px; }
 
-  /* ── KEUZE SCHERM HERO ── */
+  /* ── NAV: verberg CTA op telefoon (hamburger-menu heeft eigen CTA) ── */
+  .nav-cta { display: none !important; }
+
+  /* ── DECORATIEVE RINGEN VERBERGEN ── */
   .split-bg-ring { display: none; }
+  .zak-bg-ring { display: none; }
 
   /* ── BLOG ── */
   .blog-img { height: 110px; }
@@ -575,6 +584,10 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   #zak-werkgever div[style*="grid-template-columns:1fr 1fr"] {
     display: flex !important; flex-direction: column;
   }
+
+  /* ── INLINE-GESTIJLDE SECTIES: correcte padding op mobiel ── */
+  #part-intake-cta { padding: 48px 16px !important; }
+  .zak-band-navy, .zak-band-green { padding-left: 16px !important; padding-right: 16px !important; }
 }
 
 /* ═══════════════════════════════════════
@@ -886,7 +899,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
         <p style="font-size:16px;color:rgba(255,255,255,0.55);line-height:1.7;max-width:480px;margin:0;">Een kort telefonisch gesprek — gratis, vrijblijvend en zonder verplichtingen. We kijken samen of en hoe ik je verder kan helpen.</p>
       </div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0;">
-        <button class="btn-primary" onclick="scrollToId('part-contact')" style="font-size:16px;padding:14px 32px;white-space:nowrap;">Plan je intake →</button>
+        <button class="btn-primary" onclick="scrollToId('part-contact')" style="font-size:16px;padding:14px 32px;">Plan je intake →</button>
         <span style="font-size:12px;color:rgba(255,255,255,0.35);">Telefonisch · gratis · geen verplichtingen</span>
       </div>
     </div>
@@ -1012,7 +1025,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   </div>
 
   <!-- ── WERKGEVER DIVIDER ── -->
-  <div style="background:var(--navy);padding:40px 40px 0;">
+  <div class="zak-band-navy" style="background:var(--navy);padding:40px 40px 0;">
     <div style="max-width:1100px;margin:0 auto;">
       <div style="display:flex;align-items:center;gap:20px;padding-bottom:40px;border-bottom:0.5px solid rgba(255,255,255,0.08);">
         <div style="width:56px;height:56px;border-radius:14px;background:rgba(109,191,74,0.12);border:0.5px solid rgba(109,191,74,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -1139,7 +1152,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   </div>
 
   <!-- ── MEDEWERKERS DIVIDER ── -->
-  <div style="background:var(--green);padding:40px 40px 0;">
+  <div class="zak-band-green" style="background:var(--green);padding:40px 40px 0;">
     <div style="max-width:1100px;margin:0 auto;">
       <div style="display:flex;align-items:center;gap:20px;padding-bottom:40px;border-bottom:0.5px solid rgba(255,255,255,0.15);">
         <div style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
