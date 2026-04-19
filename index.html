@@ -206,10 +206,10 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; backgrou
 .choice-card.zak  .choice-btn:hover { background:rgba(255,255,255,0.92); }
 
 /* ── PARTICULIER HERO ── */
-.hero-part { min-height:88vh; background:var(--off); padding:136px 40px 80px; }
+.hero-part { min-height:88vh; background:var(--off); padding:96px 40px 80px; }
 .hero-part-inner { display:grid; grid-template-columns:1fr 400px; gap:80px; align-items:center; }
-.hero-part h1 { font-family:'Syne',sans-serif; font-size:clamp(34px,4.5vw,52px); font-weight:700; line-height:1.1; margin-bottom:20px; }
-.hero-part h1 span { color:var(--green); }
+.hero-part h1, .hero-part h2 { font-family:'Syne',sans-serif; font-size:clamp(34px,4.5vw,52px); font-weight:700; line-height:1.1; margin-bottom:20px; }
+.hero-part h1 span, .hero-part h2 span { color:var(--green); }
 .hero-sub-txt { font-size:17px; color:var(--navy-40); margin-bottom:36px; line-height:1.7; max-width:440px; }
 .vraag-card { background:white; border-radius:20px; box-shadow:0 16px 48px rgba(27,46,75,0.1); padding:32px; border:0.5px solid var(--border); }
 .vraag-card-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:16px; }
@@ -241,8 +241,8 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; backgrou
 .hero-zak { min-height:88vh; background:var(--navy); padding:136px 40px 80px; position:relative; overflow:hidden; }
 .zak-bg-ring { position:absolute; border-radius:50%; border:1px solid rgba(109,191,74,0.12); pointer-events:none; }
 .hero-zak-inner { display:grid; grid-template-columns:1fr 380px; gap:80px; align-items:center; }
-.hero-zak h1 { font-family:'Syne',sans-serif; font-size:clamp(34px,4.5vw,52px); font-weight:700; color:white; line-height:1.12; margin-bottom:20px; }
-.hero-zak h1 span { color:var(--green); }
+.hero-zak h1, .hero-zak h2 { font-family:'Syne',sans-serif; font-size:clamp(34px,4.5vw,52px); font-weight:700; color:white; line-height:1.12; margin-bottom:20px; }
+.hero-zak h1 span, .hero-zak h2 span { color:var(--green); }
 .zak-props { display:flex; flex-direction:column; gap:12px; }
 .zak-prop { display:flex; align-items:center; gap:14px; background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.1); border-radius:14px; padding:18px 20px; }
 .zak-prop > div { display:flex; flex-direction:column; }
@@ -379,7 +379,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   .stat-num { font-size: 38px; }
 
   .section { padding: 72px 28px; }
-  .hero-part { padding: 120px 28px 60px; }
+  .hero-part { padding: 96px 28px 60px; }
   .hero-zak  { padding: 120px 28px 60px; }
   .hero-split { padding: 100px 24px 60px; }
   .quote-inner { grid-template-columns: 1fr; gap: 48px; }
@@ -407,7 +407,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   /* ── PARTICULIER HERO ── */
   .hero-part { padding: 88px 16px 48px; }
   .hero-part-inner { grid-template-columns: 1fr; gap: 32px; }
-  .hero-part h1 { font-size: 34px; }
+  .hero-part h1, .hero-part h2 { font-size: 34px; }
   .hero-sub-txt { font-size: 15px; }
   .vraag-card { padding: 24px; }
   .vraag-item { font-size: 13px; padding: 12px 14px; }
@@ -415,7 +415,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   /* ── ZAKELIJK HERO ── */
   .hero-zak { padding: 88px 16px 48px; }
   .hero-zak-inner { grid-template-columns: 1fr; gap: 32px; }
-  .hero-zak h1 { font-size: 32px; }
+  .hero-zak h1, .hero-zak h2 { font-size: 32px; }
   .zak-props { gap: 10px; }
   .zak-prop { padding: 14px 16px; }
 
@@ -934,8 +934,13 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   <div style="background:var(--navy);padding:40px 40px 0;">
     <div style="max-width:1100px;margin:0 auto;">
       <div style="display:flex;align-items:center;gap:20px;padding-bottom:40px;border-bottom:0.5px solid rgba(255,255,255,0.08);">
-        <div style="width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="24" height="24" viewBox="0 0 20 20" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="6.5" width="12" height="8" rx="2"/><path d="M7 6.5V5.5a3 3 0 0 1 6 0v2.5"/></svg>
+        <div style="width:56px;height:56px;border-radius:14px;background:rgba(109,191,74,0.12);border:0.5px solid rgba(109,191,74,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+            <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+            <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/>
+            <path d="M10 6h4M10 10h4M10 14h4M10 18h4"/>
+          </svg>
         </div>
         <div>
           <div style="font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:4px;">Deel 1</div>
