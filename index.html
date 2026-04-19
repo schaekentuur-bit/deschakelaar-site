@@ -9,6 +9,102 @@
 <meta name="geo.region" content="NL-LI">
 <meta name="geo.placename" content="Sittard, Limburg">
 <link rel="canonical" href="https://deschakelaar.nl/">
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://deschakelaar.nl/">
+<meta property="og:title"       content="De Schakelaar — EV-advies in Limburg | Tuur Schaeken">
+<meta property="og:description" content="Onafhankelijk advies over elektrisch rijden, laadpalen en energie — persoonlijk aan huis in Limburg. Tuur Schaeken, De Schakelaar, Sittard.">
+<meta property="og:image"       content="https://deschakelaar.nl/og-image.jpg">
+<meta property="og:locale"      content="nl_NL">
+<meta property="og:site_name"   content="De Schakelaar">
+
+<!-- Twitter Card -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="De Schakelaar — EV-advies in Limburg | Tuur Schaeken">
+<meta name="twitter:description" content="Onafhankelijk advies over elektrisch rijden, laadpalen en energie — persoonlijk aan huis in Limburg.">
+<meta name="twitter:image"       content="https://deschakelaar.nl/og-image.jpg">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://deschakelaar.nl/#business",
+      "name": "De Schakelaar",
+      "url": "https://deschakelaar.nl/",
+      "logo": "https://deschakelaar.nl/og-image.jpg",
+      "description": "Onafhankelijk EV-advies over elektrisch rijden, laadpalen en energie in Limburg.",
+      "priceRange": "€€",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sittard",
+        "addressRegion": "Limburg",
+        "addressCountry": "NL"
+      },
+      "areaServed": {
+        "@type": "State",
+        "name": "Limburg"
+      },
+      "serviceType": ["EV-advies", "Laadpaaladvies", "Energieadvies"],
+      "founder": { "@id": "https://deschakelaar.nl/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://deschakelaar.nl/#person",
+      "name": "Tuur Schaeken",
+      "jobTitle": "EV-adviseur",
+      "worksFor": { "@id": "https://deschakelaar.nl/#business" },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sittard",
+        "addressRegion": "Limburg",
+        "addressCountry": "NL"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Welke laadpaal past bij mij thuis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dat hangt af van je woonsituatie, huisaansluiting en rijgedrag. Tuur Schaeken komt bij je thuis langs en geeft onafhankelijk advies over de laadpaal die het beste bij jou past."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wat kost laden per maand echt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De maandelijkse laadkosten hangen af van je rijkilometers, energietarief en laadgedrag. Gemiddeld is thuisladen veel goedkoper dan aan een openbare laadpaal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is elektrisch rijden iets voor mij?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Voor de meeste mensen in Limburg is elektrisch rijden financieel voordelig. Tuur helpt je eerlijk inschatten of het bij jouw situatie past — zonder verkoopbelang."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe zet ik als werkgever een laadbeleid op?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Een goed laadbeleid omvat afspraken over thuisladen, laadpassen, vergoedingen en eventuele laadpalen op het bedrijfspand. De Schakelaar helpt werkgevers in Limburg met het opstellen van een eerlijk en werkbaar beleid."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -514,7 +610,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
       <div class="hero-part-inner">
         <div>
           <div class="section-label">Particulier · Limburg</div>
-          <h1>Ik kom gewoon<br><span>bij je thuis.</span></h1>
+          <h2>Ik kom gewoon<br><span>bij je thuis.</span></h2>
           <p class="hero-sub-txt">Woon je in Limburg en wil je weten of een laadpaal iets voor jou is? Ik kom langs, kijk mee en geef je eerlijk advies — geen verkooppraatje, geen gedoe. Gewoon een goed gesprek aan je eigen keukentafel.</p>
           <div class="btn-row">
             <button class="btn-navy"       onclick="scrollToId('part-hoe')">Bekijk de werkwijze</button>
@@ -809,7 +905,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
       <div class="hero-zak-inner">
         <div>
           <div class="section-label">Zakelijk</div>
-          <h1>EV-advies voor<br><span>jouw organisatie.</span></h1>
+          <h2>EV-advies voor<br><span>jouw organisatie.</span></h2>
           <p class="hero-sub-txt" style="color:rgba(255,255,255,0.55);">Medewerkers die overstappen op elektrisch rijden — het roept veel vragen op. Ik help je als werkgever de juiste keuzes maken. Gebaseerd in Limburg, voor het juiste project ook landelijk.</p>
           <div class="btn-row">
             <button class="btn-primary"     onclick="scrollToId('zak-werkgever')">Voor werkgevers</button>
