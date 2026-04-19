@@ -14,16 +14,27 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav><div class="nav-inner">
-  <a href="/" style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:#1B2E4B;text-decoration:none;">De Schakelaar</a>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <a href="/" class="nav-back">← Terug naar home</a>
-    <a href="/?audience=zakelijk&to=contact" class="nav-cta">Gratis advies</a>
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo"><svg class="logo-nav" viewBox="0 0 480 90" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="17" width="78" height="42" rx="21" fill="#1B2E4B"/>
+        <circle cx="61" cy="38" r="17" fill="#6DBF4A"/>
+        <path d="M60 31L56 39L61 39L59 46L66 37L60 37Z" fill="#1B2E4B" opacity="0.9"/>
+        <path d="M61 8 A30 30 0 0 1 91 38" stroke="#6DBF4A" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+        <path d="M61 -2 A40 40 0 0 1 101 38" stroke="#6DBF4A" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+        <line x1="118" y1="14" x2="118" y2="62" stroke="#1B2E4B" stroke-width="0.75" opacity="0.18"/>
+        <text x="130" y="54" style="font-family:'Syne',sans-serif;font-weight:700;font-size:40px;"><tspan fill="#6DBF4A">De </tspan><tspan fill="#1B2E4B">Schakelaar</tspan></text>
+      </svg></a>
+    <div class="nav-audience">
+      <a href="../index.html?audience=particulier" class="nav-aud-btn">Particulier</a>
+      <a href="../index.html?audience=zakelijk"    class="nav-aud-btn active-zak">Zakelijk</a>
+    </div>
+    <a href="../index.html?audience=zakelijk&to=contact" class="nav-cta">Plan een gesprek</a>
   </div>
-</div></nav>
+</nav>
 <main>
   <div class="hero"><div class="hero-inner">
-    <div class="breadcrumb"><a href="/">Home</a> / <a href="/?audience=zakelijk&to=blog">Blog zakelijk</a> / Medewerkers</div>
+    <div class="breadcrumb"><a href="../index.html">Home</a> / <a href="/?audience=zakelijk&to=blog">Blog zakelijk</a> / Medewerkers</div>
     <div class="cat-badge">Medewerkers</div>
     <h1>Hoe informeer je medewerkers over elektrisch rijden?</h1>
     <p class="hero-intro">Je hebt een EV-beleid opgesteld en laadpalen geregeld. Maar je medewerkers stellen nog steeds tientallen vragen — of erger: ze vermijden de overstap. Hoe pak je dat aan?</p>
@@ -68,6 +79,69 @@
     </div>
   </article>
 </main>
-<footer><p>© 2025 De Schakelaar — <a href="/">deschakelaar.nl</a> — EV-advies in Limburg door Tuur Schaeken, Sittard</p></footer>
+<footer id="blog-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg class="logo-footer" viewBox="0 0 480 90" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="17" width="78" height="42" rx="21" fill="rgba(255,255,255,0.12)"/><circle cx="61" cy="38" r="17" fill="#6DBF4A"/><path d="M60 31L56 39L61 39L59 46L66 37L60 37Z" fill="#1B2E4B" opacity="0.9"/><path d="M61 8 A30 30 0 0 1 91 38" stroke="#6DBF4A" stroke-width="2.8" fill="none" stroke-linecap="round"/><path d="M61 -2 A40 40 0 0 1 101 38" stroke="#6DBF4A" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/><line x1="118" y1="14" x2="118" y2="62" stroke="rgba(255,255,255,0.2)" stroke-width="0.75"/><text x="130" y="54" style="font-family:'Syne',sans-serif;font-weight:700;font-size:40px;"><tspan fill="#6DBF4A">De </tspan><tspan fill="rgba(255,255,255,0.8)">Schakelaar</tspan></text></svg>
+      <p>EV-adviseur in Limburg. Persoonlijk, onafhankelijk en zonder commercieel belang.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Particulier</h4>
+      <ul>
+        <li><a href="../index.html?audience=particulier">Naar de particulierenpagina</a></li>
+        <li><a href="../index.html?audience=particulier&to=hoe">Werkwijze &amp; tarieven</a></li>
+        <li><a href="../index.html?audience=particulier&to=contact">Contact &amp; afspraak</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Zakelijk</h4>
+      <ul>
+        <li><a href="../index.html?audience=zakelijk">Naar de zakelijke pagina</a></li>
+        <li><a href="../index.html?audience=zakelijk&to=werkgever">Voor werkgevers</a></li>
+        <li><a href="../index.html?audience=zakelijk&to=webinar">Voor medewerkers</a></li>
+        <li><a href="../index.html?audience=zakelijk&to=contact">Contact &amp; kennismaking</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>De Schakelaar</h4>
+      <ul>
+        <li><a href="../index.html">Over mij</a></li>
+        <li><a href="../index.html?audience=particulier&to=blog">Blog particulier</a></li>
+        <li><a href="../index.html?audience=zakelijk&to=blog">Blog zakelijk</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Juridisch</h4>
+      <ul>
+        <li><a href="../index.html">Algemene voorwaarden</a></li>
+        <li><a href="../index.html">Privacyverklaring</a></li>
+        <li><a href="../index.html">Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-info-row">
+    <div class="footer-info-item">
+      <span class="footer-info-lbl">Bedrijfsnaam</span>
+      <span class="footer-info-val">De Schakelaar</span>
+    </div>
+    <div class="footer-info-item">
+      <span class="footer-info-lbl">Adres</span>
+      <span class="footer-info-val">Steegstraat 46, 6133 AL Sittard</span>
+    </div>
+    <div class="footer-info-item">
+      <span class="footer-info-lbl">KvK-nummer</span>
+      <span class="footer-info-val">12345678</span>
+    </div>
+    <div class="footer-info-item">
+      <span class="footer-info-lbl">BTW-nummer</span>
+      <span class="footer-info-val">NL000000000B01</span>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&#169; 2026 De Schakelaar &middot; deschakelaar.nl</span>
+    <span>info@deschakelaar.nl</span>
+  </div>
+</footer>
 </body>
 </html>
