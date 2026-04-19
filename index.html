@@ -588,6 +588,11 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   /* ── INLINE-GESTIJLDE SECTIES: correcte padding op mobiel ── */
   #part-intake-cta { padding: 48px 16px !important; }
   .zak-band-navy, .zak-band-green { padding-left: 16px !important; padding-right: 16px !important; }
+
+  /* ── BAND DIVIDER: wrap naar kolom op kleine schermen ── */
+  .zak-band-row { flex-wrap: wrap; gap: 14px !important; align-items: flex-start !important; }
+  .zak-band-row > div:last-child { margin-left: 0 !important; width: 100%; }
+  .zak-band-row > div:last-child button { width: 100%; text-align: center; font-size: 14px !important; padding: 12px 20px !important; }
 }
 
 /* ═══════════════════════════════════════
@@ -1027,7 +1032,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   <!-- ── WERKGEVER DIVIDER ── -->
   <div class="zak-band-navy" style="background:var(--navy);padding:40px 40px 0;">
     <div style="max-width:1100px;margin:0 auto;">
-      <div style="display:flex;align-items:center;gap:20px;padding-bottom:40px;border-bottom:0.5px solid rgba(255,255,255,0.08);">
+      <div class="zak-band-row" style="display:flex;align-items:center;gap:20px;padding-bottom:40px;border-bottom:0.5px solid rgba(255,255,255,0.08);">
         <div style="width:56px;height:56px;border-radius:14px;background:rgba(109,191,74,0.12);border:0.5px solid rgba(109,191,74,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
@@ -1154,7 +1159,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   <!-- ── MEDEWERKERS DIVIDER ── -->
   <div class="zak-band-green" style="background:var(--green);padding:40px 40px 0;">
     <div style="max-width:1100px;margin:0 auto;">
-      <div style="display:flex;align-items:center;gap:20px;padding-bottom:40px;border-bottom:0.5px solid rgba(255,255,255,0.15);">
+      <div class="zak-band-row" style="display:flex;align-items:center;gap:20px;padding-bottom:40px;border-bottom:0.5px solid rgba(255,255,255,0.15);">
         <div style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="6" r="2.5"/><circle cx="13" cy="6" r="2.5"/><path d="M1 17c0-3 2.5-5 6-5M19 17c0-3-2.5-5-6-5M7 12c1 0 2 .2 3 .6"/></svg>
         </div>
