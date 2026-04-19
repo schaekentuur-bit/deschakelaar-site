@@ -1394,6 +1394,21 @@ function scrollToId(id) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+// Afhandeling van URL-parameters vanuit blogposts
+// Voorbeeld: /?audience=particulier&to=contact
+document.addEventListener('DOMContentLoaded', () => {
+  const p   = new URLSearchParams(window.location.search);
+  const aud = p.get('audience');
+  const to  = p.get('to');
+  if (aud === 'particulier' || aud === 'zakelijk') {
+    setAudience(aud);
+    if (to) {
+      const sectionId = (aud === 'particulier' ? 'part-' : 'zak-') + to;
+      setTimeout(() => scrollToId(sectionId), 350);
+    }
+  }
+});
+
 function toggleFaq(btn) {
   const item = btn.closest('.faq-item');
   const open = item.classList.contains('open');
