@@ -1,4 +1,5 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { overflow-x: hidden; }
 :root {
   --navy: #1B2E4B; --green: #6DBF4A; --green-50: rgba(109,191,74,0.5);
   --green-15: rgba(109,191,74,0.15); --green-08: rgba(109,191,74,0.08);
