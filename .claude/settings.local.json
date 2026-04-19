@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(py -3 \"/c/Users/schae/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.5.0/src/ui-ux-pro-max/scripts/search.py\" \"local service advisor EV consultancy professional clean\" --design-system -p \"De Schakelaar\")"
+    ]
+  }
+}
