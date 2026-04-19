@@ -292,6 +292,7 @@ button:focus-visible, .nav-link:focus-visible, .nav-cta:focus-visible {
 .over-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; margin-top:52px; }
 .over-visual { background:var(--navy); border-radius:24px; padding:48px; position:relative; overflow:hidden; min-height:340px; display:flex; flex-direction:column; justify-content:flex-end; }
 .over-visual::before { content:''; position:absolute; top:-60px; right:-60px; width:260px; height:260px; border-radius:50%; border:1px solid rgba(109,191,74,0.2); }
+.over-visual[style*="background:transparent"]::before { display:none; }
 .over-initials { position:absolute; top:40px; left:48px; width:72px; height:72px; border-radius:50%; background:var(--green-15); border:2px solid var(--green-50); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-size:22px; font-weight:700; color:var(--green); }
 .over-name { font-family:'Syne',sans-serif; font-size:19px; font-weight:700; color:white; margin-bottom:4px; }
 .over-role { font-size:13px; color:rgba(255,255,255,0.4); }
