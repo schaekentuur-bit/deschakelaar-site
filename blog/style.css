@@ -1,0 +1,47 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1B2E4B; --green: #6DBF4A; --green-50: rgba(109,191,74,0.5);
+  --green-15: rgba(109,191,74,0.15); --green-08: rgba(109,191,74,0.08);
+  --navy-60: rgba(27,46,75,0.6); --navy-40: rgba(27,46,75,0.4);
+  --border: rgba(27,46,75,0.1); --off: #F6F8FA; --white: #ffffff;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--navy); font-size: 16px; line-height: 1.7; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; background: rgba(255,255,255,0.93); backdrop-filter: blur(14px); border-bottom: 0.5px solid var(--border); display: flex; align-items: center; padding: 0 40px; }
+.nav-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+.nav-back { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--navy-60); text-decoration: none; padding: 8px 16px; border-radius: 20px; border: 0.5px solid var(--border); transition: all 0.2s; }
+.nav-back:hover { color: var(--green); border-color: var(--green); }
+.nav-cta { background: var(--green); color: white; padding: 8px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; }
+.nav-cta:hover { background: #5aaa38; }
+main { padding-top: 64px; }
+.hero { background: var(--off); padding: 72px 40px 56px; border-bottom: 0.5px solid var(--border); }
+.hero-inner { max-width: 740px; margin: 0 auto; }
+.breadcrumb { font-size: 13px; color: var(--navy-40); margin-bottom: 20px; }
+.breadcrumb a { color: var(--green); text-decoration: none; }
+.cat-badge { display: inline-flex; align-items: center; background: var(--green-15); border: 0.5px solid var(--green-50); padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 18px; }
+h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 700; line-height: 1.15; margin-bottom: 16px; }
+.hero-intro { font-size: 18px; color: var(--navy-60); line-height: 1.7; margin-bottom: 24px; }
+.article-meta { display: flex; align-items: center; gap: 20px; font-size: 13px; color: var(--navy-40); flex-wrap: wrap; }
+.article { max-width: 740px; margin: 0 auto; padding: 56px 40px 80px; }
+.article h2 { font-family: 'Syne', sans-serif; font-size: clamp(20px, 2.5vw, 26px); font-weight: 700; margin: 48px 0 16px; line-height: 1.25; }
+.article h3 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin: 32px 0 12px; }
+.article p { font-size: 16px; line-height: 1.85; margin-bottom: 18px; }
+.article ul, .article ol { padding-left: 22px; margin-bottom: 18px; }
+.article li { font-size: 16px; line-height: 1.85; margin-bottom: 8px; }
+.article strong { font-weight: 600; }
+.tip-box { background: var(--green-08); border: 0.5px solid var(--green-50); border-radius: 14px; padding: 22px 26px; margin: 32px 0; }
+.tip-box p { margin: 0; }
+.tip-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+.cta-block { background: var(--navy); border-radius: 20px; padding: 40px; margin: 56px 0 0; text-align: center; }
+.cta-block h2 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: white; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 24px; }
+.cta-btn { display: inline-block; background: var(--green); color: white; padding: 13px 32px; border-radius: 28px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+.cta-btn:hover { background: #5aaa38; transform: translateY(-2px); }
+footer { background: var(--navy); padding: 32px 40px; color: rgba(255,255,255,0.4); font-size: 13px; text-align: center; }
+footer a { color: rgba(255,255,255,0.55); text-decoration: none; }
+footer a:hover { color: var(--green); }
+@media (max-width: 640px) {
+  nav { padding: 0 16px; }
+  .hero { padding: 56px 20px 40px; }
+  .article { padding: 40px 20px 60px; }
+}
