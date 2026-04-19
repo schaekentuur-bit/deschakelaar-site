@@ -166,8 +166,39 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; backgrou
 .back-link-light { color:rgba(255,255,255,0.35); }
 .back-link-light:hover { color:var(--green); }
 
+/* TOUCH & INTERACTION */
+button, .choice-card, .vraag-item, .faq-q, .blog-card, .how-card { touch-action:manipulation; }
+.btn-primary:active  { transform:scale(0.97); background:#5aaa38; }
+.btn-navy:active     { transform:scale(0.97); background:#243d63; }
+.btn-ghost-navy:active { transform:scale(0.97); }
+.btn-ghost-white:active { transform:scale(0.97); }
+.btn-white:active    { transform:scale(0.97); }
+.choice-card:active  { transform:scale(0.98); }
+.choice-btn:active   { transform:scale(0.97); }
+.vraag-item:active   { background:var(--green-08); border-color:var(--green-50); }
+
+/* FOCUS VISIBLE */
+button:focus-visible, .nav-link:focus-visible, .nav-cta:focus-visible {
+  outline:2px solid var(--green);
+  outline-offset:2px;
+}
+.form-input:focus-visible,.form-select:focus-visible,.form-textarea:focus-visible {
+  border-color:var(--green);
+  box-shadow:0 0 0 3px var(--green-15);
+}
+
+/* VRAAG ARROW — altijd zichtbaar op touch */
+.vraag-arrow { color:var(--green); opacity:0.35; transition:opacity 0.2s; font-size:18px; }
+.vraag-item:hover .vraag-arrow, .vraag-item:active .vraag-arrow { opacity:1; }
+
+/* PREFERS-REDUCED-MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  html { scroll-behavior:auto; }
+}
+
 /* ── KEUZE SCHERM ── */
-.hero-split { min-height:100vh; background:var(--navy); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:100px 40px 80px; position:relative; overflow:hidden; }
+.hero-split { min-height:100dvh; background:var(--navy); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:100px 40px 80px; position:relative; overflow:hidden; }
 .split-bg-ring { position:absolute; border-radius:50%; border:1px solid rgba(109,191,74,0.12); pointer-events:none; }
 .split-top { text-align:center; margin-bottom:60px; position:relative; z-index:1; }
 .split-tag { display:inline-flex; align-items:center; gap:8px; background:var(--green-15); border:0.5px solid var(--green-50); padding:6px 18px; border-radius:20px; font-size:13px; color:var(--green); font-weight:500; margin-bottom:28px; }
@@ -238,7 +269,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; backgrou
 .dienst-card p  { font-size:13px; color:var(--navy-40); line-height:1.7; flex:1; }
 
 /* ── ZAKELIJK HERO ── */
-.hero-zak { min-height:88vh; background:var(--navy); padding:136px 40px 80px; position:relative; overflow:hidden; }
+.hero-zak { min-height:88vh; background:var(--navy); padding:96px 40px 80px; position:relative; overflow:hidden; }
 .zak-bg-ring { position:absolute; border-radius:50%; border:1px solid rgba(109,191,74,0.12); pointer-events:none; }
 .hero-zak-inner { display:grid; grid-template-columns:1fr 380px; gap:80px; align-items:center; }
 .hero-zak h1, .hero-zak h2 { font-family:'Syne',sans-serif; font-size:clamp(34px,4.5vw,52px); font-weight:700; color:white; line-height:1.12; margin-bottom:20px; }
@@ -289,7 +320,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; backgrou
 .faq-icon { width:28px; height:28px; border-radius:50%; background:var(--green-15); flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--green); font-size:20px; font-weight:300; transition:transform 0.3s, background 0.3s; line-height:1; }
 .faq-item.open .faq-icon { transform:rotate(45deg); background:var(--green); color:white; }
 .faq-a { font-size:14px; color:var(--navy-40); line-height:1.8; max-height:0; overflow:hidden; transition:max-height 0.35s ease, padding 0.3s; }
-.faq-item.open .faq-a { max-height:300px; padding-bottom:20px; }
+.faq-item.open .faq-a { max-height:600px; padding-bottom:20px; }
 
 /* ── CONTACT ── */
 .contact-wrap { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; margin-top:52px; }
@@ -307,7 +338,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; backgrou
 .form-row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .form-group { display:flex; flex-direction:column; gap:5px; margin-bottom:12px; }
 .form-label { font-size:13px; font-weight:500; color:var(--navy-60); }
-.form-input,.form-select,.form-textarea { width:100%; padding:11px 14px; background:white; border:0.5px solid var(--border); border-radius:10px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--navy); outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
+.form-input,.form-select,.form-textarea { width:100%; padding:13px 14px; background:white; border:0.5px solid var(--border); border-radius:10px; font-family:'DM Sans',sans-serif; font-size:16px; color:var(--navy); outline:none; transition:border-color 0.2s, box-shadow 0.2s; }
 .form-input:focus,.form-select:focus,.form-textarea:focus { border-color:var(--green); box-shadow:0 0 0 3px var(--green-15); }
 .form-textarea { resize:vertical; min-height:100px; line-height:1.6; }
 .form-submit { width:100%; padding:14px; background:var(--green); color:white; border:none; border-radius:12px; font-family:'Syne',sans-serif; font-size:16px; font-weight:700; cursor:pointer; transition:all 0.2s; margin-top:6px; }
@@ -350,13 +381,47 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   .nav-audience { display: none !important; }
   .nav-links { display: none !important; }
 
-  /* Hamburger menu tonen */
-  .nav-mobile-cta {
-    background: var(--green); color: white;
-    padding: 7px 16px; border-radius: 20px;
-    font-size: 13px; font-weight: 500;
-    cursor: pointer; border: none;
+  /* Hamburger */
+  .nav-mobile-cta { display: none !important; }
+  .nav-hamburger {
+    display: flex; flex-direction: column; justify-content: center; gap: 5px;
+    width: 44px; height: 44px; background: none; border: none; cursor: pointer;
+    padding: 10px; border-radius: 10px; touch-action: manipulation;
   }
+  .nav-hamburger span {
+    display: block; width: 20px; height: 2px;
+    background: var(--navy); border-radius: 2px; transition: all 0.2s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobiel menu dropdown */
+  .mobile-menu {
+    position: absolute; top: 64px; left: 0; right: 0;
+    background: white; border-bottom: 0.5px solid var(--border);
+    padding: 12px 16px 20px; display: flex; flex-direction: column; gap: 2px;
+    transform: translateY(-8px); opacity: 0; pointer-events: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    box-shadow: 0 12px 40px rgba(27,46,75,0.12);
+    z-index: 199;
+  }
+  .mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+  .mobile-menu-link {
+    text-align: left; padding: 14px 16px; border-radius: 10px;
+    font-size: 15px; color: var(--navy-60); background: none; border: none;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+    touch-action: manipulation; min-height: 44px;
+  }
+  .mobile-menu-link:hover, .mobile-menu-link:active { background: var(--navy-06); color: var(--navy); }
+  .mobile-menu-cta {
+    margin-top: 8px; background: var(--green); color: white;
+    padding: 14px 20px; border-radius: 12px; font-size: 15px; font-weight: 600;
+    border: none; cursor: pointer; font-family: 'Syne', sans-serif;
+    width: 100%; text-align: center; transition: all 0.15s;
+    touch-action: manipulation; min-height: 48px;
+  }
+  .mobile-menu-cta:active { background: #5aaa38; transform: scale(0.98); }
 
   .hero-part-inner,
   .hero-zak-inner,
@@ -553,6 +618,18 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
     </div>
     <!-- Mobiel: altijd zichtbare CTA -->
     <button id="nav-mobile-cta" class="nav-mobile-cta" onclick="mobileContact()" style="display:none;">Contact</button>
+    <!-- Mobiel: hamburger -->
+    <button id="nav-hamburger" class="nav-hamburger" onclick="toggleMobileMenu()" style="display:none;" aria-label="Menu openen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <!-- Mobiel dropdown menu -->
+  <div id="mobile-menu" class="mobile-menu">
+    <button class="mobile-menu-link" onclick="navScroll('diensten');closeMobileMenu()">Waarmee ik help</button>
+    <button class="mobile-menu-link" id="mobile-nav-link-2" onclick="navScrollAlt('hoe','werkgever');closeMobileMenu()">Werkwijze</button>
+    <button class="mobile-menu-link" onclick="navScroll('faq');closeMobileMenu()">FAQ</button>
+    <button class="mobile-menu-link" onclick="navScroll('blog');closeMobileMenu()">Blog</button>
+    <button class="mobile-menu-cta" id="mobile-menu-cta-btn" onclick="mobileContact();closeMobileMenu()">Plan je intake →</button>
   </div>
 </nav>
 
@@ -1242,11 +1319,29 @@ function mobileContact() {
   else goHome();
 }
 
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const btn  = document.getElementById('nav-hamburger');
+  const isOpen = menu.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  btn.setAttribute('aria-expanded', isOpen);
+}
+
+function closeMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const btn  = document.getElementById('nav-hamburger');
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+  btn.setAttribute('aria-expanded', 'false');
+}
+
 function goHome() {
   audience = null;
   document.getElementById('nav-aud').style.display   = 'none';
   document.getElementById('nav-links').style.display = 'none';
   document.getElementById('nav-mobile-cta').style.display = 'none';
+  document.getElementById('nav-hamburger').style.display  = 'none';
+  closeMobileMenu();
   ['pg-home','pg-particulier','pg-zakelijk'].forEach(id => {
     document.getElementById(id).classList.remove('active');
   });
@@ -1280,7 +1375,14 @@ function setAudience(aud) {
   document.getElementById('pg-' + aud).classList.add('active');
   window.scrollTo({ top: 0 });
   const mobileCta = document.getElementById('nav-mobile-cta');
-  if (window.innerWidth <= 900) mobileCta.style.display = 'block';
+  if (window.innerWidth <= 900) mobileCta.style.display = 'none';
+  const hamburger = document.getElementById('nav-hamburger');
+  if (window.innerWidth <= 900) hamburger.style.display = 'flex';
+  const menuCta = document.getElementById('mobile-menu-cta-btn');
+  if (menuCta) menuCta.textContent = aud === 'zakelijk' ? 'Plan een gesprek →' : 'Plan je intake →';
+  const mobileLink2 = document.getElementById('mobile-nav-link-2');
+  if (mobileLink2) mobileLink2.textContent = aud === 'zakelijk' ? 'Aanpak' : 'Werkwijze';
+  closeMobileMenu();
 }
 
 function scrollToId(id) {
