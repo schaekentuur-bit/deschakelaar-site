@@ -1359,8 +1359,9 @@ function closeMobileMenu() {
   btn.setAttribute('aria-expanded', 'false');
 }
 
-function goHome() {
+function goHome(pushHistory) {
   audience = null;
+  if (pushHistory !== false) history.pushState({ aud: null }, '', location.pathname);
   document.getElementById('nav-aud').style.display   = 'none';
   document.getElementById('nav-links').style.display = 'none';
   document.getElementById('nav-mobile-cta').style.display = 'none';
@@ -1383,7 +1384,8 @@ function navScrollAlt(sectionPart, sectionZak) {
   else if (audience === 'zakelijk') scrollToId('zak-' + sectionZak);
 }
 
-function setAudience(aud) {
+function setAudience(aud, pushHistory) {
+  if (pushHistory !== false) history.pushState({ aud }, '', '#' + aud);
   audience = aud;
   const cta  = document.querySelector('.nav-cta');
   const lnk2 = document.getElementById('nav-link-2');
@@ -1414,18 +1416,26 @@ function scrollToId(id) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// Afhandeling van URL-parameters vanuit blogposts
-// Voorbeeld: /?audience=particulier&to=contact
+// Afhandeling van URL-parameters vanuit blogposts en hash-routing
 document.addEventListener('DOMContentLoaded', () => {
   const p   = new URLSearchParams(window.location.search);
-  const aud = p.get('audience');
+  const aud = p.get('audience') || location.hash.replace('#', '');
   const to  = p.get('to');
   if (aud === 'particulier' || aud === 'zakelijk') {
-    setAudience(aud);
+    setAudience(aud, false);
     if (to) {
       const sectionId = (aud === 'particulier' ? 'part-' : 'zak-') + to;
       setTimeout(() => scrollToId(sectionId), 350);
     }
+  }
+});
+
+window.addEventListener('popstate', (e) => {
+  const aud = e.state && e.state.aud;
+  if (aud === 'particulier' || aud === 'zakelijk') {
+    setAudience(aud, false);
+  } else {
+    goHome(false);
   }
 });
 
