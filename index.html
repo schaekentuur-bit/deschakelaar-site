@@ -8,14 +8,14 @@
 <meta name="keywords" content="laadpaal advies Limburg, elektrisch rijden Sittard, EV adviseur Limburg, thuisladen Limburg, De Schakelaar">
 <meta name="geo.region" content="NL-LI">
 <meta name="geo.placename" content="Sittard, Limburg">
-<link rel="canonical" href="https://deschakelaar.nl/">
+<link rel="canonical" href="https://deschakelaaradvies.nl/">
 
 <!-- Open Graph -->
 <meta property="og:type"        content="website">
-<meta property="og:url"         content="https://deschakelaar.nl/">
+<meta property="og:url"         content="https://deschakelaaradvies.nl/">
 <meta property="og:title"       content="De Schakelaar — EV-advies in Limburg | Tuur Schaeken">
 <meta property="og:description" content="Onafhankelijk advies over elektrisch rijden, laadpalen en energie — persoonlijk aan huis in Limburg. Tuur Schaeken, De Schakelaar, Sittard.">
-<meta property="og:image"       content="https://deschakelaar.nl/og-image.jpg">
+<meta property="og:image"       content="https://deschakelaaradvies.nl/og-image.jpg">
 <meta property="og:locale"      content="nl_NL">
 <meta property="og:site_name"   content="De Schakelaar">
 
@@ -23,7 +23,7 @@
 <meta name="twitter:card"        content="summary_large_image">
 <meta name="twitter:title"       content="De Schakelaar — EV-advies in Limburg | Tuur Schaeken">
 <meta name="twitter:description" content="Onafhankelijk advies over elektrisch rijden, laadpalen en energie — persoonlijk aan huis in Limburg.">
-<meta name="twitter:image"       content="https://deschakelaar.nl/og-image.jpg">
+<meta name="twitter:image"       content="https://deschakelaaradvies.nl/og-image.jpg">
 
 <!-- JSON-LD Structured Data -->
 <script type="application/ld+json">
@@ -32,10 +32,10 @@
   "@graph": [
     {
       "@type": "LocalBusiness",
-      "@id": "https://deschakelaar.nl/#business",
+      "@id": "https://deschakelaaradvies.nl/#business",
       "name": "De Schakelaar",
-      "url": "https://deschakelaar.nl/",
-      "logo": "https://deschakelaar.nl/og-image.jpg",
+      "url": "https://deschakelaaradvies.nl/",
+      "logo": "https://deschakelaaradvies.nl/og-image.jpg",
       "description": "Onafhankelijk EV-advies over elektrisch rijden, laadpalen en energie in Limburg.",
       "priceRange": "€€",
       "address": {
@@ -49,14 +49,14 @@
         "name": "Limburg"
       },
       "serviceType": ["EV-advies", "Laadpaaladvies", "Energieadvies"],
-      "founder": { "@id": "https://deschakelaar.nl/#person" }
+      "founder": { "@id": "https://deschakelaaradvies.nl/#person" }
     },
     {
       "@type": "Person",
-      "@id": "https://deschakelaar.nl/#person",
+      "@id": "https://deschakelaaradvies.nl/#person",
       "name": "Tuur Schaeken",
       "jobTitle": "EV-adviseur",
-      "worksFor": { "@id": "https://deschakelaar.nl/#business" },
+      "worksFor": { "@id": "https://deschakelaaradvies.nl/#business" },
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Sittard",
@@ -246,8 +246,8 @@ button:focus-visible, .nav-link:focus-visible, .nav-cta:focus-visible {
 .vraag-card-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:16px; }
 .vraag-item { background:var(--off); border-radius:12px; padding:14px 18px; margin-bottom:8px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:space-between; font-size:14px; color:var(--navy-60); border:0.5px solid transparent; }
 .vraag-item:hover { background:var(--green-08); border-color:var(--green-50); color:var(--navy); }
-.vraag-arrow { color:var(--green); opacity:0; transition:opacity 0.2s; font-size:18px; }
-.vraag-item:hover .vraag-arrow { opacity:1; }
+.vraag-arrow { color:var(--green); opacity:0.35; transition:opacity 0.2s; font-size:18px; }
+.vraag-item:hover .vraag-arrow, .vraag-item:active .vraag-arrow { opacity:1; }
 
 /* ── HOE WERKT HET ── */
 .how-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:52px; }
@@ -371,8 +371,8 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
 .footer-bottom { max-width:1100px; margin:0 auto; border-top:0.5px solid rgba(255,255,255,0.1); padding-top:24px; display:flex; justify-content:space-between; align-items:center; }
 
 /* LOGO SVG helpers */
-.logo-nav    { height:34px; }
-.logo-footer { height:28px; }
+.logo-nav    { height:34px; display:block; }
+.logo-footer { height:28px; display:block; }
 
 /* Standaard verborgen — alleen zichtbaar via mobiele media query */
 .nav-hamburger { display:none; }
@@ -618,7 +618,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
 <nav>
   <div class="nav-inner">
     <div class="nav-logo" onclick="goHome()">
-      <svg class="logo-nav" viewBox="0 0 480 90" xmlns="http://www.w3.org/2000/svg">
+      <svg class="logo-nav" viewBox="0 0 480 70" xmlns="http://www.w3.org/2000/svg">
         <rect x="4" y="17" width="78" height="42" rx="21" fill="#1B2E4B"/>
         <circle cx="61" cy="38" r="17" fill="#6DBF4A"/>
         <path d="M60 31L56 39L61 39L59 46L66 37L60 37Z" fill="#1B2E4B" opacity="0.9"/>
@@ -724,6 +724,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
           <div class="vraag-item" onclick="scrollToId('part-contact')">Wat kost laden mij écht per maand? <span class="vraag-arrow">→</span></div>
           <div class="vraag-item" onclick="scrollToId('part-contact')">Ik heb zonnepanelen — kan ik daar slim op laden? <span class="vraag-arrow">→</span></div>
           <div class="vraag-item" onclick="scrollToId('part-contact')">Ik heb al een EV maar loop vast op praktische vragen <span class="vraag-arrow">→</span></div>
+          <div class="vraag-item" onclick="scrollToId('part-contact')">Ik woon in een appartement — wat zijn mijn opties via de VvE? <span class="vraag-arrow">→</span></div>
         </div>
       </div>
     </div>
@@ -751,7 +752,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
         <div class="dienst-card">
           <div class="dienst-icon"><svg viewBox="0 0 20 20" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 17V7l7-4 7 4v10M8 17v-5h4v5"/></svg></div>
           <h3>Wat kan jouw huis aan?</h3>
-          <p>Ik kijk samen met je naar de aansluiting op je woning. Heb je voldoende capaciteit om thuis te laden, of is er aanpassing nodig? Dit bepaalt wat mogelijk is — en wat het kost.</p>
+          <p>Ik kijk samen met je naar de aansluiting op je woning. Heb je voldoende capaciteit om thuis te laden, of is er aanpassing nodig? Dit bepaalt wat mogelijk is — en wat het kost. Woon je in een appartement? Dan bespreek ik ook wat er via de VvE mogelijk is.</p>
         </div>
 
         <div class="dienst-card">
@@ -968,7 +969,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
           <h3>Vertel me wat er speelt</h3>
           <p>Of je nu net oriënteert of al een concrete vraag hebt — ik help je verder. We beginnen altijd met een gratis telefonische intake. Daarna kijken we samen wat je nodig hebt.</p>
           <p>Geen verplichtingen, geen offerte — gewoon een goed gesprek als eerste stap.</p>
-          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l6 5 6-5M2 4h12v9H2z"/></svg></div><div><div class="cdet-lbl">E-mail</div><div class="cdet-val">info@deschakelaar.nl</div></div></div>
+          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l6 5 6-5M2 4h12v9H2z"/></svg></div><div><div class="cdet-lbl">E-mail</div><div class="cdet-val">info@deschakelaaradvies.nl</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Reactietijd</div><div class="cdet-val">Binnen 48 uur</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Werkgebied</div><div class="cdet-val">Heel Limburg · regio op aanvraag</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Eerste stap</div><div class="cdet-val">Telefonische intake — altijd gratis</div></div></div>
@@ -976,9 +977,9 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
         <div class="form-wrap">
           <div id="pf-inner">
             <div class="form-title">Plan je intake</div>
-            <div class="form-row2"><div class="form-group"><label class="form-label">Voornaam</label><input class="form-input" type="text" placeholder="Jan"></div><div class="form-group"><label class="form-label">Achternaam</label><input class="form-input" type="text" placeholder="de Vries"></div></div>
-            <div class="form-row2"><div class="form-group"><label class="form-label">E-mailadres</label><input class="form-input" type="email" placeholder="jan@email.nl"></div><div class="form-group"><label class="form-label">Telefoonnummer</label><input class="form-input" type="tel" placeholder="06 12345678"></div></div>
-            <div class="form-group"><label class="form-label">Jouw situatie</label><textarea class="form-textarea" placeholder="Schrijf hier gewoon wat er bij je speelt. Geen formele brief nodig." style="min-height:120px;"></textarea></div>
+            <div class="form-row2"><div class="form-group"><label class="form-label">Voornaam</label><input id="pf-voornaam" class="form-input" type="text" placeholder="Jan"></div><div class="form-group"><label class="form-label">Achternaam</label><input id="pf-achternaam" class="form-input" type="text" placeholder="de Vries"></div></div>
+            <div class="form-row2"><div class="form-group"><label class="form-label">E-mailadres</label><input id="pf-email" class="form-input" type="email" placeholder="jan@email.nl"></div><div class="form-group"><label class="form-label">Telefoonnummer</label><input id="pf-tel" class="form-input" type="tel" placeholder="06 12345678"></div></div>
+            <div class="form-group"><label class="form-label">Jouw situatie</label><textarea id="pf-situatie" class="form-textarea" placeholder="Schrijf hier gewoon wat er bij je speelt. Geen formele brief nodig." style="min-height:120px;"></textarea></div>
             <button class="form-submit" onclick="submitForm('p')">Plan je intake →</button>
             <p class="form-note">Telefonische intake · altijd gratis · altijd vrijblijvend</p>
           </div>
@@ -1200,7 +1201,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
           <div style="margin-top:auto;padding-top:16px;border-top:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
             <div>
               <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;">Online of op locatie</div>
-              <div style="font-size:12px;color:var(--navy-40);">±90 minuten · tot 25 deelnemers</div>
+              <div style="font-size:12px;color:var(--navy-40);">±60 minuten · tot 25 deelnemers</div>
             </div>
             <button class="btn-navy" onclick="scrollToId('zak-contact')">Vraag offerte aan</button>
           </div>
@@ -1222,7 +1223,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
           <div style="margin-top:auto;padding-top:16px;border-top:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
             <div>
               <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;">Online of op locatie</div>
-              <div style="font-size:12px;color:var(--navy-40);">±90 minuten · tot 25 deelnemers</div>
+              <div style="font-size:12px;color:var(--navy-40);">±60 minuten · tot 25 deelnemers</div>
             </div>
             <button class="btn-navy" onclick="scrollToId('zak-contact')">Vraag offerte aan</button>
           </div>
@@ -1290,7 +1291,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
         <div class="over-content">
           <div class="section-label">Over mij</div>
           <h2>Tuur Schaeken —<br>EV-adviseur in Limburg</h2>
-          <p>Als <strong>EV Manager</strong> werk ik dagelijks met organisaties die de transitie naar elektrisch rijden maken. Ik weet wat er goed gaat — en wat er misgaat als medewerkers onvoldoende geïnformeerd zijn of beleid ontbreekt.</p>
+          <p>Bij een parkeerexploitant die de stap maakt naar brede mobiliteit, ben ik verantwoordelijk voor het laden- en energieverhaal. Ik weet van binnenuit hoe zo'n transitie eruitziet — en wat er nodig is om dat stuk goed neer te zetten.</p>
           <p>De Schakelaar is mijn manier om die kennis ook beschikbaar te maken voor werkgevers die dat zelf niet hebben. <strong>Onafhankelijk, zonder leveranciersbelang</strong>, en altijd persoonlijk contact.</p>
           <div class="pills"><span class="pill">📍 Sittard · ook landelijk op maat</span><span class="pill">EV Manager</span><span class="pill">Laadinfrastructuur</span><span class="pill">Webinars</span></div>
         </div>
@@ -1307,18 +1308,18 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
         <div class="contact-info">
           <h3>Vertel me wat er speelt</h3>
           <p>Of je nu concrete plannen hebt of nog aan het oriënteren bent — ik denk graag mee. Na je bericht plan ik een kort kennismakingsgesprek in op een moment dat jou uitkomt.</p>
-          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l6 5 6-5M2 4h12v9H2z"/></svg></div><div><div class="cdet-lbl">E-mail</div><div class="cdet-val">zakelijk@deschakelaar.nl</div></div></div>
+          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l6 5 6-5M2 4h12v9H2z"/></svg></div><div><div class="cdet-lbl">E-mail</div><div class="cdet-val">zakelijk@deschakelaaradvies.nl</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Reactietijd</div><div class="cdet-val">Binnen 48 uur</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Kennismaking</div><div class="cdet-val">Eerste gesprek kosteloos</div></div></div>
         </div>
         <div class="form-wrap">
           <div id="zf-inner">
             <div class="form-title">Plan een gesprek</div>
-            <div class="form-row2"><div class="form-group"><label class="form-label">Voornaam</label><input class="form-input" type="text" placeholder="Sara"></div><div class="form-group"><label class="form-label">Achternaam</label><input class="form-input" type="text" placeholder="Jansen"></div></div>
-            <div class="form-row2"><div class="form-group"><label class="form-label">Bedrijfsnaam</label><input class="form-input" type="text" placeholder="Bedrijf BV"></div><div class="form-group"><label class="form-label">Functie</label><input class="form-input" type="text" placeholder="HR Manager"></div></div>
-            <div class="form-row2"><div class="form-group"><label class="form-label">Zakelijk e-mailadres</label><input class="form-input" type="email" placeholder="sara@bedrijf.nl"></div><div class="form-group"><label class="form-label">Telefoonnummer</label><input class="form-input" type="tel" placeholder="06 12345678"></div></div>
-            <div class="form-group"><label class="form-label">Waar kan ik je mee helpen?</label><select class="form-select"><option value="">Kies een onderwerp...</option><option>Financieel advies (laadkosten, vergoedingen, laadpassen)</option><option>Technisch advies (laadinfrastructuur pand)</option><option>Totaal advies (financieel + technisch)</option><option>Realisatie &amp; begeleiding</option><option>Webinar voor medewerkers</option><option>Weet ik nog niet precies</option></select></div>
-            <div class="form-group"><label class="form-label">Toelichting (optioneel)</label><textarea class="form-textarea" placeholder="Vertel kort wat er speelt in jouw organisatie..."></textarea></div>
+            <div class="form-row2"><div class="form-group"><label class="form-label">Voornaam</label><input id="zf-voornaam" class="form-input" type="text" placeholder="Sara"></div><div class="form-group"><label class="form-label">Achternaam</label><input id="zf-achternaam" class="form-input" type="text" placeholder="Jansen"></div></div>
+            <div class="form-row2"><div class="form-group"><label class="form-label">Bedrijfsnaam</label><input id="zf-bedrijf" class="form-input" type="text" placeholder="Bedrijf BV"></div><div class="form-group"><label class="form-label">Functie</label><input id="zf-functie" class="form-input" type="text" placeholder="HR Manager"></div></div>
+            <div class="form-row2"><div class="form-group"><label class="form-label">Zakelijk e-mailadres</label><input id="zf-email" class="form-input" type="email" placeholder="sara@bedrijf.nl"></div><div class="form-group"><label class="form-label">Telefoonnummer</label><input id="zf-tel" class="form-input" type="tel" placeholder="06 12345678"></div></div>
+            <div class="form-group"><label class="form-label">Waar kan ik je mee helpen?</label><select id="zf-onderwerp" class="form-select"><option value="">Kies een onderwerp...</option><option>Financieel advies (laadkosten, vergoedingen, laadpassen)</option><option>Technisch advies (laadinfrastructuur pand)</option><option>Totaal advies (financieel + technisch)</option><option>Realisatie &amp; begeleiding</option><option>Webinar voor medewerkers</option><option>Weet ik nog niet precies</option></select></div>
+            <div class="form-group"><label class="form-label">Toelichting (optioneel)</label><textarea id="zf-toelichting" class="form-textarea" placeholder="Vertel kort wat er speelt in jouw organisatie..."></textarea></div>
             <button class="form-submit" onclick="submitForm('z')">Plan een kennismaking →</button>
             <p class="form-note">Eerste gesprek kosteloos · Reactie binnen 48 uur</p>
           </div>
@@ -1435,13 +1436,64 @@ function toggleFaq(btn) {
   if (!open) item.classList.add('open');
 }
 
+const FORMSPREE_PARTICULIER = 'JOUW_FORM_ID_PARTICULIER';
+const FORMSPREE_ZAKELIJK    = 'JOUW_FORM_ID_ZAKELIJK';
+
 function submitForm(type) {
-  document.getElementById(type + 'f-inner').style.display   = 'none';
-  document.getElementById(type + 'f-success').style.display = 'block';
+  const btn = document.querySelector('#' + type + 'f-inner .form-submit');
+  btn.disabled = true;
+  btn.textContent = 'Versturen…';
+
+  let data, endpoint;
+  if (type === 'p') {
+    data = {
+      voornaam:    document.getElementById('pf-voornaam').value,
+      achternaam:  document.getElementById('pf-achternaam').value,
+      email:       document.getElementById('pf-email').value,
+      telefoon:    document.getElementById('pf-tel').value,
+      situatie:    document.getElementById('pf-situatie').value,
+      _subject:    'Nieuwe intake-aanvraag — De Schakelaar'
+    };
+    endpoint = 'https://formspree.io/f/' + FORMSPREE_PARTICULIER;
+  } else {
+    data = {
+      voornaam:    document.getElementById('zf-voornaam').value,
+      achternaam:  document.getElementById('zf-achternaam').value,
+      bedrijf:     document.getElementById('zf-bedrijf').value,
+      functie:     document.getElementById('zf-functie').value,
+      email:       document.getElementById('zf-email').value,
+      telefoon:    document.getElementById('zf-tel').value,
+      onderwerp:   document.getElementById('zf-onderwerp').value,
+      toelichting: document.getElementById('zf-toelichting').value,
+      _subject:    'Nieuwe kennismakingsaanvraag — De Schakelaar'
+    };
+    endpoint = 'https://formspree.io/f/' + FORMSPREE_ZAKELIJK;
+  }
+
+  fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(r => {
+    if (r.ok) {
+      document.getElementById(type + 'f-inner').style.display   = 'none';
+      document.getElementById(type + 'f-success').style.display = 'block';
+    } else {
+      btn.disabled = false;
+      btn.textContent = type === 'p' ? 'Plan je intake →' : 'Plan een kennismaking →';
+      alert('Er ging iets mis. Stuur gerust een e-mail naar info@deschakelaaradvies.nl');
+    }
+  })
+  .catch(() => {
+    btn.disabled = false;
+    btn.textContent = type === 'p' ? 'Plan je intake →' : 'Plan een kennismaking →';
+    alert('Er ging iets mis. Stuur gerust een e-mail naar info@deschakelaaradvies.nl');
+  });
 }
 
 // ── GEDEELDE FOOTER ──
-const FOOTER_SVG = `<svg class="logo-footer" viewBox="0 0 480 90" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="17" width="78" height="42" rx="21" fill="rgba(255,255,255,0.12)"/><circle cx="61" cy="38" r="17" fill="#6DBF4A"/><path d="M60 31L56 39L61 39L59 46L66 37L60 37Z" fill="#1B2E4B" opacity="0.9"/><path d="M61 8 A30 30 0 0 1 91 38" stroke="#6DBF4A" stroke-width="2.8" fill="none" stroke-linecap="round"/><path d="M61 -2 A40 40 0 0 1 101 38" stroke="#6DBF4A" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/><line x1="118" y1="14" x2="118" y2="62" stroke="rgba(255,255,255,0.2)" stroke-width="0.75"/><text x="130" y="54" style="font-family:'Syne',sans-serif;font-weight:700;font-size:40px;"><tspan fill="#6DBF4A">De </tspan><tspan fill="rgba(255,255,255,0.8)">Schakelaar</tspan></text></svg>`;
+const FOOTER_SVG = `<svg class="logo-footer" viewBox="0 0 480 70" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="17" width="78" height="42" rx="21" fill="rgba(255,255,255,0.12)"/><circle cx="61" cy="38" r="17" fill="#6DBF4A"/><path d="M60 31L56 39L61 39L59 46L66 37L60 37Z" fill="#1B2E4B" opacity="0.9"/><path d="M61 8 A30 30 0 0 1 91 38" stroke="#6DBF4A" stroke-width="2.8" fill="none" stroke-linecap="round"/><path d="M61 -2 A40 40 0 0 1 101 38" stroke="#6DBF4A" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/><line x1="118" y1="14" x2="118" y2="62" stroke="rgba(255,255,255,0.2)" stroke-width="0.75"/><text x="130" y="54" style="font-family:'Syne',sans-serif;font-weight:700;font-size:40px;"><tspan fill="#6DBF4A">De </tspan><tspan fill="rgba(255,255,255,0.8)">Schakelaar</tspan></text></svg>`;
 const FOOTER_HTML = `
   <div class="footer-inner">
     <div class="footer-brand">
@@ -1469,8 +1521,14 @@ const FOOTER_HTML = `
       <h4>De Schakelaar</h4>
       <ul>
         <li onclick="openOverMij()" style="cursor:pointer;">Over mij</li>
+        <li onclick="toggleContactPopup()" style="cursor:pointer;">Contact</li>
       </ul>
     </div>
+  <div id="footer-contact-popup" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:white;color:var(--navy);border-radius:12px;padding:20px 28px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:9999;text-align:center;min-width:260px;">
+    <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--navy-40);margin-bottom:8px;">E-mail</div>
+    <a href="mailto:info@deschakelaaradvies.nl" style="font-size:15px;font-weight:600;color:var(--navy);text-decoration:none;">info@deschakelaaradvies.nl</a>
+    <button onclick="toggleContactPopup()" style="display:block;margin:14px auto 0;background:none;border:none;font-size:12px;color:var(--navy-40);cursor:pointer;">Sluiten</button>
+  </div>
     <div class="footer-col">
       <h4>Juridisch</h4>
       <ul>
@@ -1499,11 +1557,22 @@ const FOOTER_HTML = `
     </div>
   </div>
   <div class="footer-bottom">
-    <span>&#169; 2026 De Schakelaar &middot; deschakelaar.nl</span>
-    <span>info@deschakelaar.nl</span>
+    <span>&#169; 2026 De Schakelaar &middot; deschakelaaradvies.nl</span>
+    <span>info@deschakelaaradvies.nl</span>
   </div>
 `;
 document.querySelectorAll('#site-footer').forEach(el => el.innerHTML = FOOTER_HTML);
+
+function toggleContactPopup() {
+  const popup = document.getElementById('footer-contact-popup');
+  if (popup) popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+}
+document.addEventListener('click', e => {
+  const popup = document.getElementById('footer-contact-popup');
+  if (popup && popup.style.display !== 'none' && !popup.contains(e.target) && !e.target.closest('[onclick="toggleContactPopup()"]')) {
+    popup.style.display = 'none';
+  }
+});
 
 // ── HULPFUNCTIE: doelgroep instellen + scrollen ──
 function setAudAndScroll(aud, id) {
@@ -1567,8 +1636,8 @@ document.addEventListener('keydown', e => {
           <li>Eigenaar: Tuur Schaeken</li>
           <li>Adres: Steegstraat 46, 6133 AL Sittard</li>
           <li>KvK-nummer: 12345678</li>
-          <li>E-mail: info@deschakelaar.nl</li>
-          <li>Website: deschakelaar.nl</li>
+          <li>E-mail: info@deschakelaaradvies.nl</li>
+          <li>Website: deschakelaaradvies.nl</li>
         </ul>
       </div>
 
@@ -1670,7 +1739,7 @@ document.addEventListener('keydown', e => {
       <!-- 7 -->
       <div class="av-art">
         <div class="av-art-title"><span class="av-art-num">7</span> Cookies</div>
-        <p>De website deschakelaar.nl kan gebruik maken van cookies:</p>
+        <p>De website deschakelaaradvies.nl kan gebruik maken van cookies:</p>
         <ul>
           <li><strong>Functionele cookies:</strong> noodzakelijk voor de werking van de website. Hiervoor is geen toestemming vereist.</li>
           <li><strong>Analytische cookies:</strong> voor inzicht in websitegebruik, uitsluitend in geanonimiseerde vorm.</li>
@@ -1692,7 +1761,7 @@ document.addEventListener('keydown', e => {
           <li><strong>Recht van bezwaar:</strong> u kunt bezwaar maken tegen verwerking op basis van gerechtvaardigd belang.</li>
           <li><strong>Recht om toestemming in te trekken:</strong> indien verwerking berust op toestemming, kunt u deze te allen tijde intrekken.</li>
         </ul>
-        <p style="margin-top:10px;">Verzoeken kunt u indienen via <strong>info@deschakelaar.nl</strong>. Wij reageren binnen 30 dagen. Wij kunnen om een kopie van een geldig identiteitsbewijs vragen ter verificatie (blacken van BSN en pasfoto is toegestaan).</p>
+        <p style="margin-top:10px;">Verzoeken kunt u indienen via <strong>info@deschakelaaradvies.nl</strong>. Wij reageren binnen 30 dagen. Wij kunnen om een kopie van een geldig identiteitsbewijs vragen ter verificatie (blacken van BSN en pasfoto is toegestaan).</p>
       </div>
 
       <!-- 9 -->
@@ -1710,7 +1779,7 @@ document.addEventListener('keydown', e => {
       <!-- 10 -->
       <div class="av-art">
         <div class="av-art-title"><span class="av-art-num">10</span> Wijzigingen</div>
-        <p>Deze privacyverklaring kan worden gewijzigd. De meest actuele versie is altijd te vinden op <strong>deschakelaar.nl/privacy</strong>. Bij wezenlijke wijzigingen informeren wij bestaande opdrachtgevers per e-mail.</p>
+        <p>Deze privacyverklaring kan worden gewijzigd. De meest actuele versie is altijd te vinden op <strong>deschakelaaradvies.nl/privacy</strong>. Bij wezenlijke wijzigingen informeren wij bestaande opdrachtgevers per e-mail.</p>
         <p>Laatste update: april 2026.</p>
       </div>
 
@@ -1718,7 +1787,7 @@ document.addEventListener('keydown', e => {
 
     <div class="av-colofon">
       De Schakelaar — Steegstraat 46, 6133 AL Sittard — KvK 12345678 — BTW NL000000000B01<br>
-      info@deschakelaar.nl · deschakelaar.nl
+      info@deschakelaaradvies.nl · deschakelaaradvies.nl
     </div>
 
   </div>
@@ -2032,7 +2101,7 @@ document.addEventListener('keydown', e => {
       <!-- Art. 13 -->
       <div class="av-art">
         <div class="av-art-title"><span class="av-art-num">Art. 13</span> Klachten</div>
-        <p>13.1 Klachten dienen schriftelijk en uiterlijk binnen 14 dagen na ontdekking te worden ingediend via <strong>info@deschakelaar.nl</strong>.</p>
+        <p>13.1 Klachten dienen schriftelijk en uiterlijk binnen 14 dagen na ontdekking te worden ingediend via <strong>info@deschakelaaradvies.nl</strong>.</p>
         <p>13.2 Een klacht schort de betalingsverplichting van opdrachtgever niet op.</p>
         <p>13.3 Opdrachtnemer streeft ernaar klachten binnen 10 werkdagen af te handelen.</p>
         <p>13.4 Indien een klacht gegrond wordt bevonden, zal opdrachtnemer naar eigen keuze de werkzaamheden aanpassen, herstellen of een korting verlenen.</p>
@@ -2050,7 +2119,7 @@ document.addEventListener('keydown', e => {
         <div class="av-art-title"><span class="av-art-num">Art. 15</span> Persoonsgegevens</div>
         <p>15.1 Opdrachtnemer verwerkt persoonsgegevens in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG).</p>
         <p>15.2 Persoonsgegevens worden uitsluitend gebruikt voor de uitvoering van de overeenkomst en niet zonder toestemming aan derden verstrekt, tenzij wettelijk verplicht.</p>
-        <p>15.3 Opdrachtgever heeft het recht op inzage, correctie en verwijdering van zijn persoonsgegevens via <strong>info@deschakelaar.nl</strong>.</p>
+        <p>15.3 Opdrachtgever heeft het recht op inzage, correctie en verwijdering van zijn persoonsgegevens via <strong>info@deschakelaaradvies.nl</strong>.</p>
       </div>
 
       <!-- Art. 16 -->
@@ -2072,7 +2141,7 @@ document.addEventListener('keydown', e => {
 
     <div class="av-colofon">
       De Schakelaar — Steegstraat 46, 6133 AL Sittard — KvK 12345678 — BTW NL000000000B01<br>
-      info@deschakelaar.nl · zakelijk@deschakelaar.nl · deschakelaar.nl
+      info@deschakelaaradvies.nl · zakelijk@deschakelaaradvies.nl · deschakelaaradvies.nl
     </div>
 
   </div>
@@ -2126,7 +2195,7 @@ document.addEventListener('keydown', e => {
       <div class="av-art">
         <div class="av-art-title"><span class="av-art-num">→</span> Mijn werk als EV Manager</div>
         <p>In mijn dagelijkse functie ben ik <strong>Manager EV-Charging &amp; Energy Services</strong> bij een parkeerexploitant met meer dan 150 exploitatielocaties en bijna 2.000 laadpalen. Ik ben verantwoordelijk voor de volledige laadbusiness én het energiebeheer: van het verkrijgen van netcapaciteit tot duurzame oplossingen als energiemanagementsystemen, solar en batterijen.</p>
-        <p>Ik ben in de EV-sector terechtgekomen via Scania, waar ik analyses maakte ter ondersteuning van accountmanagers voor elektrische trucks. Daarna begon ik als junior projectleider EV-charging bij een parkeerexploitant en groeide ik door naar een volwaardige projectleidersrol — en uiteindelijk naar mijn huidige managementpositie.</p>
+        <p>Ik ben in de EV-sector terechtgekomen bij een producent van elektrische vrachtwagens, waar ik analyses maakte ter ondersteuning van accountmanagers. Daarna begon ik als junior projectleider EV-charging bij een parkeerexploitant en groeide ik door naar een volwaardige projectleidersrol — en uiteindelijk naar mijn huidige managementpositie.</p>
         <p>Die dagelijkse praktijkervaring — met laadinfrastructuur, energiecontracten, vergoedingen en beleid — is precies wat ik inzet bij De Schakelaar. <strong>Niet als verkoper, maar als adviseur.</strong></p>
       </div>
 
@@ -2134,7 +2203,7 @@ document.addEventListener('keydown', e => {
       <div class="av-art" style="border-bottom:none;padding-bottom:0;margin-bottom:0;">
         <div class="av-art-title"><span class="av-art-num">→</span> Contact</div>
         <ul>
-          <li>E-mail: <strong>info@deschakelaar.nl</strong></li>
+          <li>E-mail: <strong>info@deschakelaaradvies.nl</strong></li>
           <li>Adres: Steegstraat 46, 6133 AL Sittard</li>
         </ul>
         <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
@@ -2147,7 +2216,7 @@ document.addEventListener('keydown', e => {
 
     <div class="av-colofon">
       De Schakelaar — Steegstraat 46, 6133 AL Sittard — KvK 12345678 — BTW NL000000000B01<br>
-      info@deschakelaar.nl · deschakelaar.nl
+      info@deschakelaaradvies.nl · deschakelaaradvies.nl
     </div>
 
   </div>
@@ -2168,7 +2237,7 @@ document.addEventListener('keydown', e => {
     <div class="av-body">
 
       <div class="av-intro">
-        Deze disclaimer is van toepassing op alle informatie op de website deschakelaar.nl en op alle diensten van De Schakelaar. Door gebruik te maken van deze website of diensten aanvaardt u de inhoud van deze disclaimer.
+        Deze disclaimer is van toepassing op alle informatie op de website deschakelaaradvies.nl en op alle diensten van De Schakelaar. Door gebruik te maken van deze website of diensten aanvaardt u de inhoud van deze disclaimer.
       </div>
 
       <!-- 1 -->
@@ -2235,8 +2304,8 @@ document.addEventListener('keydown', e => {
         <ul>
           <li><strong>De Schakelaar</strong> — Tuur Schaeken</li>
           <li>Steegstraat 46, 6133 AL Sittard</li>
-          <li>info@deschakelaar.nl</li>
-          <li>deschakelaar.nl</li>
+          <li>info@deschakelaaradvies.nl</li>
+          <li>deschakelaaradvies.nl</li>
         </ul>
       </div>
 
@@ -2244,7 +2313,7 @@ document.addEventListener('keydown', e => {
 
     <div class="av-colofon">
       De Schakelaar — Steegstraat 46, 6133 AL Sittard — KvK 12345678 — BTW NL000000000B01<br>
-      info@deschakelaar.nl · deschakelaar.nl
+      info@deschakelaaradvies.nl · deschakelaaradvies.nl
     </div>
 
   </div>
