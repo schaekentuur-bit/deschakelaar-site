@@ -230,15 +230,15 @@ pakket, abonnement, installateur, product, oplossing, offerte, verkoop
 - Reactietijd: binnen 48 uur
 
 **Achtergrond Tuur:**
-- EV Manager (dagelijks werk met EV-transitie bij organisaties)
-- Eerder: Scania (analyses voor elektrische trucks), junior projectleider EV-charging bij parkeerexploitant
+- Manager EV-charging & Energy Services bij een parkeerexploitant in transitie naar brede mobiliteit — verantwoordelijk voor het laden- en energieluik
+- Eerder: producent van elektrische vrachtwagens (analyses voor accountmanagers), junior projectleider EV-charging bij parkeerexploitant
 - Rijdt zelf elektrisch, energiekosten vorig jaar negatief door slim laden + zonnepanelen
 
 **Waardethema's:**
 | Thema | Bewijs |
 |-------|--------|
 | Onafhankelijkheid | Verkoopt geen producten, heeft geen leveranciersrelaties |
-| Vakkennis | EV Manager by day, jarenlange ervaring in EV-sector |
+| Vakkennis | Manager EV-charging & Energy Services by day, jarenlange ervaring in EV-sector |
 | Persoonlijk | Komt bij je thuis, heel Limburg, 48u reactietijd |
 | Eerlijkheid | Zegt ook "nee" als EV nog niet de juiste keuze is |
 

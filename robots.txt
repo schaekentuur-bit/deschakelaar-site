@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://deschakelaar.nl/sitemap.xml
+Sitemap: https://deschakelaaradvies.nl/sitemap.xml

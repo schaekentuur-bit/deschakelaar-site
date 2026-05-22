@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Situatieschets laden — De Schakelaar</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--navy:#1B2E4B;--green:#6DBF4A;--g10:rgba(109,191,74,.10);--g25:rgba(109,191,74,.25);--n08:rgba(27,46,75,.08);--n14:rgba(27,46,75,.14);--n30:rgba(27,46,75,.30);--mu:rgba(27,46,75,.45);--off:#F7F8FA;--wh:#fff;}
+html,body{min-height:100%;background:var(--off);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.6;}
+.wrap{max-width:860px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+.tool-header{margin-bottom:2rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.tool-header-left .brand{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:.45rem;}
+.tool-header-left h1{font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:700;color:var(--navy);line-height:1.2;}
+.tool-header-left p{font-size:.82rem;color:var(--mu);margin-top:.3rem;max-width:460px;}
+.reset-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .85rem;border-radius:8px;border:.5px solid var(--n14);background:transparent;font-family:'DM Sans',sans-serif;font-size:.75rem;color:var(--mu);cursor:pointer;transition:all .18s;white-space:nowrap;align-self:flex-start;margin-top:.15rem;}
+.reset-btn:hover{border-color:var(--n30);color:var(--navy);}
+.steps{display:flex;flex-direction:column;gap:.75rem;}
+.step{background:var(--wh);border:.5px solid var(--n14);border-radius:12px;overflow:hidden;}
+.step-head{display:flex;align-items:center;gap:.75rem;padding:.9rem 1.2rem;cursor:pointer;user-select:none;}
+.step-head:hover{background:var(--n08);}
+.step-num{width:27px;height:27px;border-radius:50%;background:var(--g10);border:.5px solid var(--g25);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;color:var(--green);flex-shrink:0;}
+.step-head h2{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--navy);flex:1;}
+.toggle-icon{font-size:.68rem;color:var(--mu);transition:transform .25s;display:inline-block;}
+.toggle-icon.open{transform:rotate(180deg);}
+.step-body{padding:1rem 1.2rem 1.3rem;display:flex;flex-direction:column;gap:.85rem;}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:.65rem;}
+.field{display:flex;flex-direction:column;gap:.3rem;}
+.field label{font-size:.7rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--mu);}
+.field select,
+.field input[type=number]{background:var(--off);border:.5px solid var(--n14);border-radius:8px;padding:.42rem .65rem;font-family:'DM Sans',sans-serif;font-size:.84rem;color:var(--navy);outline:none;width:100%;-webkit-appearance:none;appearance:none;}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%231B2E4B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .65rem center;padding-right:1.8rem;}
+.field select:focus,.field input:focus{border-color:var(--green);outline:none;}
+.slider-wrap{display:flex;align-items:center;gap:.6rem;}
+.slider-wrap input[type=range]{flex:1;height:4px;accent-color:var(--green);cursor:pointer;}
+.slider-val{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--green);min-width:44px;text-align:right;}
+.tog-row{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;}
+.tog-btn{padding:.3rem .8rem;border-radius:6px;border:.5px solid var(--n14);background:transparent;font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--mu);cursor:pointer;transition:all .18s;line-height:1.5;}
+.tog-btn:hover{border-color:var(--n30);color:var(--navy);}
+.tog-btn.active{background:var(--g10);border-color:var(--g25);color:var(--green);font-weight:500;}
+.hint{font-size:.73rem;color:var(--mu);line-height:1.6;padding:.55rem .8rem;background:var(--g10);border-left:2.5px solid var(--green);border-radius:0 7px 7px 0;}
+.hint.warn{background:rgba(229,160,0,.08);border-left-color:#e5a000;color:rgba(27,46,75,.6);}
+.divider{height:.5px;background:var(--n08);}
+
+/* RESULTAAT */
+.result-box{background:var(--navy);border-radius:14px;padding:1.4rem 1.4rem 1.3rem;margin-top:1.4rem;}
+.rb-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;}
+.rb-title{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:rgba(109,191,74,.65);}
+.rb-live{display:flex;align-items:center;gap:.4rem;font-size:.65rem;color:rgba(255,255,255,.28);}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.6rem;}
+.rcard{background:rgba(255,255,255,.06);border:.5px solid rgba(255,255,255,.10);border-radius:10px;padding:.8rem 1rem;}
+.rcard.accent{background:rgba(109,191,74,.12);border-color:rgba(109,191,74,.28);}
+.rcard.total{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.18);}
+.rc-label{font-size:.63rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.28rem;}
+.rc-val{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;line-height:1.1;}
+.rcard.accent .rc-val{color:var(--green);}
+.rc-sub{font-size:.66rem;color:rgba(255,255,255,.25);margin-top:.12rem;line-height:1.4;}
+
+/* Logo */
+.logo-svg{display:inline-block;vertical-align:middle;}
+
+/* Optioneel badge */
+.badge-opt{display:inline-block;font-size:.6rem;font-weight:500;letter-spacing:.06em;color:var(--mu);background:var(--n08);border:.5px solid var(--n14);border-radius:4px;padding:.1rem .42rem;margin-left:.5rem;vertical-align:middle;white-space:nowrap;}
+
+/* Sectie-labels binnen stappen (vervangt kale dividers) */
+.step-section{font-size:.62rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--mu);padding:.5rem 0 .25rem;border-top:.5px solid var(--n08);margin-top:.1rem;}
+
+/* Detail-wrappers: eigen flex-kolom met consistent ritme */
+.details-wrap{display:flex;flex-direction:column;gap:.7rem;}
+#phev-wrap{display:flex;flex-direction:column;gap:.65rem;}
+
+/* Eén-veld rijen: beperkte breedte zodat ze niet onnodig uitrekken */
+.field-sm{max-width:300px;}
+
+/* Vergelijk-divider in resultaatblok */
+.rb-divider{height:.5px;background:rgba(255,255,255,.08);margin:1.25rem 0;}
+
+/* Subtiel onderscheid optionele stappen */
+.step.optional .step-num{background:var(--n08);border-color:var(--n14);color:var(--mu);}
+
+/* Scenario selector */
+.rb-scenario-wrap{margin-bottom:1.15rem;}
+.rb-scenario-label{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.5rem;}
+.rb-scenario-row{display:flex;gap:.4rem;flex-wrap:wrap;}
+.rb-sc-btn{padding:.3rem .9rem;border-radius:6px;border:.5px solid rgba(255,255,255,.14);background:transparent;font-family:'DM Sans',sans-serif;font-size:.78rem;color:rgba(255,255,255,.38);cursor:pointer;transition:all .18s;line-height:1.5;}
+.rb-sc-btn:hover{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);}
+.rb-sc-btn.active{background:rgba(109,191,74,.18);border-color:rgba(109,191,74,.45);color:var(--green);font-weight:500;}
+.rb-sc-btn.pessimist.active{background:rgba(229,160,0,.13);border-color:rgba(229,160,0,.4);color:#e5a000;}
+.rb-scenario-note{font-size:.7rem;color:rgba(255,255,255,.22);margin-top:.5rem;line-height:1.55;font-style:italic;}
+
+/* Voertuigtype keuze */
+.vt-wrap{background:var(--wh);border:.5px solid var(--n14);border-radius:12px;padding:.85rem 1.2rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.vt-label{font-size:.62rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--mu);white-space:nowrap;}
+
+/* Mobiel */
+@media(max-width:560px){
+  .wrap{padding:1.25rem .9rem 3rem;}
+  .tool-header{gap:.75rem;}
+  .result-grid{grid-template-columns:1fr 1fr;}
+  .field-sm{max-width:100%;}
+}
+
+/* Export knop */
+.export-btn{display:flex;align-items:center;justify-content:center;gap:.55rem;margin-top:1.1rem;padding:.65rem 1.2rem;border-radius:10px;border:.5px solid var(--n14);background:var(--wh);font-family:'DM Sans',sans-serif;font-size:.84rem;color:var(--navy);cursor:pointer;transition:all .18s;width:100%;}
+.export-btn:hover{border-color:var(--green);color:var(--green);}
+#export-view{display:none;font-family:'DM Sans',sans-serif;color:#1B2E4B;line-height:1.5;}
+
+/* Topbar */
+.ev-topbar{background:#1B2E4B;border-radius:10px;padding:.95rem 1.35rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ev-topbar-inner{display:flex;align-items:center;gap:.7rem;}
+.ev-topbar-brand{font-family:'Syne',sans-serif;font-size:.56rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6DBF4A;margin-bottom:.16rem;}
+.ev-topbar-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;line-height:1.2;}
+.ev-topbar-date{font-size:.68rem;color:rgba(255,255,255,.38);text-align:right;}
+
+/* Sections */
+.ev-section{margin-bottom:1.15rem;page-break-inside:avoid;}
+.ev-section-head{display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;}
+.ev-snum{width:20px;height:20px;border-radius:50%;background:rgba(109,191,74,.12);border:.5px solid rgba(109,191,74,.3);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:.57rem;font-weight:700;color:#6DBF4A;flex-shrink:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ev-stitle{font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1B2E4B;flex:1;padding-bottom:.25rem;border-bottom:.5px solid rgba(27,46,75,.12);}
+
+/* Input grid */
+.ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.08rem .55rem;}
+.ev-row{padding:.27rem .38rem;border-radius:4px;}
+.ev-row:nth-child(odd){background:rgba(27,46,75,.03);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ev-label{font-size:.56rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(27,46,75,.34);margin-bottom:.05rem;}
+.ev-value{font-size:.79rem;color:#1B2E4B;}
+
+/* Result cards */
+.ev-scenario-badge{display:inline-block;padding:.18rem .68rem;border-radius:5px;font-size:.67rem;font-weight:500;background:rgba(109,191,74,.10);border:.5px solid rgba(109,191,74,.28);color:#3a8820;margin-bottom:.8rem;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ev-result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.48rem;}
+.ev-rcard{background:#fff;border:1px solid rgba(27,46,75,.11);border-top:3px solid rgba(27,46,75,.13);border-radius:8px;padding:.68rem .82rem;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ev-rcard.accent{border-top-color:#6DBF4A;background:rgba(109,191,74,.04);}
+.ev-rcard.total{border-top-color:#1B2E4B;background:rgba(27,46,75,.04);}
+.ev-rc-label{font-size:.55rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(27,46,75,.37);margin-bottom:.26rem;}
+.ev-rc-val{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#1B2E4B;line-height:1.1;}
+.ev-rcard.accent .ev-rc-val{color:#3a8820;}
+.ev-rc-sub{font-size:.58rem;color:rgba(27,46,75,.32);margin-top:.14rem;}
+.ev-divider{height:1px;background:rgba(27,46,75,.08);margin:.95rem 0;}
+.ev-footer{margin-top:1.4rem;padding-top:.6rem;border-top:.5px solid rgba(27,46,75,.10);font-size:.6rem;color:rgba(27,46,75,.3);display:flex;justify-content:space-between;}
+
+/* Eenmalig-balk */
+.ev-eenmalig{display:flex;align-items:center;justify-content:space-between;background:rgba(27,46,75,.04);border:.5px solid rgba(27,46,75,.10);border-radius:7px;padding:.55rem .85rem;margin-bottom:.85rem;}
+.ev-eenmalig-left .ev-rc-label{margin-bottom:.12rem;}
+.ev-eenmalig-val{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:#1B2E4B;}
+
+/* Scenario-vergelijkingstabel */
+.ev-comp-table{width:100%;border-collapse:collapse;font-size:.78rem;margin-top:.15rem;}
+.ev-comp-table th{font-family:'Syne',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.48rem .7rem;text-align:right;border-bottom:1.5px solid rgba(27,46,75,.12);}
+.ev-comp-table th:first-child{text-align:left;color:rgba(27,46,75,.35);font-size:.56rem;}
+.ev-comp-table th.pess{color:#c47d00;}
+.ev-comp-table th.real{color:#1B2E4B;}
+.ev-comp-table th.opt{color:#3a8820;}
+.ev-comp-table td{padding:.35rem .7rem;text-align:right;border-bottom:.5px solid rgba(27,46,75,.06);color:#1B2E4B;font-variant-numeric:tabular-nums;}
+.ev-comp-table td:first-child{text-align:left;font-size:.71rem;color:rgba(27,46,75,.48);font-variant-numeric:normal;}
+.ev-comp-table td.pess{color:#c47d00;}
+.ev-comp-table td.opt{color:#3a8820;}
+.ev-comp-table td .num{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;}
+.ev-comp-table tr.hl td{background:rgba(27,46,75,.04);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ev-comp-table tr.hl td:first-child{font-weight:600;color:#1B2E4B;font-size:.78rem;}
+.ev-comp-table tr.hl-accent td{background:rgba(109,191,74,.05);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.ev-comp-table tr.hl-accent td:first-child{font-weight:600;color:#3a8820;font-size:.78rem;}
+.ev-comp-table tr.hl-accent td.num,.ev-comp-table tr.hl-accent .num{color:#3a8820;}
+.ev-comp-sub{font-size:.58rem;color:rgba(27,46,75,.3);display:block;margin-top:.03rem;font-weight:400;}
+
+@media print{
+  body{background:#fff;}
+  .wrap>*:not(#export-view){display:none!important;}
+  #export-view{display:block!important;}
+  @page{margin:14mm 18mm;}
+}
+
+/* FOCUS VISIBLE — keyboard accessibility */
+button:focus-visible,.reset-btn:focus-visible,.tog-btn:focus-visible,.rb-sc-btn:focus-visible,.export-btn:focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:6px;}
+.field select:focus-visible,.field input:focus-visible{border-color:var(--green);box-shadow:0 0 0 3px var(--g10);outline:none;}
+
+/* TOUCH — larger hit areas & manipulation hint */
+button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipulation;}
+.tog-btn,.rb-sc-btn{min-height:36px;display:inline-flex;align-items:center;justify-content:center;}
+.step-head{min-height:48px;}
+
+/* MOBILE — prevent iOS auto-zoom on inputs below 16px */
+@media(max-width:768px){
+  .field select,.field input[type=number]{font-size:16px;}
+}
+
+/* MOTION — respect reduced-motion preference */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="tool-header">
+  <div class="tool-header-left">
+    <div class="brand">
+      <svg class="logo-svg" width="22" height="22" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="28" y="72" width="144" height="56" rx="28" fill="#1B2E4B"/>
+        <circle cx="144" cy="100" r="26" fill="#6DBF4A"/>
+        <path d="M143 88L135 102L144 102L142 112L153 98L143 98Z" fill="#1B2E4B" opacity=".9"/>
+        <path d="M144 60A40 40 0 0 1 184 100" stroke="#6DBF4A" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M144 46A54 54 0 0 1 198 100" stroke="#6DBF4A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".5"/>
+      </svg>
+      De Schakelaar — Advies aan huis
+    </div>
+    <h1>Financiële situatieschets laden</h1>
+    <p>Vul samen met de klant de situatie in. De uitkomst wordt live bijgewerkt.</p>
+  </div>
+  <button class="reset-btn" onclick="resetAll()">↺ Reset alle velden</button>
+</div>
+
+<!-- VOERTUIGTYPE KEUZE -->
+<div class="vt-wrap">
+  <div class="vt-label">Voertuigtype</div>
+  <div class="tog-row" id="vt-tog">
+    <button class="tog-btn active" data-v="ev" onclick="setVoertuig(this,'ev')">Volledig elektrisch (EV)</button>
+    <button class="tog-btn" data-v="hybride" onclick="setVoertuig(this,'hybride')">Hybride / PHEV</button>
+    <button class="tog-btn" data-v="beide" onclick="setVoertuig(this,'beide')">Vergelijk EV ↔ Hybride</button>
+  </div>
+</div>
+
+<div class="steps">
+
+<!-- STAP 1 — THUISSITUATIE -->
+<div class="step" id="s1">
+  <div class="step-head" onclick="toggleStep(1)">
+    <div class="step-num">01</div>
+    <h2>Thuissituatie</h2>
+    <span class="toggle-icon open" id="ti1">▾</span>
+  </div>
+  <div class="step-body" id="sb1">
+    <div class="row">
+      <div class="field">
+        <label>Woningtype</label>
+        <select id="woning" onchange="calc()">
+          <option value="koop">Koopwoning</option>
+          <option value="huur">Huurwoning</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Eigen oprit of garage?</label>
+        <select id="oprit" onchange="calc()">
+          <option value="ja">Ja</option>
+          <option value="nee">Nee — geen vaste laadplek</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Huisaansluiting</label>
+        <select id="aansluiting" onchange="calc()">
+          <option value="1x35">1×35A — max. 8 kW (1-fase)</option>
+          <option value="3x25" selected>3×25A — max. 17 kW (standaard)</option>
+          <option value="3x35">3×35A — max. 24 kW (nieuwbouw)</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Afstand meterkast → laadplek</label>
+        <select id="afstand" onchange="calc()">
+          <option value="0">Minder dan 5 meter</option>
+          <option value="100" selected>5 – 15 meter</option>
+          <option value="250">Meer dan 15 meter</option>
+          <option value="500">Grondwerk nodig</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Zonnepanelen aanwezig?</label>
+        <select id="zon" onchange="calc();toggleZon()">
+          <option value="nee">Nee</option>
+          <option value="ja">Ja</option>
+        </select>
+      </div>
+      <div class="field" id="zon-pct-wrap" style="display:none;">
+        <label>Aandeel laden op eigen opwek</label>
+        <div class="slider-wrap">
+          <input type="range" id="zon_pct" min="0" max="80" step="5" value="30"
+            oninput="calc();document.getElementById('zon_pct_v').textContent=this.value+'%'">
+          <span class="slider-val" id="zon_pct_v">30%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAP 2 — LAADPAAL -->
+<div class="step" id="s2">
+  <div class="step-head" onclick="toggleStep(2)">
+    <div class="step-num">02</div>
+    <h2>Laadpaal &amp; installatie</h2>
+    <span class="toggle-icon open" id="ti2">▾</span>
+  </div>
+  <div class="step-body" id="sb2">
+    <div class="field">
+      <label>Type laadpaal</label>
+      <div class="tog-row" id="paal-tog">
+        <button class="tog-btn" data-v="0" onclick="setPaal(this,0)">Al een paal / straat laden — €0</button>
+        <button class="tog-btn" data-v="800" onclick="setPaal(this,800)">Eenvoudig — €800</button>
+        <button class="tog-btn active" data-v="1200" onclick="setPaal(this,1200)">Slim OCPP — €1.200</button>
+        <button class="tog-btn" data-v="1500" onclick="setPaal(this,1500)">Complexe situatie — €1.500+</button>
+      </div>
+    </div>
+    <div class="row" id="paal-opties">
+      <div class="field">
+        <label>MID-meter (vereist voor ERE's)</label>
+        <select id="mid" onchange="calc();toggleERE()">
+          <option value="nee">Nee — niet nodig</option>
+          <option value="ja_inbegrepen">Ja — inbegrepen in paal</option>
+          <option value="ja_extra">Ja — als add-on (+€75)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Aansluiting paal</label>
+        <select id="kabel" onchange="calc()">
+          <option value="kabel">Vaste kabel — meest praktisch</option>
+          <option value="t2">Type 2 stopcontact — flexibeler</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Load balancing</label>
+        <select id="lb" onchange="calc()">
+          <option value="nee">Nee — niet nodig</option>
+          <option value="inbegrepen">Ja — inbegrepen in paal</option>
+          <option value="extra">Ja — als add-on (+€100)</option>
+        </select>
+      </div>
+    </div>
+    <div class="hint" id="mid-hint" style="display:none;">
+      Een MID-meter is vereist voor ERE-registratie. Bij de meeste slimme palen is dit al ingebouwd of als optie te bestellen (~€75). Check dit bij de installateur.
+    </div>
+  </div>
+</div>
+
+<!-- STAP 3 — ENERGIECONTRACT -->
+<div class="step" id="s3">
+  <div class="step-head" onclick="toggleStep(3)">
+    <div class="step-num">03</div>
+    <h2>Energiecontract</h2>
+    <span class="toggle-icon open" id="ti3">▾</span>
+  </div>
+  <div class="step-body" id="sb3">
+    <div class="field">
+      <label>Type contract</label>
+      <div class="tog-row" id="tarief-tog">
+        <button class="tog-btn" data-v="vast" onclick="setTarief(this,'vast')">Vast tarief</button>
+        <button class="tog-btn active" data-v="dynamisch" onclick="setTarief(this,'dynamisch')">Dynamisch (uurprijs)</button>
+        <button class="tog-btn" data-v="zon" onclick="setTarief(this,'zon')">Primair op zonnepanelen</button>
+      </div>
+    </div>
+    <div class="row" id="tarief-inputs">
+      <div class="field" id="fi-vast" style="display:none;">
+        <label>Vast tarief (€/kWh)</label>
+        <input type="number" id="tarief_vast" value="0.26" step="0.01" min="0.05" max="1.00" oninput="calc()">
+      </div>
+      <div class="field" id="fi-dyn">
+        <label>Gem. dynamisch tarief (€/kWh)</label>
+        <input type="number" id="tarief_dyn" value="0.22" step="0.01" min="0.01" max="1.00" oninput="calc()">
+      </div>
+      <div class="field">
+        <label>Publiek laadtarief (€/kWh)</label>
+        <input type="number" id="tarief_pub" value="0.45" step="0.01" min="0.10" max="1.00" oninput="calc()">
+      </div>
+    </div>
+    <div class="hint" id="dyn-hint">
+      Dynamisch tarief volgt de EPEX-spotmarkt. Met een slimme OCPP-paal laadt de auto automatisch op de goedkoopste uren. Realistisch gemiddelde bij slim laden: €0,18–0,25/kWh (inclusief netkosten, energiebelasting en btw).
+    </div>
+  </div>
+</div>
+
+<!-- STAP 4 — RIJGEDRAG -->
+<div class="step" id="s4">
+  <div class="step-head" onclick="toggleStep(4)">
+    <div class="step-num">04</div>
+    <h2>Rijgedrag</h2>
+    <span class="toggle-icon open" id="ti4">▾</span>
+  </div>
+  <div class="step-body" id="sb4">
+    <div class="row">
+      <div class="field">
+        <label>Kilometers per jaar</label>
+        <div class="slider-wrap">
+          <input type="range" id="km" min="5000" max="55000" step="500" value="15000"
+            oninput="calc();document.getElementById('km_v').textContent=parseInt(this.value).toLocaleString('nl-NL')">
+          <span class="slider-val" id="km_v">15.000</span>
+        </div>
+      </div>
+      <div class="field">
+        <label id="verbruik-label">Verbruik per 100 km (kWh)</label>
+        <div class="slider-wrap">
+          <input type="range" id="verbruik" min="12" max="30" step="0.5" value="18"
+            oninput="calc();document.getElementById('vb_v').textContent=parseFloat(this.value).toFixed(1)">
+          <span class="slider-val" id="vb_v">18.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>% thuis laden</label>
+        <div class="slider-wrap">
+          <input type="range" id="thuis_pct" min="0" max="100" step="5" value="85"
+            oninput="syncPub();calc();document.getElementById('th_v').textContent=this.value+'%'">
+          <span class="slider-val" id="th_v">85%</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>% publiek laden</label>
+        <div class="slider-wrap">
+          <input type="range" id="pub_pct" min="0" max="100" step="5" value="15"
+            oninput="syncThuis();calc();document.getElementById('pb_v').textContent=this.value+'%'">
+          <span class="slider-val" id="pb_v">15%</span>
+        </div>
+      </div>
+    </div>
+    <div id="ev-section-label" class="step-section" style="display:none;">Volledig elektrisch (EV)</div>
+    <div id="hybrid-s4-wrap" style="display:none;">
+      <div class="step-section" id="hybrid-section-title">Hybride / PHEV</div>
+      <div class="row" id="verbruik-hybrid-row" style="display:none;">
+        <div class="field">
+          <label>EV-verbruik hybride (kWh/100 km)</label>
+          <div class="slider-wrap">
+            <input type="range" id="verbruik_hybrid" min="12" max="30" step="0.5" value="18"
+              oninput="calc();document.getElementById('vb_hybrid_v').textContent=parseFloat(this.value).toFixed(1)">
+            <span class="slider-val" id="vb_hybrid_v">18.0</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>% elektrisch gereden</label>
+          <div class="slider-wrap">
+            <input type="range" id="new_ev_split" min="0" max="100" step="5" value="60"
+              oninput="calc();document.getElementById('new_ev_split_v').textContent=this.value+'%'">
+            <span class="slider-val" id="new_ev_split_v">60%</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Fosiel verbruik (L/100 km)</label>
+          <div class="slider-wrap">
+            <input type="range" id="fosiel_verb" min="3" max="15" step="0.5" value="6"
+              oninput="calc();document.getElementById('fosiel_verb_v').textContent=parseFloat(this.value).toFixed(1)">
+            <span class="slider-val" id="fosiel_verb_v">6.0</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Fossiele brandstofprijs (€/L)</label>
+          <input type="number" id="fosiel_prijs" value="1.98" step="0.01" min="0.50" max="3.00" oninput="calc()">
+        </div>
+      </div>
+      <div class="hint">De EV/fossiel verhouding hangt af van de gemiddelde ritafstand t.o.v. de elektrische actieradius. Stel in op basis van typisch rijgedrag van de klant.</div>
+    </div>
+  </div>
+</div>
+
+<!-- STAP 5 — ERE's -->
+<div class="step" id="s5">
+  <div class="step-head" onclick="toggleStep(5)">
+    <div class="step-num">05</div>
+    <h2>ERE's — Emissie Reductie Eenheden</h2>
+    <span class="toggle-icon open" id="ti5">▾</span>
+  </div>
+  <div class="step-body" id="sb5">
+    <div class="hint">
+      Als EV-rijder kun je de kWh's die je thuis laadt registreren en omzetten naar ERE's. Die worden verkocht aan brandstofleveranciers die wettelijk moeten verduurzamen. Opbrengst na platformkosten: ca. €0,09–0,11 per kWh. Je hebt een gecertificeerde MID-meter nodig voor officiële registratie.
+    </div>
+    <div class="field">
+      <label>ERE-registratie activeren?</label>
+      <div class="tog-row" id="ere-tog">
+        <button class="tog-btn" data-v="nee" onclick="setERE(this,'nee')">Nee</button>
+        <button class="tog-btn active" data-v="ja" onclick="setERE(this,'ja')">Ja</button>
+      </div>
+    </div>
+    <div id="ere-details" class="details-wrap">
+      <div class="row">
+        <div class="field">
+          <label>Netto opbrengst per kWh</label>
+          <input type="number" id="ere_kwh" value="0.10" step="0.01" min="0.01" max="0.20" oninput="calc()">
+        </div>
+      </div>
+    </div>
+    <div class="hint warn" id="ere-mid-warn" style="display:none;">
+      Zonder MID-meter is officiële ERE-registratie niet mogelijk. Selecteer een MID-meter bij stap 2 om ERE's te activeren.
+    </div>
+  </div>
+</div>
+
+<!-- STAP 6 — HUIDIGE AUTO (optioneel) -->
+<div class="step optional" id="s6">
+  <div class="step-head" onclick="toggleStep(6)">
+    <div class="step-num">06</div>
+    <h2>Huidige auto <span class="badge-opt">optioneel</span></h2>
+    <span class="toggle-icon open" id="ti6">▾</span>
+  </div>
+  <div class="step-body" id="sb6">
+    <div class="hint">Vul de huidige autokosten in om een oud-nieuw vergelijking te maken in het resultaat.</div>
+    <div class="field">
+      <label>Meenemen in vergelijking?</label>
+      <div class="tog-row" id="huidig-tog">
+        <button class="tog-btn" data-v="nee" onclick="setHuidig(this,'nee')">Nee — overslaan</button>
+        <button class="tog-btn active" data-v="ja" onclick="setHuidig(this,'ja')">Ja — kosten invullen</button>
+      </div>
+    </div>
+    <div id="huidig-details" class="details-wrap">
+      <div class="row">
+        <div class="field">
+          <label>Brandstoftype</label>
+          <select id="brandstof" onchange="setBrandstof();calc()">
+            <option value="benzine">Benzine</option>
+            <option value="diesel">Diesel</option>
+            <option value="hybride">Hybride / PHEV</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Verbruik (L/100 km)</label>
+          <div class="slider-wrap">
+            <input type="range" id="verb_l" min="3" max="15" step="0.5" value="7"
+              oninput="calc();document.getElementById('verb_l_v').textContent=parseFloat(this.value).toFixed(1)">
+            <span class="slider-val" id="verb_l_v">7.0</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Brandstofprijs (€/L)</label>
+          <input type="number" id="brandstof_prijs" value="1.98" step="0.01" min="0.50" max="3.00" oninput="calc()">
+        </div>
+      </div>
+      <div id="phev-wrap" style="display:none;">
+        <div class="row">
+          <div class="field">
+            <label>% elektrisch gereden</label>
+            <div class="slider-wrap">
+              <input type="range" id="phev_el_pct" min="0" max="80" step="5" value="40"
+                oninput="calc();document.getElementById('phev_el_v').textContent=this.value+'%'">
+              <span class="slider-val" id="phev_el_v">40%</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>EV-verbruik PHEV (kWh/100 km)</label>
+            <div class="slider-wrap">
+              <input type="range" id="phev_kwh" min="10" max="25" step="0.5" value="18"
+                oninput="calc();document.getElementById('phev_kwh_v').textContent=parseFloat(this.value).toFixed(1)">
+              <span class="slider-val" id="phev_kwh_v">18.0</span>
+            </div>
+          </div>
+        </div>
+        <div class="hint">Laadkosten PHEV worden berekend op basis van het huidige tarief (stap 3).</div>
+      </div>
+      <div class="step-section">Vaste autolasten</div>
+      <div class="row">
+        <div class="field">
+          <label>Verzekering (€/jaar)</label>
+          <input type="number" id="oud_verz" value="1200" step="50" min="0" oninput="calc()">
+        </div>
+        <div class="field">
+          <label>Wegenbelasting (€/jaar)</label>
+          <input type="number" id="oud_mrb" value="650" step="25" min="0" oninput="calc()">
+        </div>
+        <div class="field">
+          <label>Onderhoud (€/jaar)</label>
+          <input type="number" id="oud_oh" value="1000" step="50" min="0" oninput="calc()">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAP 7 — NIEUWE EV VASTE LASTEN (optioneel) -->
+<div class="step optional" id="s7">
+  <div class="step-head" onclick="toggleStep(7)">
+    <div class="step-num">07</div>
+    <h2>Nieuwe EV — vaste lasten <span class="badge-opt">optioneel</span></h2>
+    <span class="toggle-icon open" id="ti7">▾</span>
+  </div>
+  <div class="step-body" id="sb7">
+    <div class="hint">Laadkosten worden berekend via stap 3 &amp; 4. Vul hier de overige vaste lasten van de nieuwe EV in.</div>
+    <div class="field">
+      <label>Meenemen in vergelijking?</label>
+      <div class="tog-row" id="nieuw-tog">
+        <button class="tog-btn" data-v="nee" onclick="setNieuw(this,'nee')">Nee — overslaan</button>
+        <button class="tog-btn active" data-v="ja" onclick="setNieuw(this,'ja')">Ja — kosten invullen</button>
+      </div>
+    </div>
+    <div id="nieuw-details" class="details-wrap">
+      <div class="row">
+        <div class="field">
+          <label>Verzekering (€/jaar)</label>
+          <input type="number" id="nieuw_verz" value="1100" step="50" min="0" oninput="calc()">
+        </div>
+        <div class="field">
+          <label>Volledig MRB-tarief (€/jaar)</label>
+          <input type="number" id="nieuw_mrb_vol" value="800" step="25" min="0" oninput="updateMrbHint();calc()">
+        </div>
+        <div class="field">
+          <label>Onderhoud (€/jaar)</label>
+          <input type="number" id="nieuw_oh" value="600" step="50" min="0" oninput="calc()">
+        </div>
+      </div>
+      <div class="hint" id="mrb-hint">—</div>
+      <div class="step-section" id="auto-investering-section">Auto-investering</div>
+      <div class="field" id="auto-mode-field">
+        <label>Rekenmethode</label>
+        <div class="tog-row" id="auto-mode-tog">
+          <button class="tog-btn active" data-v="eenmalig" onclick="setAutoMode(this,'eenmalig')">Eenmalige meerprijs</button>
+          <button class="tog-btn" data-v="afschrijving" onclick="setAutoMode(this,'afschrijving')">Via afschrijving</button>
+        </div>
+      </div>
+      <div id="auto-eenmalig-wrap">
+        <div class="row">
+          <div class="field field-sm">
+            <label>Meerprijs t.o.v. huidige auto (€) <span class="badge-opt">voor TVT</span></label>
+            <input type="number" id="ev_meerprijs" value="0" step="500" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="hint">Vul de meerprijs in om de terugverdientijd te berekenen inclusief het prijsverschil met de huidige auto. Onderhoud EV ligt gemiddeld 30–40% lager dan bij een verbrandingsmotor.</div>
+      </div>
+      <div id="auto-afschrijving-wrap" style="display:none;">
+        <div class="step-section" style="border-top:none;padding-top:0;margin-top:0;">Nieuwe EV</div>
+        <div class="row">
+          <div class="field">
+            <label>Aankoopprijs EV (€)</label>
+            <input type="number" id="ev_prijs" value="45000" step="1000" min="0" oninput="calc()">
+          </div>
+          <div class="field">
+            <label>Restwaarde na periode (€)</label>
+            <input type="number" id="ev_restwaarde" value="20000" step="1000" min="0" oninput="calc()">
+          </div>
+          <div class="field">
+            <label>Afschrijvingstermijn (jaar)</label>
+            <div class="slider-wrap">
+              <input type="range" id="ev_afsj_jaren" min="3" max="12" step="1" value="7"
+                oninput="calc();document.getElementById('ev_afsj_v').textContent=this.value">
+              <span class="slider-val" id="ev_afsj_v">7</span>
+            </div>
+          </div>
+        </div>
+        <div class="hint" id="ev-afsj-hint">Jaarlijkse afschrijving EV: —</div>
+        <div class="step-section">Huidige auto</div>
+        <div class="row">
+          <div class="field">
+            <label>Aankoopprijs / huidige waarde (€)</label>
+            <input type="number" id="huidig_prijs" value="35000" step="1000" min="0" oninput="calc()">
+          </div>
+          <div class="field">
+            <label>Restwaarde na periode (€)</label>
+            <input type="number" id="huidig_restwaarde" value="15000" step="1000" min="0" oninput="calc()">
+          </div>
+          <div class="field">
+            <label>Afschrijvingstermijn (jaar)</label>
+            <div class="slider-wrap">
+              <input type="range" id="huidig_afsj_jaren" min="3" max="12" step="1" value="7"
+                oninput="calc();document.getElementById('huidig_afsj_v').textContent=this.value">
+              <span class="slider-val" id="huidig_afsj_v">7</span>
+            </div>
+          </div>
+        </div>
+        <div class="hint" id="huidig-afsj-hint">Jaarlijkse afschrijving huidige auto: —</div>
+        <div class="hint">Afschrijvingskosten worden jaarlijks verrekend. De terugverdientijd geldt dan alleen voor de laadpaalinvestering.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAP 8 — NIEUWE HYBRIDE VASTE LASTEN (optioneel) -->
+<div class="step optional" id="s8" style="display:none;">
+  <div class="step-head" onclick="toggleStep(8)">
+    <div class="step-num">08</div>
+    <h2>Nieuwe hybride — vaste lasten <span class="badge-opt">optioneel</span></h2>
+    <span class="toggle-icon open" id="ti8">▾</span>
+  </div>
+  <div class="step-body" id="sb8">
+    <div class="hint">Laadkosten en fossiele brandstofkosten worden berekend via stap 3 &amp; 4. Vul hier de overige vaste lasten van de nieuwe hybride in.</div>
+    <div class="field">
+      <label>Meenemen in vergelijking?</label>
+      <div class="tog-row" id="nieuw-hybrid-tog">
+        <button class="tog-btn" data-v="nee" onclick="setNieuwHybrid(this,'nee')">Nee — overslaan</button>
+        <button class="tog-btn active" data-v="ja" onclick="setNieuwHybrid(this,'ja')">Ja — kosten invullen</button>
+      </div>
+    </div>
+    <div id="nieuw-hybrid-details" class="details-wrap">
+      <div class="row">
+        <div class="field">
+          <label>Verzekering hybride (€/jaar)</label>
+          <input type="number" id="nieuw_hybrid_verz" value="1200" step="50" min="0" oninput="calc()">
+        </div>
+        <div class="field">
+          <label>MRB hybride (€/jaar)</label>
+          <input type="number" id="nieuw_hybrid_mrb" value="800" step="25" min="0" oninput="calc()">
+        </div>
+        <div class="field">
+          <label>Onderhoud hybride (€/jaar)</label>
+          <input type="number" id="nieuw_hybrid_oh" value="900" step="50" min="0" oninput="calc()">
+        </div>
+      </div>
+      <div class="hint">MRB hybride betaalt volledig tarief (geen EV-korting). Onderhoud hybride ligt doorgaans 15–20% lager dan fossiel.</div>
+      <div class="step-section">Auto-investering</div>
+      <div class="field">
+        <label>Rekenmethode</label>
+        <div class="tog-row" id="hybrid-auto-mode-tog">
+          <button class="tog-btn active" data-v="eenmalig" onclick="setHybridAutoMode(this,'eenmalig')">Eenmalige meerprijs</button>
+          <button class="tog-btn" data-v="afschrijving" onclick="setHybridAutoMode(this,'afschrijving')">Via afschrijving</button>
+        </div>
+      </div>
+      <div id="hybrid-eenmalig-wrap">
+        <div class="row">
+          <div class="field field-sm">
+            <label>Meerprijs t.o.v. huidige auto (€) <span class="badge-opt">voor TVT</span></label>
+            <input type="number" id="hybrid_meerprijs" value="0" step="500" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="hint">Vul de meerprijs in om de terugverdientijd te berekenen inclusief het prijsverschil met de huidige auto.</div>
+      </div>
+      <div id="hybrid-afschrijving-wrap" style="display:none;">
+        <div class="step-section" style="border-top:none;padding-top:0;margin-top:0;">Nieuwe hybride</div>
+        <div class="row">
+          <div class="field">
+            <label>Aankoopprijs hybride (€)</label>
+            <input type="number" id="hybrid_prijs" value="35000" step="1000" min="0" oninput="calc()">
+          </div>
+          <div class="field">
+            <label>Restwaarde na periode (€)</label>
+            <input type="number" id="hybrid_restwaarde" value="15000" step="1000" min="0" oninput="calc()">
+          </div>
+          <div class="field">
+            <label>Afschrijvingstermijn (jaar)</label>
+            <div class="slider-wrap">
+              <input type="range" id="hybrid_afsj_jaren" min="3" max="12" step="1" value="7"
+                oninput="calc();document.getElementById('hybrid_afsj_v').textContent=this.value">
+              <span class="slider-val" id="hybrid_afsj_v">7</span>
+            </div>
+          </div>
+        </div>
+        <div class="hint" id="hybrid-afsj-hint">Jaarlijkse afschrijving hybride: —</div>
+        <div class="step-section">Huidige auto</div>
+        <div class="row">
+          <div class="field">
+            <label>Aankoopprijs / huidige waarde (€)</label>
+            <input type="number" id="hybrid_huidig_prijs" value="35000" step="1000" min="0" oninput="calc()">
+          </div>
+          <div class="field">
+            <label>Restwaarde na periode (€)</label>
+            <input type="number" id="hybrid_huidig_restwaarde" value="15000" step="1000" min="0" oninput="calc()">
+          </div>
+          <div class="field">
+            <label>Afschrijvingstermijn (jaar)</label>
+            <div class="slider-wrap">
+              <input type="range" id="hybrid_huidig_afsj_jaren" min="3" max="12" step="1" value="7"
+                oninput="calc();document.getElementById('hybrid_huidig_afsj_v').textContent=this.value">
+              <span class="slider-val" id="hybrid_huidig_afsj_v">7</span>
+            </div>
+          </div>
+        </div>
+        <div class="hint" id="hybrid-huidig-afsj-hint">Jaarlijkse afschrijving huidige auto: —</div>
+        <div class="hint">Afschrijvingskosten worden jaarlijks verrekend. De terugverdientijd geldt dan alleen voor de laadpaalinvestering.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /steps -->
+
+<!-- RESULTAAT -->
+<div class="result-box" id="result-box">
+  <div class="rb-header">
+    <div class="rb-title">Uitkomst — financieel overzicht</div>
+    <div class="rb-live"><span class="live-dot"></span> Live bijgewerkt</div>
+  </div>
+  <div class="rb-scenario-wrap">
+    <div class="rb-scenario-label">Scenario</div>
+    <div class="rb-scenario-row">
+      <button class="rb-sc-btn pessimist" data-v="pessimistisch" onclick="setScenario(this,'pessimistisch')">Pessimistisch</button>
+      <button class="rb-sc-btn active" data-v="realistisch" onclick="setScenario(this,'realistisch')">Realistisch</button>
+      <button class="rb-sc-btn" data-v="optimistisch" onclick="setScenario(this,'optimistisch')">Optimistisch</button>
+    </div>
+    <div class="rb-scenario-note" id="scenario-note">Basisscenario op basis van ingevoerde waarden.</div>
+  </div>
+  <div class="result-grid">
+    <div class="rcard">
+      <div class="rc-label">Eenmalig</div>
+      <div class="rc-val" id="r-eenmalig">—</div>
+      <div class="rc-sub" id="r-eenmalig-sub">laadpaal + installatie</div>
+    </div>
+    <div class="rcard">
+      <div class="rc-label">Jaarl. laadkosten thuis</div>
+      <div class="rc-val" id="r-thuis">—</div>
+      <div class="rc-sub" id="r-thuis-sub">—</div>
+    </div>
+    <div class="rcard">
+      <div class="rc-label">Jaarl. laadkosten publiek</div>
+      <div class="rc-val" id="r-pub">—</div>
+      <div class="rc-sub" id="r-pub-sub">—</div>
+    </div>
+    <div class="rcard" id="r-fossil-card" style="display:none;">
+      <div class="rc-label">Jaarl. fossiele brandstof</div>
+      <div class="rc-val" id="r-fossil">—</div>
+      <div class="rc-sub" id="r-fossil-sub">—</div>
+    </div>
+    <div class="rcard accent">
+      <div class="rc-label">ERE-opbrengst per jaar</div>
+      <div class="rc-val" id="r-ere">—</div>
+      <div class="rc-sub" id="r-ere-sub">—</div>
+    </div>
+    <div class="rcard total">
+      <div class="rc-label">Netto jaarlijks totaal</div>
+      <div class="rc-val" id="r-netto">—</div>
+      <div class="rc-sub">laadkosten minus ERE-opbrengst</div>
+    </div>
+    <div class="rcard">
+      <div class="rc-label">Terugverdientijd paal</div>
+      <div class="rc-val" id="r-tvt">—</div>
+      <div class="rc-sub">t.o.v. volledig publiek laden</div>
+    </div>
+  </div>
+
+  <div id="beide-box" style="display:none;">
+    <div class="rb-divider"></div>
+    <div class="rb-title" style="margin-bottom:.9rem;">EV ↔ Hybride vergelijking</div>
+    <div class="result-grid">
+      <div class="rcard">
+        <div class="rc-label">Netto jaarkosten EV</div>
+        <div class="rc-val" id="r-beide-ev">—</div>
+        <div class="rc-sub">100% elektrisch</div>
+      </div>
+      <div class="rcard">
+        <div class="rc-label">Netto jaarkosten hybride</div>
+        <div class="rc-val" id="r-beide-hybrid">—</div>
+        <div class="rc-sub" id="r-beide-hybrid-sub">laden + fossiele brandstof</div>
+      </div>
+      <div class="rcard accent">
+        <div class="rc-label">Jaarlijks verschil</div>
+        <div class="rc-val" id="r-beide-diff">—</div>
+        <div class="rc-sub" id="r-beide-diff-sub">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="vergelijk-box" style="display:none;">
+    <div class="rb-divider"></div>
+    <div class="rb-title" style="margin-bottom:.9rem;">Oud → Nieuw vergelijking</div>
+    <div class="result-grid">
+      <div class="rcard">
+        <div class="rc-label">Jaarkosten huidig</div>
+        <div class="rc-val" id="r-oud-totaal">—</div>
+        <div class="rc-sub" id="r-oud-totaal-sub">brandstof + vaste lasten</div>
+      </div>
+      <div class="rcard">
+        <div class="rc-label" id="r-nieuw-totaal-label">Jaarkosten nieuw EV</div>
+        <div class="rc-val" id="r-nieuw-totaal">—</div>
+        <div class="rc-sub" id="r-nieuw-totaal-sub">laden + vaste lasten</div>
+      </div>
+      <div class="rcard" id="r-nieuw-hybrid-card" style="display:none;">
+        <div class="rc-label">Jaarkosten nieuw hybride</div>
+        <div class="rc-val" id="r-nieuw-hybrid-totaal">—</div>
+        <div class="rc-sub" id="r-nieuw-hybrid-totaal-sub">laden + fossiel + vaste lasten</div>
+      </div>
+      <div class="rcard accent">
+        <div class="rc-label" id="r-besparing-label">Jaarlijkse besparing</div>
+        <div class="rc-val" id="r-besparing">—</div>
+        <div class="rc-sub" id="r-besparing-sub">—</div>
+      </div>
+      <div class="rcard accent" id="r-besparing-hybrid-card" style="display:none;">
+        <div class="rc-label">Besparing hybride</div>
+        <div class="rc-val" id="r-besparing-hybrid">—</div>
+        <div class="rc-sub" id="r-besparing-hybrid-sub">—</div>
+      </div>
+      <div class="rcard total">
+        <div class="rc-label" id="r-tvt-totaal-label">Terugverdientijd totaal</div>
+        <div class="rc-val" id="r-tvt-totaal">—</div>
+        <div class="rc-sub" id="r-tvt-totaal-sub">incl. laadpaal investering</div>
+      </div>
+      <div class="rcard" id="r-tvt-hybrid-card" style="display:none;">
+        <div class="rc-label">TVT hybride</div>
+        <div class="rc-val" id="r-tvt-hybrid">—</div>
+        <div class="rc-sub">incl. laadpaal + meerprijs</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="export-btn" onclick="generateExport()">↓ Exporteer als PDF / afdrukken</button>
+
+<div id="export-view"></div>
+
+</div><!-- /wrap -->
+
+<script>
+const scenarios = {
+  pessimistisch: { verbruik: 1.15, tarief: 1.35, pub: 1.20, ere: 0.70 },
+  realistisch:   { verbruik: 1.00, tarief: 1.00, pub: 1.00, ere: 1.00 },
+  optimistisch:  { verbruik: 0.90, tarief: 0.80, pub: 1.00, ere: 1.15 }
+};
+let scenario = 'realistisch';
+
+let paalKosten = 1200;
+let tariefType = 'dynamisch';
+let ereActief = 'ja';
+let huidigActief = 'ja';
+let nieuwActief = 'ja';
+let autoMode = 'eenmalig';
+let voertuigType = 'ev';
+let hybridAutoMode = 'eenmalig';
+let nieuwHybridActief = 'ja';
+let _syncing = false;
+
+function setVoertuig(el, val) {
+  document.querySelectorAll('#vt-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  voertuigType = val;
+  const isHybrid = val === 'hybride' || val === 'beide';
+  const isBeide = val === 'beide';
+  document.getElementById('hybrid-s4-wrap').style.display = isHybrid ? '' : 'none';
+  document.getElementById('ev-section-label').style.display = isBeide ? '' : 'none';
+  document.getElementById('verbruik-hybrid-row').style.display = isBeide ? '' : 'none';
+  document.getElementById('hybrid-section-title').textContent = isBeide ? 'Hybride / PHEV' : 'Hybride verdeling';
+  document.getElementById('verbruik-label').textContent = isHybrid ? 'EV-verbruik (kWh/100 km)' : 'Verbruik per 100 km (kWh)';
+  const s7h2 = document.querySelector('#s7 .step-head h2');
+  s7h2.innerHTML = (isHybrid ? 'Nieuwe auto' : 'Nieuwe EV') + ' — vaste lasten <span class="badge-opt">optioneel</span>';
+  document.getElementById('s7').style.display = (val === 'ev' || val === 'beide') ? '' : 'none';
+  document.getElementById('s8').style.display = (val === 'hybride' || val === 'beide') ? '' : 'none';
+  calc();
+}
+
+function toggleStep(n) {
+  const sb = document.getElementById('sb' + n);
+  const ti = document.getElementById('ti' + n);
+  const open = sb.style.display !== 'none';
+  sb.style.display = open ? 'none' : '';
+  ti.classList.toggle('open', !open);
+}
+
+function setPaal(el, val) {
+  document.querySelectorAll('#paal-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  paalKosten = val;
+  const paalOpties = document.getElementById('paal-opties');
+  if (paalOpties) paalOpties.style.display = val === 0 ? 'none' : '';
+  calc();
+}
+
+function setTarief(el, val) {
+  document.querySelectorAll('#tarief-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  tariefType = val;
+  document.getElementById('fi-vast').style.display = val === 'vast' ? '' : 'none';
+  document.getElementById('fi-dyn').style.display = val === 'dynamisch' ? '' : 'none';
+  document.getElementById('dyn-hint').style.display = val === 'dynamisch' ? '' : 'none';
+  calc();
+}
+
+function setERE(el, val) {
+  document.querySelectorAll('#ere-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  ereActief = val;
+  document.getElementById('ere-details').style.display = val === 'ja' ? '' : 'none';
+  calc();
+}
+
+function toggleZon() {
+  const v = document.getElementById('zon').value;
+  document.getElementById('zon-pct-wrap').style.display = v === 'ja' ? '' : 'none';
+}
+
+function toggleERE() {
+  const mid = document.getElementById('mid').value;
+  const tog = document.getElementById('ere-tog');
+  const warn = document.getElementById('ere-mid-warn');
+  document.getElementById('mid-hint').style.display = mid !== 'nee' ? '' : 'none';
+  if (mid === 'nee') {
+    tog.style.opacity = '.35';
+    tog.style.pointerEvents = 'none';
+    warn.style.display = '';
+    ereActief = 'nee';
+    document.querySelectorAll('#ere-tog .tog-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('#ere-tog .tog-btn[data-v="nee"]').classList.add('active');
+    document.getElementById('ere-details').style.display = 'none';
+  } else {
+    tog.style.opacity = '';
+    tog.style.pointerEvents = '';
+    warn.style.display = 'none';
+  }
+  calc();
+}
+
+
+function setHuidig(el, val) {
+  document.querySelectorAll('#huidig-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  huidigActief = val;
+  document.getElementById('huidig-details').style.display = val === 'ja' ? '' : 'none';
+  calc();
+}
+
+function setNieuwHybrid(el, val) {
+  document.querySelectorAll('#nieuw-hybrid-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  nieuwHybridActief = val;
+  document.getElementById('nieuw-hybrid-details').style.display = val === 'ja' ? '' : 'none';
+  calc();
+}
+
+function setNieuw(el, val) {
+  document.querySelectorAll('#nieuw-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  nieuwActief = val;
+  document.getElementById('nieuw-details').style.display = val === 'ja' ? '' : 'none';
+  calc();
+}
+
+function setHybridAutoMode(el, val) {
+  document.querySelectorAll('#hybrid-auto-mode-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  hybridAutoMode = val;
+  document.getElementById('hybrid-eenmalig-wrap').style.display = val === 'eenmalig' ? '' : 'none';
+  document.getElementById('hybrid-afschrijving-wrap').style.display = val === 'afschrijving' ? '' : 'none';
+  calc();
+}
+
+function setAutoMode(el, val) {
+  document.querySelectorAll('#auto-mode-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  autoMode = val;
+  document.getElementById('auto-eenmalig-wrap').style.display = val === 'eenmalig' ? '' : 'none';
+  document.getElementById('auto-afschrijving-wrap').style.display = val === 'afschrijving' ? '' : 'none';
+  calc();
+}
+
+function setScenario(el, val) {
+  document.querySelectorAll('.rb-sc-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  scenario = val;
+  const notes = {
+    pessimistisch: 'Hoger tarief (+35%), meer verbruik (+15%), lagere ERE-opbrengst (−30%) en hogere publieke laadprijs (+20%).',
+    realistisch:   'Basisscenario op basis van ingevoerde waarden.',
+    optimistisch:  'Lager tarief (−20%), zuiniger verbruik (−10%) en hogere ERE-opbrengst (+15%).'
+  };
+  document.getElementById('scenario-note').textContent = notes[val];
+  calc();
+}
+
+function mrbPct(year) {
+  if (year <= 2025) return 0.25;
+  if (year === 2026) return 0.25;
+  if (year === 2027) return 0.50;
+  if (year === 2028) return 0.75;
+  return 1.0;
+}
+
+function updateMrbHint() {
+  const vol = parseFloat(document.getElementById('nieuw_mrb_vol').value) || 0;
+  const curYear = new Date().getFullYear();
+  const rows = [];
+  for (let y = curYear; y <= Math.max(curYear + 3, 2028); y++) {
+    const pct = mrbPct(y);
+    const bedrag = Math.round(vol * pct);
+    rows.push(y + ': €' + bedrag.toLocaleString('nl-NL') + ' (' + Math.round(pct * 100) + '%)');
+  }
+  document.getElementById('mrb-hint').textContent = rows.join(' · ');
+}
+
+function setBrandstof() {
+  const type = document.getElementById('brandstof').value;
+  const prijzen = { benzine: 1.98, diesel: 1.85, hybride: 1.98 };
+  document.getElementById('brandstof_prijs').value = prijzen[type] || 1.98;
+  document.getElementById('phev-wrap').style.display = type === 'hybride' ? '' : 'none';
+}
+
+function syncPub() {
+  if (_syncing) return; _syncing = true;
+  const v = parseInt(document.getElementById('thuis_pct').value);
+  const pub = Math.max(0, 100 - v);
+  document.getElementById('pub_pct').value = pub;
+  document.getElementById('pb_v').textContent = pub + '%';
+  _syncing = false;
+}
+
+function syncThuis() {
+  if (_syncing) return; _syncing = true;
+  const v = parseInt(document.getElementById('pub_pct').value);
+  const th = Math.max(0, 100 - v);
+  document.getElementById('thuis_pct').value = th;
+  document.getElementById('th_v').textContent = th + '%';
+  _syncing = false;
+}
+
+function euro(v) {
+  return '€' + Math.round(v).toLocaleString('nl-NL');
+}
+
+function calc() {
+  const afstand = parseInt(document.getElementById('afstand').value) || 0;
+  const lb = document.getElementById('lb').value;
+  const mid = document.getElementById('mid').value;
+
+  let eenmalig = paalKosten + afstand;
+  if (paalKosten > 0) {
+    if (lb === 'extra') eenmalig += 100;
+    if (mid === 'ja_extra') eenmalig += 75;
+  }
+
+  const kmJaar = parseInt(document.getElementById('km').value) || 15000;
+  const vb = parseFloat(document.getElementById('verbruik').value) || 18;
+  const thuisPct = parseInt(document.getElementById('thuis_pct').value) / 100;
+  const pubPct = parseInt(document.getElementById('pub_pct').value) / 100;
+  const kwhJaar = kmJaar / 100 * vb;
+  const sm = scenarios[scenario];
+
+  const isHybrid = voertuigType === 'hybride' || voertuigType === 'beide';
+  let evSplit = 1.0;
+  let fosielKosten = 0;
+  if (isHybrid) {
+    evSplit = parseInt(document.getElementById('new_ev_split').value) / 100;
+    const fosielVerb = parseFloat(document.getElementById('fosiel_verb').value) || 6;
+    const fosielPrijs = parseFloat(document.getElementById('fosiel_prijs').value) || 1.98;
+    const kmFossiel = kmJaar * (1 - evSplit);
+    fosielKosten = kmFossiel / 100 * fosielVerb * fosielPrijs * sm.verbruik;
+  }
+
+  // In 'beide' modus heeft de hybride een eigen kWh/100km instelling
+  const vbHybrid = (voertuigType === 'beide')
+    ? (parseFloat(document.getElementById('verbruik_hybrid').value) || 18)
+    : vb;
+  const kwhJaarHybrid = kmJaar / 100 * vbHybrid;
+
+  const effKwhJaar  = kwhJaarHybrid * evSplit * sm.verbruik;
+  const effKwhThuis = effKwhJaar * thuisPct;
+  const effKwhPub   = effKwhJaar * pubPct;
+
+  const zonPct = document.getElementById('zon').value === 'ja'
+    ? (parseInt(document.getElementById('zon_pct').value) / 100) : 0;
+  const kwhThuisNet = effKwhThuis * (1 - zonPct);
+
+  let tariefThuis = 0.26;
+  if (tariefType === 'dynamisch') tariefThuis = parseFloat(document.getElementById('tarief_dyn').value) || 0.22;
+  else if (tariefType === 'vast') tariefThuis = parseFloat(document.getElementById('tarief_vast').value) || 0.26;
+  else tariefThuis = 0;
+
+  const tariefPub = parseFloat(document.getElementById('tarief_pub').value) || 0.45;
+  const effTariefThuis = tariefThuis * sm.tarief;
+  const effTariefPub   = tariefPub   * sm.pub;
+
+  const kostenThuis = kwhThuisNet  * effTariefThuis;
+  const kostenPub   = effKwhPub    * effTariefPub;
+
+  let ereOpbrengst = 0, erePer = 0, effErePer = 0;
+  if (ereActief === 'ja' && mid !== 'nee') {
+    erePer    = parseFloat(document.getElementById('ere_kwh').value) || 0.10;
+    effErePer = erePer * sm.ere;
+    ereOpbrengst = effKwhThuis * effErePer;
+  }
+
+  const nettoLaden = kostenThuis + kostenPub - ereOpbrengst;
+  const netto = nettoLaden + fosielKosten;
+  const volledigPub = kwhJaarHybrid * evSplit * tariefPub;
+  const besparing = volledigPub - nettoLaden;
+  const tvt = besparing > 0 ? eenmalig / besparing : null;
+
+  document.getElementById('r-eenmalig').textContent = euro(eenmalig);
+  document.getElementById('r-eenmalig-sub').textContent = paalKosten === 0
+    ? (afstand > 0 ? 'enkel installatiekosten' : 'geen laadpaalinvestering')
+    : 'laadpaal + installatie';
+  document.getElementById('r-thuis').textContent = euro(kostenThuis);
+  document.getElementById('r-thuis-sub').textContent =
+    Math.round(kwhThuisNet) + ' kWh × €' + effTariefThuis.toFixed(2);
+  document.getElementById('r-pub').textContent = euro(kostenPub);
+  document.getElementById('r-pub-sub').textContent =
+    Math.round(effKwhPub) + ' kWh × €' + effTariefPub.toFixed(2);
+
+  if (ereActief === 'ja' && mid !== 'nee') {
+    document.getElementById('r-ere').textContent = '+ ' + euro(ereOpbrengst);
+    document.getElementById('r-ere-sub').textContent =
+      Math.round(effKwhThuis) + ' kWh × €' + effErePer.toFixed(2);
+  } else {
+    document.getElementById('r-ere').textContent = '—';
+    document.getElementById('r-ere-sub').textContent = 'niet actief';
+  }
+
+  document.getElementById('r-netto').textContent = euro(netto);
+  document.getElementById('r-tvt').textContent = tvt
+    ? (Math.round(tvt * 10) / 10).toFixed(1).replace('.', ',') + ' jaar' : '—';
+
+  // Fossiele brandstof kaart
+  document.getElementById('r-fossil-card').style.display = isHybrid ? '' : 'none';
+  if (isHybrid) {
+    const fosKm = Math.round(kmJaar * (1 - evSplit));
+    document.getElementById('r-fossil').textContent = euro(fosielKosten);
+    document.getElementById('r-fossil-sub').textContent = fosKm.toLocaleString('nl-NL') + ' km fosiel';
+  }
+
+  // EV-netto berekening voor 'beide' modus (ook gebruikt in vergelijk-box)
+  let nettoEV = 0;
+  if (voertuigType === 'beide') {
+    const effKwhJaarEV = kwhJaar * sm.verbruik;
+    const effKwhThuisEV = effKwhJaarEV * thuisPct;
+    const kwhThuisNetEV = effKwhThuisEV * (1 - zonPct);
+    const kostenThuisEV = kwhThuisNetEV * effTariefThuis;
+    const kostenPubEV = effKwhJaarEV * pubPct * effTariefPub;
+    let ereEV = 0;
+    if (ereActief === 'ja' && mid !== 'nee') {
+      const erePer = parseFloat(document.getElementById('ere_kwh').value) || 0.10;
+      ereEV = effKwhThuisEV * erePer * sm.ere;
+    }
+    nettoEV = kostenThuisEV + kostenPubEV - ereEV;
+  }
+
+  // EV ↔ Hybride vergelijking (beide-box)
+  if (voertuigType === 'beide') {
+    document.getElementById('beide-box').style.display = '';
+    document.getElementById('r-beide-ev').textContent = euro(nettoEV);
+    document.getElementById('r-beide-hybrid').textContent = euro(netto);
+    const diff = nettoEV - netto;
+    if (diff > 0) {
+      document.getElementById('r-beide-diff').textContent = '+ ' + euro(diff);
+      document.getElementById('r-beide-diff-sub').textContent = 'hybride is goedkoper per jaar';
+    } else if (diff < 0) {
+      document.getElementById('r-beide-diff').textContent = '+ ' + euro(-diff);
+      document.getElementById('r-beide-diff-sub').textContent = 'volledig EV is goedkoper per jaar';
+    } else {
+      document.getElementById('r-beide-diff').textContent = '—';
+      document.getElementById('r-beide-diff-sub').textContent = 'geen verschil';
+    }
+  } else {
+    document.getElementById('beide-box').style.display = 'none';
+  }
+
+  // Oud-nieuw vergelijking
+  const evInVergelijk     = (voertuigType !== 'hybride') && nieuwActief === 'ja';
+  const hybridInVergelijk = (voertuigType !== 'ev')     && nieuwHybridActief === 'ja';
+  const showVergelijk = huidigActief === 'ja' && (evInVergelijk || hybridInVergelijk);
+  document.getElementById('vergelijk-box').style.display = showVergelijk ? '' : 'none';
+
+  if (showVergelijk) {
+    updateMrbHint();
+    const verbL = parseFloat(document.getElementById('verb_l').value) || 7;
+    const bPrijs = parseFloat(document.getElementById('brandstof_prijs').value) || 1.98;
+    const brandstofType = document.getElementById('brandstof').value;
+    let brandstofKosten, phevLaadKosten = 0;
+    if (brandstofType === 'hybride') {
+      const elPct = parseInt(document.getElementById('phev_el_pct').value) / 100;
+      const phevKwh = parseFloat(document.getElementById('phev_kwh').value) || 18;
+      brandstofKosten = (kmJaar / 100) * verbL * bPrijs * (1 - elPct);
+      phevLaadKosten = (kmJaar / 100) * phevKwh * elPct * tariefThuis;
+    } else {
+      brandstofKosten = (kmJaar / 100) * verbL * bPrijs;
+    }
+    const oudVerz = parseFloat(document.getElementById('oud_verz').value) || 0;
+    const oudMrb = parseFloat(document.getElementById('oud_mrb').value) || 0;
+    const oudOh = parseFloat(document.getElementById('oud_oh').value) || 0;
+
+    const nieuwVerz = parseFloat(document.getElementById('nieuw_verz').value) || 0;
+    const nieuwMrbVol = parseFloat(document.getElementById('nieuw_mrb_vol').value) || 0;
+    const nieuwMrb = nieuwMrbVol * mrbPct(new Date().getFullYear());
+    const nieuwOh = parseFloat(document.getElementById('nieuw_oh').value) || 0;
+
+    let oudAfschr = 0, nieuwAfschr = 0, evMeerprijs = 0;
+    if (autoMode === 'afschrijving') {
+      const evPrijs      = parseFloat(document.getElementById('ev_prijs').value)      || 0;
+      const evRest       = parseFloat(document.getElementById('ev_restwaarde').value)  || 0;
+      const evJaren      = parseInt(document.getElementById('ev_afsj_jaren').value)    || 7;
+      const huidigPrijs  = parseFloat(document.getElementById('huidig_prijs').value)  || 0;
+      const huidigRest   = parseFloat(document.getElementById('huidig_restwaarde').value) || 0;
+      const huidigJaren  = parseInt(document.getElementById('huidig_afsj_jaren').value) || 7;
+      nieuwAfschr  = Math.max(0, evPrijs - evRest)       / evJaren;
+      oudAfschr    = Math.max(0, huidigPrijs - huidigRest) / huidigJaren;
+      document.getElementById('ev-afsj-hint').textContent =
+        'Jaarlijkse afschrijving EV: ' + euro(nieuwAfschr) + ' (' + euro(evPrijs) + ' − ' + euro(evRest) + ' over ' + evJaren + ' jaar)';
+      document.getElementById('huidig-afsj-hint').textContent =
+        'Jaarlijkse afschrijving huidige auto: ' + euro(oudAfschr) + ' (' + euro(huidigPrijs) + ' − ' + euro(huidigRest) + ' over ' + huidigJaren + ' jaar)';
+    } else {
+      evMeerprijs = parseFloat(document.getElementById('ev_meerprijs').value) || 0;
+    }
+
+    const oudTotaal = brandstofKosten + phevLaadKosten + oudVerz + oudMrb + oudOh + oudAfschr;
+
+    // EV-vergelijking: gebruik nettoEV in 'beide' modus, anders netto
+    const nettoForEV = voertuigType === 'beide' ? nettoEV : netto;
+    const nieuwTotaal = nettoForEV + nieuwVerz + nieuwMrb + nieuwOh + nieuwAfschr;
+
+    const besparing = oudTotaal - nieuwTotaal;
+    const tvtTotaal = besparing > 0 ? (eenmalig + evMeerprijs) / besparing : null;
+
+    document.getElementById('r-oud-totaal').textContent = euro(oudTotaal);
+    document.getElementById('r-oud-totaal-sub').textContent = autoMode === 'afschrijving'
+      ? 'brandstof + lasten + afschrijving' : 'brandstof + vaste lasten';
+    // EV-kaarten: toon alleen als EV in vergelijking meedoet
+    const evKaartZichtbaar = evInVergelijk;
+    document.getElementById('r-nieuw-totaal-label').textContent = voertuigType === 'beide' ? 'Jaarkosten nieuw EV' : 'Jaarkosten nieuw EV';
+    document.getElementById('r-nieuw-totaal').textContent = evKaartZichtbaar ? euro(nieuwTotaal) : '—';
+    document.getElementById('r-nieuw-totaal-sub').textContent = autoMode === 'afschrijving'
+      ? 'laden + lasten + afschrijving' : 'laden + vaste lasten';
+    document.getElementById('r-besparing-label').textContent = voertuigType === 'beide' ? 'Besparing EV' : 'Jaarlijkse besparing';
+    document.getElementById('r-besparing').textContent = evKaartZichtbaar
+      ? (besparing >= 0 ? '+ ' + euro(besparing) : '− ' + euro(Math.abs(besparing))) : '—';
+    document.getElementById('r-besparing-sub').textContent = evKaartZichtbaar
+      ? (besparing >= 0 ? 'per maand: + ' + euro(besparing / 12) : 'per maand: − ' + euro(Math.abs(besparing) / 12)) : '';
+    document.getElementById('r-tvt-totaal-label').textContent = voertuigType === 'beide' ? 'TVT EV' : 'Terugverdientijd totaal';
+    document.getElementById('r-tvt-totaal').textContent = evKaartZichtbaar && tvtTotaal
+      ? (Math.round(tvtTotaal * 10) / 10).toFixed(1).replace('.', ',') + ' jaar' : '—';
+    document.getElementById('r-tvt-totaal-sub').textContent = autoMode === 'afschrijving'
+      ? 'alleen laadpaal (auto via afschrijving)' : 'incl. laadpaal + meerprijs EV';
+
+    // Hybride vergelijking
+    const showHybridVerg = hybridInVergelijk;
+    document.getElementById('r-nieuw-hybrid-card').style.display = showHybridVerg ? '' : 'none';
+    document.getElementById('r-besparing-hybrid-card').style.display = showHybridVerg ? '' : 'none';
+    document.getElementById('r-tvt-hybrid-card').style.display = showHybridVerg ? '' : 'none';
+    if (showHybridVerg) {
+      const hybridVerz = parseFloat(document.getElementById('nieuw_hybrid_verz').value) || 0;
+      const hybridMrb  = parseFloat(document.getElementById('nieuw_hybrid_mrb').value)  || 0;
+      const hybridOh   = parseFloat(document.getElementById('nieuw_hybrid_oh').value)   || 0;
+
+      let hybridAfschr = 0, hybridOudAfschr = 0, hybridMp = 0;
+      if (hybridAutoMode === 'afschrijving') {
+        const hP  = parseFloat(document.getElementById('hybrid_prijs').value)             || 0;
+        const hR  = parseFloat(document.getElementById('hybrid_restwaarde').value)        || 0;
+        const hJ  = parseInt(document.getElementById('hybrid_afsj_jaren').value)          || 7;
+        const hHP = parseFloat(document.getElementById('hybrid_huidig_prijs').value)      || 0;
+        const hHR = parseFloat(document.getElementById('hybrid_huidig_restwaarde').value) || 0;
+        const hHJ = parseInt(document.getElementById('hybrid_huidig_afsj_jaren').value)   || 7;
+        hybridAfschr    = Math.max(0, hP  - hR)  / hJ;
+        hybridOudAfschr = Math.max(0, hHP - hHR) / hHJ;
+        document.getElementById('hybrid-afsj-hint').textContent =
+          'Jaarlijkse afschrijving hybride: ' + euro(hybridAfschr) + ' (' + euro(hP) + ' − ' + euro(hR) + ' over ' + hJ + ' jaar)';
+        document.getElementById('hybrid-huidig-afsj-hint').textContent =
+          'Jaarlijkse afschrijving huidige auto: ' + euro(hybridOudAfschr) + ' (' + euro(hHP) + ' − ' + euro(hHR) + ' over ' + hHJ + ' jaar)';
+      } else {
+        hybridMp = parseFloat(document.getElementById('hybrid_meerprijs').value) || 0;
+      }
+
+      const oudTotaalForHybrid = brandstofKosten + phevLaadKosten + oudVerz + oudMrb + oudOh + hybridOudAfschr;
+      const nieuwTotaalHybrid  = netto + hybridVerz + hybridMrb + hybridOh + hybridAfschr;
+      const besparingHybrid    = oudTotaalForHybrid - nieuwTotaalHybrid;
+      const tvtHybrid = besparingHybrid > 0 ? (eenmalig + hybridMp) / besparingHybrid : null;
+
+      document.getElementById('r-nieuw-hybrid-totaal').textContent = euro(nieuwTotaalHybrid);
+      document.getElementById('r-nieuw-hybrid-totaal-sub').textContent = hybridAutoMode === 'afschrijving'
+        ? 'laden + fossiel + lasten + afschrijving' : 'laden + fossiel + vaste lasten';
+      document.getElementById('r-besparing-hybrid').textContent = besparingHybrid >= 0
+        ? '+ ' + euro(besparingHybrid) : '− ' + euro(Math.abs(besparingHybrid));
+      document.getElementById('r-besparing-hybrid-sub').textContent = besparingHybrid >= 0
+        ? 'per maand: + ' + euro(besparingHybrid / 12)
+        : 'per maand: − ' + euro(Math.abs(besparingHybrid) / 12);
+      document.getElementById('r-tvt-hybrid').textContent = tvtHybrid
+        ? (Math.round(tvtHybrid * 10) / 10).toFixed(1).replace('.', ',') + ' jaar' : '—';
+    }
+  }
+}
+
+function resetAll() {
+  scenario = 'realistisch';
+  document.querySelectorAll('.rb-sc-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.rb-sc-btn[data-v="realistisch"]').classList.add('active');
+  document.getElementById('scenario-note').textContent = 'Basisscenario op basis van ingevoerde waarden.';
+
+  voertuigType = 'ev';
+  document.querySelectorAll('#vt-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#vt-tog .tog-btn[data-v="ev"]').classList.add('active');
+  document.getElementById('hybrid-s4-wrap').style.display = 'none';
+  document.getElementById('ev-section-label').style.display = 'none';
+  document.getElementById('verbruik-hybrid-row').style.display = 'none';
+  document.getElementById('hybrid-section-title').textContent = 'Hybride verdeling';
+  document.getElementById('s7').style.display = '';
+  document.getElementById('s8').style.display = 'none';
+  nieuwHybridActief = 'ja';
+  document.querySelectorAll('#nieuw-hybrid-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#nieuw-hybrid-tog .tog-btn[data-v="ja"]').classList.add('active');
+  document.getElementById('nieuw-hybrid-details').style.display = '';
+  document.getElementById('nieuw_hybrid_verz').value = '1200';
+  document.getElementById('nieuw_hybrid_mrb').value = '800';
+  document.getElementById('nieuw_hybrid_oh').value = '900';
+  hybridAutoMode = 'eenmalig';
+  document.querySelectorAll('#hybrid-auto-mode-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#hybrid-auto-mode-tog .tog-btn[data-v="eenmalig"]').classList.add('active');
+  document.getElementById('hybrid-eenmalig-wrap').style.display = '';
+  document.getElementById('hybrid-afschrijving-wrap').style.display = 'none';
+  document.getElementById('hybrid_meerprijs').value = '0';
+  document.getElementById('hybrid_prijs').value = '35000';
+  document.getElementById('hybrid_restwaarde').value = '15000';
+  document.getElementById('hybrid_afsj_jaren').value = 7;
+  document.getElementById('hybrid_afsj_v').textContent = '7';
+  document.getElementById('hybrid_huidig_prijs').value = '35000';
+  document.getElementById('hybrid_huidig_restwaarde').value = '15000';
+  document.getElementById('hybrid_huidig_afsj_jaren').value = 7;
+  document.getElementById('hybrid_huidig_afsj_v').textContent = '7';
+  document.getElementById('verbruik-label').textContent = 'Verbruik per 100 km (kWh)';
+  document.querySelector('#s7 .step-head h2').innerHTML = 'Nieuwe EV — vaste lasten <span class="badge-opt">optioneel</span>';
+  document.getElementById('verbruik_hybrid').value = 18;
+  document.getElementById('vb_hybrid_v').textContent = '18.0';
+  document.getElementById('new_ev_split').value = 60;
+  document.getElementById('new_ev_split_v').textContent = '60%';
+  document.getElementById('fosiel_verb').value = 6;
+  document.getElementById('fosiel_verb_v').textContent = '6.0';
+  document.getElementById('fosiel_prijs').value = '1.98';
+
+  document.getElementById('woning').value = 'koop';
+  document.getElementById('oprit').value = 'ja';
+  document.getElementById('aansluiting').value = '3x25';
+  document.getElementById('afstand').value = '100';
+  document.getElementById('zon').value = 'nee';
+  document.getElementById('zon-pct-wrap').style.display = 'none';
+  document.getElementById('zon_pct').value = 30;
+  document.getElementById('zon_pct_v').textContent = '30%';
+
+  paalKosten = 1200;
+  document.querySelectorAll('#paal-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#paal-tog .tog-btn[data-v="1200"]').classList.add('active');
+  document.getElementById('paal-opties').style.display = '';
+  document.getElementById('mid').value = 'nee';
+  document.getElementById('kabel').value = 'kabel';
+  document.getElementById('lb').value = 'nee';
+  document.getElementById('mid-hint').style.display = 'none';
+
+  tariefType = 'dynamisch';
+  document.querySelectorAll('#tarief-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#tarief-tog .tog-btn[data-v="dynamisch"]').classList.add('active');
+  document.getElementById('fi-vast').style.display = 'none';
+  document.getElementById('fi-dyn').style.display = '';
+  document.getElementById('dyn-hint').style.display = '';
+  document.getElementById('tarief_vast').value = '0.26';
+  document.getElementById('tarief_dyn').value = '0.22';
+  document.getElementById('tarief_pub').value = '0.45';
+
+  document.getElementById('km').value = 15000;
+  document.getElementById('km_v').textContent = '15.000';
+  document.getElementById('verbruik').value = 18;
+  document.getElementById('vb_v').textContent = '18.0';
+  document.getElementById('thuis_pct').value = 85;
+  document.getElementById('th_v').textContent = '85%';
+  document.getElementById('pub_pct').value = 15;
+  document.getElementById('pb_v').textContent = '15%';
+
+  ereActief = 'ja';
+  document.querySelectorAll('#ere-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#ere-tog .tog-btn[data-v="ja"]').classList.add('active');
+  document.getElementById('ere-details').style.display = '';
+  document.getElementById('ere_kwh').value = '0.10';
+  document.getElementById('ere-mid-warn').style.display = 'none';
+  document.getElementById('ere-tog').style.opacity = '';
+  document.getElementById('ere-tog').style.pointerEvents = '';
+
+  // Reset huidige auto
+  huidigActief = 'ja';
+  document.querySelectorAll('#huidig-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#huidig-tog .tog-btn[data-v="ja"]').classList.add('active');
+  document.getElementById('huidig-details').style.display = '';
+  document.getElementById('brandstof').value = 'benzine';
+  document.getElementById('phev-wrap').style.display = 'none';
+  document.getElementById('phev_el_pct').value = 40;
+  document.getElementById('phev_el_v').textContent = '40%';
+  document.getElementById('phev_kwh').value = 18;
+  document.getElementById('phev_kwh_v').textContent = '18.0';
+  document.getElementById('verb_l').value = 7;
+  document.getElementById('verb_l_v').textContent = '7.0';
+  document.getElementById('brandstof_prijs').value = '1.98';
+  document.getElementById('oud_verz').value = '1200';
+  document.getElementById('oud_mrb').value = '650';
+  document.getElementById('oud_oh').value = '1000';
+
+  // Reset nieuwe EV vaste lasten
+  nieuwActief = 'ja';
+  document.querySelectorAll('#nieuw-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#nieuw-tog .tog-btn[data-v="ja"]').classList.add('active');
+  document.getElementById('nieuw-details').style.display = '';
+  document.getElementById('nieuw_verz').value = '1100';
+  document.getElementById('nieuw_mrb_vol').value = '800';
+  document.getElementById('nieuw_oh').value = '600';
+  document.getElementById('ev_meerprijs').value = '0';
+
+  autoMode = 'eenmalig';
+  document.querySelectorAll('#auto-mode-tog .tog-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#auto-mode-tog .tog-btn[data-v="eenmalig"]').classList.add('active');
+  document.getElementById('auto-eenmalig-wrap').style.display = '';
+  document.getElementById('auto-afschrijving-wrap').style.display = 'none';
+  document.getElementById('ev_prijs').value = '45000';
+  document.getElementById('ev_restwaarde').value = '20000';
+  document.getElementById('ev_afsj_jaren').value = 7;
+  document.getElementById('ev_afsj_v').textContent = '7';
+  document.getElementById('huidig_prijs').value = '35000';
+  document.getElementById('huidig_restwaarde').value = '15000';
+  document.getElementById('huidig_afsj_jaren').value = 7;
+  document.getElementById('huidig_afsj_v').textContent = '7';
+
+  calc();
+}
+
+calc();
+
+function generateExport() {
+  const now = new Date().toLocaleDateString('nl-NL', {day:'numeric', month:'long', year:'numeric'});
+
+  const logoSVG = `<svg width="30" height="30" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="72" width="144" height="56" rx="28" fill="#fff" opacity=".9"/><circle cx="144" cy="100" r="26" fill="#6DBF4A"/><path d="M143 88L135 102L144 102L142 112L153 98L143 98Z" fill="#1B2E4B" opacity=".9"/><path d="M144 60A40 40 0 0 1 184 100" stroke="#6DBF4A" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M144 46A54 54 0 0 1 198 100" stroke="#6DBF4A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".5"/></svg>`;
+
+  function selText(id) { const el=document.getElementById(id); return el&&el.tagName==='SELECT'?el.options[el.selectedIndex].text:(el?el.value:'—'); }
+  function fval(id) { const el=document.getElementById(id); return el?el.value:'—'; }
+  function spanVal(id) { const el=document.getElementById(id); return el?el.textContent:'—'; }
+  function togActive(gid) { const el=document.querySelector('#'+gid+' .tog-btn.active'); return el?el.textContent.trim():'—'; }
+  function cardVal(id) { const el=document.getElementById(id); return el?el.textContent:'—'; }
+  function cardSub(id) { const el=document.getElementById(id); return el?el.textContent:''; }
+
+  function row(label, value) {
+    return `<div class="ev-row"><div class="ev-label">${label}</div><div class="ev-value">${value}</div></div>`;
+  }
+  function section(num, title, content) {
+    return `<div class="ev-section"><div class="ev-section-head"><div class="ev-snum">${num}</div><div class="ev-stitle">${title}</div></div><div class="ev-grid">${content}</div></div>`;
+  }
+
+  const isHybridExport = voertuigType === 'hybride' || voertuigType === 'beide';
+  const isBeideExport  = voertuigType === 'beide';
+  const isHybridOnly   = voertuigType === 'hybride';
+
+  // 01 Thuissituatie
+  const zon = document.getElementById('zon').value;
+  const s1 = [
+    row('Woningtype', selText('woning')),
+    row('Eigen oprit / garage', selText('oprit')),
+    row('Huisaansluiting', selText('aansluiting')),
+    row('Afstand meterkast → laadplek', selText('afstand')),
+    row('Zonnepanelen', zon==='ja'?'Ja — '+fval('zon_pct')+'% eigen opwek':'Nee'),
+  ].join('');
+
+  // 02 Laadpaal
+  const paalOpties = paalKosten>0 ? [
+    row('MID-meter', selText('mid')),
+    row('Aansluiting paal', selText('kabel')),
+    row('Load balancing', selText('lb')),
+  ].join('') : row('MID-meter / opties','n.v.t. (geen eigen paal)');
+  const s2 = row('Type laadpaal', togActive('paal-tog')) + paalOpties;
+
+  // 03 Energiecontract
+  let tariefInfo = togActive('tarief-tog');
+  if (tariefType==='vast') tariefInfo += ' — '+fval('tarief_vast')+' €/kWh';
+  else if (tariefType==='dynamisch') tariefInfo += ' — gem. '+fval('tarief_dyn')+' €/kWh';
+  const s3 = row('Contract', tariefInfo) + row('Publiek laadtarief', fval('tarief_pub')+' €/kWh');
+
+  // 04 Rijgedrag
+  const vtLabel = voertuigType === 'ev' ? 'Volledig elektrisch (EV)' : voertuigType === 'hybride' ? 'Hybride / PHEV' : 'Vergelijk EV ↔ Hybride';
+  const s4 = [
+    row('Voertuigtype', vtLabel),
+    row('Kilometers per jaar', spanVal('km_v')),
+    row(isHybridExport ? 'EV-verbruik (EV deel)' : 'Verbruik', spanVal('vb_v')+' kWh/100 km'),
+    isBeideExport ? row('EV-verbruik (hybride deel)', spanVal('vb_hybrid_v')+' kWh/100 km') : '',
+    isHybridExport ? row('EV/fossiel verdeling', spanVal('new_ev_split_v')+' elektrisch') : '',
+    isHybridExport ? row('Fosiel verbruik', spanVal('fosiel_verb_v')+' L/100 km') : '',
+    isHybridExport ? row('Fossiele brandstofprijs', fval('fosiel_prijs')+' €/L') : '',
+    row('Thuis laden', spanVal('th_v')),
+    row('Publiek laden', spanVal('pb_v')),
+  ].join('');
+
+  // 05 ERE's
+  const ereOn = ereActief==='ja' && document.getElementById('mid').value!=='nee';
+  const s5 = row('ERE-registratie', ereOn?'Actief — '+fval('ere_kwh')+' €/kWh netto':'Niet actief');
+
+  // 06 Huidige auto
+  let s6='';
+  if (huidigActief==='ja') {
+    const isPhev = document.getElementById('brandstof').value==='hybride';
+    s6 = [
+      row('Brandstoftype', selText('brandstof')),
+      row('Verbruik', spanVal('verb_l_v')+' L/100 km'),
+      row('Brandstofprijs', fval('brandstof_prijs')+' €/L'),
+      isPhev?row('% elektrisch (PHEV)', spanVal('phev_el_v')):'',
+      row('Verzekering', '€'+parseInt(fval('oud_verz')).toLocaleString('nl-NL')+'/jr'),
+      row('Wegenbelasting', '€'+parseInt(fval('oud_mrb')).toLocaleString('nl-NL')+'/jr'),
+      row('Onderhoud', '€'+parseInt(fval('oud_oh')).toLocaleString('nl-NL')+'/jr'),
+    ].join('');
+  }
+
+  // 07 Nieuwe EV (alleen bij ev of beide modus)
+  let s7='';
+  const showS7 = (voertuigType === 'ev' || voertuigType === 'beide') && nieuwActief === 'ja';
+  if (showS7) {
+    let investering;
+    if (autoMode==='eenmalig') {
+      const mp=parseInt(fval('ev_meerprijs'))||0;
+      investering = mp>0?'Eenmalige meerprijs: €'+mp.toLocaleString('nl-NL'):'Geen meerprijs ingevuld';
+    } else {
+      const evP=parseInt(fval('ev_prijs')||0), evR=parseInt(fval('ev_restwaarde')||0), evJ=fval('ev_afsj_jaren');
+      const hP=parseInt(fval('huidig_prijs')||0), hR=parseInt(fval('huidig_restwaarde')||0), hJ=fval('huidig_afsj_jaren');
+      investering = `EV: €${evP.toLocaleString('nl-NL')} → €${evR.toLocaleString('nl-NL')} / ${evJ} jr &nbsp;·&nbsp; Huidig: €${hP.toLocaleString('nl-NL')} → €${hR.toLocaleString('nl-NL')} / ${hJ} jr`;
+    }
+    s7 = [
+      row('Verzekering', '€'+parseInt(fval('nieuw_verz')).toLocaleString('nl-NL')+'/jr'),
+      row('MRB (volledig tarief)', '€'+parseInt(fval('nieuw_mrb_vol')).toLocaleString('nl-NL')+'/jr'),
+      row('Onderhoud', '€'+parseInt(fval('nieuw_oh')).toLocaleString('nl-NL')+'/jr'),
+      row('Auto-investering ('+(autoMode==='eenmalig'?'eenmalig':'afschrijving')+')', investering),
+    ].join('');
+  }
+
+  // 08 Nieuwe hybride (alleen bij hybride of beide modus)
+  let s8='';
+  const showS8 = (voertuigType === 'hybride' || voertuigType === 'beide') && nieuwHybridActief === 'ja';
+  if (showS8) {
+    let hybridInvestering;
+    if (hybridAutoMode==='eenmalig') {
+      const mp=parseInt(fval('hybrid_meerprijs'))||0;
+      hybridInvestering = mp>0?'Eenmalige meerprijs: €'+mp.toLocaleString('nl-NL'):'Geen meerprijs ingevuld';
+    } else {
+      const hP=parseInt(fval('hybrid_prijs')||0), hR=parseInt(fval('hybrid_restwaarde')||0), hJ=fval('hybrid_afsj_jaren');
+      const hHP=parseInt(fval('hybrid_huidig_prijs')||0), hHR=parseInt(fval('hybrid_huidig_restwaarde')||0), hHJ=fval('hybrid_huidig_afsj_jaren');
+      hybridInvestering = `Hybride: €${hP.toLocaleString('nl-NL')} → €${hR.toLocaleString('nl-NL')} / ${hJ} jr &nbsp;·&nbsp; Huidig: €${hHP.toLocaleString('nl-NL')} → €${hHR.toLocaleString('nl-NL')} / ${hHJ} jr`;
+    }
+    s8 = [
+      row('Verzekering', '€'+parseInt(fval('nieuw_hybrid_verz')).toLocaleString('nl-NL')+'/jr'),
+      row('MRB', '€'+parseInt(fval('nieuw_hybrid_mrb')).toLocaleString('nl-NL')+'/jr'),
+      row('Onderhoud', '€'+parseInt(fval('nieuw_hybrid_oh')).toLocaleString('nl-NL')+'/jr'),
+      row('Auto-investering ('+(hybridAutoMode==='eenmalig'?'eenmalig':'afschrijving')+')', hybridInvestering),
+    ].join('');
+  }
+
+  // Bereken alle drie de scenario's
+  const savedScenario = scenario;
+  const sc = {};
+  ['pessimistisch','realistisch','optimistisch'].forEach(s => {
+    scenario = s; calc();
+    sc[s] = {
+      eenmalig:           cardVal('r-eenmalig'),          eenmaligSub:        cardSub('r-eenmalig-sub'),
+      thuis:              cardVal('r-thuis'),              thuisSub:           cardSub('r-thuis-sub'),
+      pub:                cardVal('r-pub'),                pubSub:             cardSub('r-pub-sub'),
+      fossil:             cardVal('r-fossil'),             fossilSub:          cardSub('r-fossil-sub'),
+      ere:                cardVal('r-ere'),                ereSub:             cardSub('r-ere-sub'),
+      netto:              cardVal('r-netto'),
+      tvt:                cardVal('r-tvt'),
+      beideEV:            cardVal('r-beide-ev'),
+      beideHybrid:        cardVal('r-beide-hybrid'),
+      beideDiff:          cardVal('r-beide-diff'),         beideDiffSub:       cardSub('r-beide-diff-sub'),
+      oudTotaal:          cardVal('r-oud-totaal'),         oudSub:             cardSub('r-oud-totaal-sub'),
+      nieuwTotaal:        cardVal('r-nieuw-totaal'),       nieuwSub:           cardSub('r-nieuw-totaal-sub'),
+      besparing:          cardVal('r-besparing'),          bespSub:            cardSub('r-besparing-sub'),
+      tvtTotaal:          cardVal('r-tvt-totaal'),         tvtTotSub:          cardSub('r-tvt-totaal-sub'),
+      nieuwHybridTotaal:  cardVal('r-nieuw-hybrid-totaal'),nieuwHybridSub:     cardSub('r-nieuw-hybrid-totaal-sub'),
+      besparingHybrid:    cardVal('r-besparing-hybrid'),   besparingHybridSub: cardSub('r-besparing-hybrid-sub'),
+      tvtHybrid:          cardVal('r-tvt-hybrid'),
+    };
+  });
+  scenario = savedScenario; calc();
+
+  function tcell(val, sub, cls) {
+    return `<td class="${cls}"><span class="num">${val}</span>${sub?`<span class="ev-comp-sub">${sub}</span>`:''}`;
+  }
+  function trow(label, key, subKey, hlCls) {
+    const p=sc.pessimistisch, r=sc.realistisch, o=sc.optimistisch;
+    return `<tr class="${hlCls||''}"><td>${label}</td>
+      ${tcell(p[key], subKey?p[subKey]:'', 'pess')}
+      ${tcell(r[key], subKey?r[subKey]:'', 'real')}
+      ${tcell(o[key], subKey?o[subKey]:'', 'opt')}
+    </tr>`;
+  }
+
+  const eenmaligVal = sc.realistisch.eenmalig;
+  const eenmaligSub = sc.realistisch.eenmaligSub;
+
+  // Nettolaadkosten tabel: labels afhankelijk van modus
+  const nettoLabel = isHybridOnly ? 'Netto jaarlijks (hybride)' : isBeideExport ? 'Netto jaarlijks (EV)' : 'Netto jaarlijks totaal';
+  const tvtLabel   = isHybridOnly ? 'Terugverdientijd paal (hybride)' : 'Terugverdientijd paal';
+
+  const mainResults = `
+    <div class="ev-eenmalig">
+      <div class="ev-eenmalig-left">
+        <div class="ev-rc-label">Eenmalige investering</div>
+        <div class="ev-eenmalig-val">${eenmaligVal}</div>
+        <div class="ev-rc-sub">${eenmaligSub}</div>
+      </div>
+      <div style="font-size:.68rem;color:rgba(27,46,75,.3);font-style:italic;">scenario-onafhankelijk</div>
+    </div>
+    <table class="ev-comp-table">
+      <thead><tr>
+        <th></th>
+        <th class="pess">Pessimistisch</th>
+        <th class="real">Realistisch</th>
+        <th class="opt">Optimistisch</th>
+      </tr></thead>
+      <tbody>
+        ${trow('Jaarl. laadkosten thuis',  'thuis', 'thuisSub', '')}
+        ${trow('Jaarl. laadkosten publiek','pub',   'pubSub',   '')}
+        ${isHybridExport ? trow('Fossiele brandstofkosten','fossil','fossilSub','') : ''}
+        ${trow('ERE-opbrengst per jaar',   'ere',   'ereSub',   '')}
+        ${isBeideExport ? trow('Netto jaarlijks (EV)',     'beideEV',     '', 'hl') : ''}
+        ${isBeideExport ? trow('Netto jaarlijks (hybride)','beideHybrid', '', '')  : ''}
+        ${isBeideExport ? trow('Jaarlijks verschil EV/hybride','beideDiff','beideDiffSub','hl-accent') : ''}
+        ${!isBeideExport ? trow(nettoLabel, 'netto', '', 'hl') : ''}
+        ${trow(tvtLabel, 'tvt', '', '')}
+      </tbody>
+    </table>`;
+
+  // Vergelijking oud → nieuw
+  const evInVergelijkExport     = (voertuigType !== 'hybride') && nieuwActief === 'ja';
+  const hybridInVergelijkExport = (voertuigType !== 'ev')      && nieuwHybridActief === 'ja';
+  const showVergelijk = huidigActief === 'ja' && (evInVergelijkExport || hybridInVergelijkExport);
+
+  const vergelijkResults = showVergelijk ? `
+    <div class="ev-divider"></div>
+    <div class="ev-section-head" style="margin-bottom:.65rem;">
+      <div class="ev-snum" style="background:rgba(27,46,75,.08);border-color:rgba(27,46,75,.18);color:#1B2E4B;font-size:.7rem;">↔</div>
+      <div class="ev-stitle">Oud → Nieuw vergelijking</div>
+    </div>
+    <table class="ev-comp-table">
+      <thead><tr>
+        <th></th>
+        <th class="pess">Pessimistisch</th>
+        <th class="real">Realistisch</th>
+        <th class="opt">Optimistisch</th>
+      </tr></thead>
+      <tbody>
+        ${trow('Jaarkosten huidig', 'oudTotaal', 'oudSub', '')}
+        ${evInVergelijkExport     ? trow(isBeideExport?'Jaarkosten nieuw EV':'Jaarkosten nieuw EV',         'nieuwTotaal',       'nieuwSub',           '') : ''}
+        ${evInVergelijkExport     ? trow(isBeideExport?'Besparing EV':'Jaarlijkse besparing',               'besparing',         'bespSub',            'hl-accent') : ''}
+        ${evInVergelijkExport     ? trow(isBeideExport?'TVT EV':'Terugverdientijd totaal',                  'tvtTotaal',         'tvtTotSub',          '') : ''}
+        ${hybridInVergelijkExport ? trow('Jaarkosten nieuw hybride',                                        'nieuwHybridTotaal', 'nieuwHybridSub',     '') : ''}
+        ${hybridInVergelijkExport ? trow('Besparing hybride',                                               'besparingHybrid',   'besparingHybridSub', 'hl-accent') : ''}
+        ${hybridInVergelijkExport ? trow('TVT hybride',                                                     'tvtHybrid',         '',                   '') : ''}
+      </tbody>
+    </table>` : '';
+
+  const s7Title = isHybridOnly ? 'Nieuwe hybride — vaste lasten' : 'Nieuwe EV — vaste lasten';
+
+  document.getElementById('export-view').innerHTML = `
+    <div class="ev-topbar">
+      <div class="ev-topbar-inner">
+        ${logoSVG}
+        <div>
+          <div class="ev-topbar-brand">De Schakelaar — Advies aan huis</div>
+          <div class="ev-topbar-title">Financiële situatieschets laden</div>
+        </div>
+      </div>
+      <div class="ev-topbar-date">${now}</div>
+    </div>
+    ${section('01','Thuissituatie', s1)}
+    ${section('02','Laadpaal & installatie', s2)}
+    ${section('03','Energiecontract', s3)}
+    ${section('04','Rijgedrag', s4)}
+    ${section('05','ERE\'s', s5)}
+    ${huidigActief==='ja'?section('06','Huidige auto', s6):''}
+    ${showS7?section('07',s7Title, s7):''}
+    ${showS8?section(showS7?'08':'07','Nieuwe hybride — vaste lasten', s8):''}
+    <div class="ev-section">
+      <div class="ev-section-head">
+        <div class="ev-snum" style="background:rgba(27,46,75,.10);border-color:rgba(27,46,75,.2);color:#1B2E4B;">✦</div>
+        <div class="ev-stitle">Uitkomst — alle scenario's vergeleken</div>
+      </div>
+      ${mainResults}
+      ${vergelijkResults}
+    </div>
+    <div class="ev-footer">
+      <span>De Schakelaar — deschakelaaradvies.nl</span>
+      <span>Gegenereerd op ${now}</span>
+    </div>`;
+
+  window.print();
+}
+</script>
+</body>
+</html>
