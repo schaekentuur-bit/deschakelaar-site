@@ -190,9 +190,46 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}
 }
+
+/* WACHTWOORD OVERLAY */
+#pw-overlay{position:fixed;inset:0;z-index:9999;background:var(--off);display:flex;align-items:center;justify-content:center;padding:1.5rem;}
+#pw-box{background:#fff;border:.5px solid var(--n14);border-radius:16px;padding:2.5rem 2rem;max-width:360px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(27,46,75,.08);}
+#pw-box .pw-logo{margin-bottom:1.5rem;}
+#pw-box h2{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:.4rem;}
+#pw-box p{font-size:.82rem;color:var(--mu);margin-bottom:1.4rem;}
+#pw-input{width:100%;background:var(--off);border:.5px solid var(--n14);border-radius:8px;padding:.6rem .9rem;font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--navy);text-align:center;letter-spacing:.18em;outline:none;margin-bottom:.75rem;}
+#pw-input:focus{border-color:var(--green);}
+#pw-input.error{border-color:#e53e3e;animation:shake .3s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}
+}
+#pw-btn{width:100%;background:var(--green);color:#fff;border:none;border-radius:8px;padding:.65rem;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .2s;}
+#pw-btn:hover{background:#5aaa38;}
+#pw-error{font-size:.75rem;color:#e53e3e;margin-top:.55rem;min-height:1em;}
+.pw-hidden{display:none!important;}
 </style>
 </head>
 <body>
+
+<!-- WACHTWOORD OVERLAY -->
+<div id="pw-overlay">
+  <div id="pw-box">
+    <div class="pw-logo">
+      <svg viewBox="0 0 480 70" height="32" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="17" width="78" height="42" rx="21" fill="#1B2E4B"/>
+        <circle cx="61" cy="38" r="17" fill="#6DBF4A"/>
+        <path d="M60 31L56 39L61 39L59 46L66 37L60 37Z" fill="#1B2E4B" opacity="0.9"/>
+        <line x1="118" y1="14" x2="118" y2="62" stroke="#1B2E4B" stroke-width="0.75" opacity="0.18"/>
+        <text x="130" y="54" style="font-family:'Syne',sans-serif;font-weight:700;font-size:40px;"><tspan fill="#6DBF4A">De </tspan><tspan fill="#1B2E4B">Schakelaar</tspan></text>
+      </svg>
+    </div>
+    <h2>Beveiligd hulpmiddel</h2>
+    <p>Voer het wachtwoord in om verder te gaan.</p>
+    <input id="pw-input" type="password" placeholder="······" autocomplete="off" onkeydown="if(event.key==='Enter')checkPw()">
+    <button id="pw-btn" onclick="checkPw()">Toegang →</button>
+    <div id="pw-error"></div>
+  </div>
+</div>
+
 <div class="wrap">
 
 <div class="tool-header">
@@ -1745,6 +1782,25 @@ function generateExport() {
     </div>`;
 
   window.print();
+}
+</script>
+<script>
+(function(){
+  if(sessionStorage.getItem('ds_auth')==='ok'){
+    document.getElementById('pw-overlay').classList.add('pw-hidden');
+  }
+})();
+function checkPw(){
+  var inp=document.getElementById('pw-input');
+  if(inp.value==='120500'){
+    sessionStorage.setItem('ds_auth','ok');
+    document.getElementById('pw-overlay').classList.add('pw-hidden');
+  } else {
+    inp.classList.add('error');
+    document.getElementById('pw-error').textContent='Onjuist wachtwoord.';
+    setTimeout(function(){inp.classList.remove('error');},400);
+    inp.value='';
+  }
 }
 </script>
 </body>
