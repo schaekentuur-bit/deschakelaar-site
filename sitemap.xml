@@ -6,6 +6,8 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url><loc>https://deschakelaaradvies.nl/laadbeleid-limburg.html</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://deschakelaaradvies.nl/laadpaaladvies-limburg.html</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://deschakelaaradvies.nl/blog/laadpaal-thuis.html</loc><lastmod>2026-05-22</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
   <url><loc>https://deschakelaaradvies.nl/blog/slim-laden.html</loc><lastmod>2026-05-22</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
   <url><loc>https://deschakelaaradvies.nl/blog/kosten-per-kilometer.html</loc><lastmod>2026-05-22</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>
