@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18200989510"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18200989510');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laadpaaladvies Limburg — Onafhankelijk Laadpaal & Laadbeleid Advies | De Schakelaar</title>
@@ -1505,6 +1514,7 @@ function submitForm(type) {
     if (r.ok) {
       document.getElementById(type + 'f-inner').style.display   = 'none';
       document.getElementById(type + 'f-success').style.display = 'block';
+      if (typeof gtag !== 'undefined') { gtag('event', 'conversion', { 'send_to': 'AW-18200989510/lNCgCIGg5LccEMae9OZD' }); }
     } else {
       btn.disabled = false;
       btn.textContent = type === 'p' ? 'Plan je intake →' : 'Plan een kennismaking →';
