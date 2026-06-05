@@ -695,8 +695,38 @@ function toggleFaq(btn) {
 }
 function submitForm(e, formId, successId) {
   e.preventDefault();
-  document.getElementById(formId).style.display = 'none';
-  document.getElementById(successId).style.display = 'block';
+  const form = document.getElementById(formId);
+  const btn  = form.querySelector('.form-submit');
+  btn.disabled    = true;
+  btn.textContent = 'Versturen…';
+
+  const data = {};
+  new FormData(form).forEach((v, k) => { data[k] = v; });
+  data._subject = 'Nieuw bericht — De Schakelaar zakelijk';
+
+  fetch('https://formspree.io/f/mbdbygla', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body:    JSON.stringify(data)
+  })
+  .then(r => {
+    if (r.ok) {
+      form.style.display = 'none';
+      document.getElementById(successId).style.display = 'block';
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'conversion', { 'send_to': 'AW-18200989510/lNCgCIGg5LccEMae9OZD' });
+      }
+    } else {
+      btn.disabled    = false;
+      btn.textContent = 'Verstuur bericht →';
+      alert('Er ging iets mis. Stuur gerust een e-mail naar zakelijk@deschakelaaradvies.nl');
+    }
+  })
+  .catch(() => {
+    btn.disabled    = false;
+    btn.textContent = 'Verstuur bericht →';
+    alert('Er ging iets mis. Stuur gerust een e-mail naar zakelijk@deschakelaaradvies.nl');
+  });
 }
 </script>
 </body>
