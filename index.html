@@ -459,6 +459,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   .hero-zak-inner,
   .over-grid,
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .form-wrap { order: -1; }
 
   .how-grid,
   .dienst-grid,
@@ -991,22 +992,22 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
       <div class="section-title">Plan je intake</div>
       <div class="contact-wrap">
         <div class="contact-info">
-          <h3>Vertel me wat er speelt</h3>
-          <p>Of je nu net oriënteert of al een concrete vraag hebt — ik help je verder. We beginnen altijd met een gratis telefonische intake. Daarna kijken we samen wat je nodig hebt.</p>
-          <p>Geen verplichtingen, geen offerte — gewoon een goed gesprek als eerste stap.</p>
-          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l6 5 6-5M2 4h12v9H2z"/></svg></div><div><div class="cdet-lbl">E-mail</div><div class="cdet-val">info@deschakelaaradvies.nl</div></div></div>
+          <h3>Ik bel jou terug</h3>
+          <p>Laat je nummer achter en geef aan wanneer ik je kan bereiken. Ik bel je terug voor een gesprek van max. 15 minuten — alles komt aan bod, geen voorbereiding nodig.</p>
+          <p style="font-size:14px;color:var(--navy-40);">Ik bel buiten kantoortijden: doordeweeks na 18:00 of in het weekend.</p>
+          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Gespreksduur</div><div class="cdet-val">Max. 15 minuten</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Reactietijd</div><div class="cdet-val">Binnen 48 uur</div></div></div>
-          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Werkgebied</div><div class="cdet-val">Heel Limburg · regio op aanvraag</div></div></div>
-          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Eerste stap</div><div class="cdet-val">Telefonische intake — altijd gratis</div></div></div>
+          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Beltijden</div><div class="cdet-val">Avond &amp; weekend</div></div></div>
+          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Kosten</div><div class="cdet-val">Altijd gratis</div></div></div>
         </div>
         <div class="form-wrap">
           <div id="pf-inner">
             <div class="form-title">Plan je intake</div>
             <div class="form-row2"><div class="form-group"><label class="form-label">Voornaam</label><input id="pf-voornaam" class="form-input" type="text" placeholder="Jan"></div><div class="form-group"><label class="form-label">Achternaam</label><input id="pf-achternaam" class="form-input" type="text" placeholder="de Vries"></div></div>
-            <div class="form-row2"><div class="form-group"><label class="form-label">E-mailadres</label><input id="pf-email" class="form-input" type="email" placeholder="jan@email.nl"></div><div class="form-group"><label class="form-label">Telefoonnummer</label><input id="pf-tel" class="form-input" type="tel" placeholder="06 12345678"></div></div>
-            <div class="form-group"><label class="form-label">Jouw situatie</label><textarea id="pf-situatie" class="form-textarea" placeholder="Schrijf hier gewoon wat er bij je speelt. Geen formele brief nodig." style="min-height:120px;"></textarea></div>
+            <div class="form-row2"><div class="form-group"><label class="form-label">Telefoonnummer</label><input id="pf-tel" class="form-input" type="tel" placeholder="06 12345678"></div><div class="form-group"><label class="form-label">E-mailadres</label><input id="pf-email" class="form-input" type="email" placeholder="jan@email.nl"></div></div>
+            <div class="form-group"><label class="form-label">Wanneer kan ik je bellen?</label><select id="pf-belbaarheid" class="form-select"><option value="">Kies een moment...</option><option>Doordeweeks avond (na 18:00)</option><option>Zaterdagochtend (9:00–12:00)</option><option>Zaterdagmiddag (13:00–17:00)</option><option>Zondagochtend (9:00–12:00)</option><option>Zondagmiddag (13:00–17:00)</option></select></div>
             <button class="form-submit" onclick="submitForm('p')">Plan je intake →</button>
-            <p class="form-note">Telefonische intake · altijd gratis · altijd vrijblijvend</p>
+            <p class="form-note">Max. 15 minuten · buiten kantoortijden · altijd gratis</p>
           </div>
           <div class="form-success" id="pf-success"><div class="form-success-check">✓</div><h3>Ontvangen!</h3><p>Ik bel je zo snel mogelijk — binnen 48 uur. Tot snel!</p></div>
         </div>
@@ -1331,10 +1332,10 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
       <div class="section-title">Plan een kennismaking</div>
       <div class="contact-wrap">
         <div class="contact-info">
-          <h3>Vertel me wat er speelt</h3>
-          <p>Of je nu concrete plannen hebt of nog aan het oriënteren bent — ik denk graag mee. Na je bericht plan ik een kort kennismakingsgesprek in op een moment dat jou uitkomt.</p>
-          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 4l6 5 6-5M2 4h12v9H2z"/></svg></div><div><div class="cdet-lbl">E-mail</div><div class="cdet-val">zakelijk@deschakelaaradvies.nl</div></div></div>
+          <h3>Ik bel jou terug</h3>
+          <p>Of je nu concrete plannen hebt of nog oriënteert — ik denk graag mee. Laat je nummer achter met een moment waarop ik je kan bereiken. Ik bel buiten kantoortijden terug.</p>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Reactietijd</div><div class="cdet-val">Binnen 48 uur</div></div></div>
+          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Beltijden</div><div class="cdet-val">Avond &amp; weekend</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Kennismaking</div><div class="cdet-val">Eerste gesprek kosteloos</div></div></div>
         </div>
         <div class="form-wrap">
@@ -1344,9 +1345,9 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
             <div class="form-row2"><div class="form-group"><label class="form-label">Bedrijfsnaam</label><input id="zf-bedrijf" class="form-input" type="text" placeholder="Bedrijf BV"></div><div class="form-group"><label class="form-label">Functie</label><input id="zf-functie" class="form-input" type="text" placeholder="HR Manager"></div></div>
             <div class="form-row2"><div class="form-group"><label class="form-label">Zakelijk e-mailadres</label><input id="zf-email" class="form-input" type="email" placeholder="sara@bedrijf.nl"></div><div class="form-group"><label class="form-label">Telefoonnummer</label><input id="zf-tel" class="form-input" type="tel" placeholder="06 12345678"></div></div>
             <div class="form-group"><label class="form-label">Waar kan ik je mee helpen?</label><select id="zf-onderwerp" class="form-select"><option value="">Kies een onderwerp...</option><option>Financieel advies (laadkosten, vergoedingen, laadpassen)</option><option>Technisch advies (laadinfrastructuur pand)</option><option>Totaal advies (financieel + technisch)</option><option>Realisatie &amp; begeleiding</option><option>Webinar voor medewerkers</option><option>Weet ik nog niet precies</option></select></div>
-            <div class="form-group"><label class="form-label">Toelichting (optioneel)</label><textarea id="zf-toelichting" class="form-textarea" placeholder="Vertel kort wat er speelt in jouw organisatie..."></textarea></div>
+            <div class="form-group"><label class="form-label">Wanneer kan ik je bellen?</label><select id="zf-belbaarheid" class="form-select"><option value="">Kies een moment...</option><option>Doordeweeks avond (na 18:00)</option><option>Zaterdagochtend (9:00–12:00)</option><option>Zaterdagmiddag (13:00–17:00)</option><option>Zondagochtend (9:00–12:00)</option><option>Zondagmiddag (13:00–17:00)</option></select></div>
             <button class="form-submit" onclick="submitForm('z')">Plan een kennismaking →</button>
-            <p class="form-note">Eerste gesprek kosteloos · Reactie binnen 48 uur</p>
+            <p class="form-note">Eerste gesprek kosteloos · buiten kantoortijden · binnen 48 uur</p>
           </div>
           <div class="form-success" id="zf-success"><div class="form-success-check">✓</div><h3>Aanvraag ontvangen!</h3><p>Ik neem binnen 48 uur contact op om een kennismakingsgesprek in te plannen.</p></div>
         </div>
@@ -1486,7 +1487,7 @@ function submitForm(type) {
       achternaam:  document.getElementById('pf-achternaam').value,
       email:       document.getElementById('pf-email').value,
       telefoon:    document.getElementById('pf-tel').value,
-      situatie:    document.getElementById('pf-situatie').value,
+      belbaarheid: document.getElementById('pf-belbaarheid').value,
       _subject:    'Nieuwe intake-aanvraag — De Schakelaar'
     };
     endpoint = 'https://formspree.io/f/' + FORMSPREE_PARTICULIER;
@@ -1499,7 +1500,7 @@ function submitForm(type) {
       email:       document.getElementById('zf-email').value,
       telefoon:    document.getElementById('zf-tel').value,
       onderwerp:   document.getElementById('zf-onderwerp').value,
-      toelichting: document.getElementById('zf-toelichting').value,
+      belbaarheid: document.getElementById('zf-belbaarheid').value,
       _subject:    'Nieuwe kennismakingsaanvraag — De Schakelaar'
     };
     endpoint = 'https://formspree.io/f/' + FORMSPREE_ZAKELIJK;

@@ -241,6 +241,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   .dienst-grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr 1fr; }
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .form-wrap { order: -1; }
   .footer-inner { grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
   .footer-info-row { grid-template-columns: 1fr 1fr; gap: 16px; }
   .section { padding: 72px 28px; }
@@ -552,44 +553,50 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
       <div class="section-title">Plan je gratis intake</div>
       <div class="contact-wrap">
         <div class="contact-info">
-          <h3>Zo neem je contact op</h3>
-          <p>Stuur me een bericht of bel me direct. Ik reageer binnen 48 uur en we plannen een korte telefonische intake — gratis en vrijblijvend.</p>
+          <h3>Ik bel jou terug</h3>
+          <p>Laat je nummer achter en geef aan wanneer ik je kan bereiken. Ik bel je terug voor een gesprek van max. 15 minuten — alles komt aan bod, geen voorbereiding nodig.</p>
+          <p style="font-size:14px;color:var(--navy-40);">Ik bel buiten kantoortijden: doordeweeks na 18:00 of in het weekend.</p>
           <div class="cdet">
-            <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 3h12v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3z"/><path d="M2 3l6 5 6-5"/></svg></div>
-            <div><span class="cdet-lbl">E-mail</span><span class="cdet-val">info@deschakelaaradvies.nl</span></div>
+            <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
+            <div><span class="cdet-lbl">Gespreksduur</span><span class="cdet-val">Max. 15 minuten</span></div>
           </div>
           <div class="cdet">
             <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
             <div><span class="cdet-lbl">Reactietijd</span><span class="cdet-val">Binnen 48 uur</span></div>
           </div>
           <div class="cdet">
-            <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M8 2C5.2 2 3 4.2 3 7c0 3.5 5 9 5 9s5-5.5 5-9c0-2.8-2.2-5-5-5z"/><circle cx="8" cy="7" r="1.5"/></svg></div>
-            <div><span class="cdet-lbl">Werkgebied</span><span class="cdet-val">Heel Limburg</span></div>
+            <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div>
+            <div><span class="cdet-lbl">Beltijden</span><span class="cdet-val">Avond &amp; weekend</span></div>
+          </div>
+          <div class="cdet">
+            <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div>
+            <div><span class="cdet-lbl">Kosten</span><span class="cdet-val">Altijd gratis</span></div>
           </div>
         </div>
         <div class="form-wrap">
-          <div class="form-title">Stuur me een bericht</div>
+          <div class="form-title">Plan je intake</div>
           <form id="contact-form-part" onsubmit="submitForm(event,'contact-form-part','form-success-part')">
             <div class="form-row2">
               <div class="form-group"><label class="form-label">Voornaam</label><input class="form-input" type="text" name="voornaam" required placeholder="Jan"></div>
               <div class="form-group"><label class="form-label">Achternaam</label><input class="form-input" type="text" name="achternaam" required placeholder="Jansen"></div>
             </div>
-            <div class="form-group"><label class="form-label">E-mailadres</label><input class="form-input" type="email" name="email" required placeholder="jan@voorbeeld.nl"></div>
-            <div class="form-group"><label class="form-label">Telefoonnummer</label><input class="form-input" type="tel" name="tel" placeholder="06-12345678"></div>
+            <div class="form-row2">
+              <div class="form-group"><label class="form-label">Telefoonnummer</label><input class="form-input" type="tel" name="tel" required placeholder="06-12345678"></div>
+              <div class="form-group"><label class="form-label">E-mailadres</label><input class="form-input" type="email" name="email" placeholder="jan@voorbeeld.nl"></div>
+            </div>
             <div class="form-group">
-              <label class="form-label">Mijn situatie</label>
-              <select class="form-select" name="situatie">
-                <option value="">Kies je situatie...</option>
-                <option>Ik overweeg een EV</option>
-                <option>Ik heb al een EV maar vragen</option>
-                <option>Ik wil een laadpaal laten installeren</option>
-                <option>Ik woon in een appartement (VvE)</option>
-                <option>Anders</option>
+              <label class="form-label">Wanneer kan ik je bellen?</label>
+              <select class="form-select" name="belbaarheid" required>
+                <option value="">Kies een moment...</option>
+                <option>Doordeweeks avond (na 18:00)</option>
+                <option>Zaterdagochtend (9:00–12:00)</option>
+                <option>Zaterdagmiddag (13:00–17:00)</option>
+                <option>Zondagochtend (9:00–12:00)</option>
+                <option>Zondagmiddag (13:00–17:00)</option>
               </select>
             </div>
-            <div class="form-group"><label class="form-label">Toelichting (optioneel)</label><textarea class="form-textarea" name="bericht" placeholder="Vertel me iets over je situatie of vraag..."></textarea></div>
-            <button type="submit" class="form-submit">Verstuur bericht →</button>
-            <p class="form-note">Ik reageer binnen 48 uur · Gratis &amp; vrijblijvend</p>
+            <button type="submit" class="form-submit">Plan je intake →</button>
+            <p class="form-note">Max. 15 minuten · buiten kantoortijden · altijd gratis</p>
           </form>
           <div class="form-success" id="form-success-part">
             <div class="form-success-check">✓</div>
