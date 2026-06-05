@@ -368,6 +368,12 @@ button:focus-visible, .nav-link:focus-visible, .nav-cta:focus-visible {
 .form-input:focus,.form-select:focus,.form-textarea:focus { border-color:var(--green); box-shadow:0 0 0 3px var(--green-15); }
 .form-textarea { resize:vertical; min-height:100px; line-height:1.6; }
 .form-submit { width:100%; padding:14px; background:var(--green); color:white; border:none; border-radius:12px; font-family:'Syne',sans-serif; font-size:16px; font-weight:700; cursor:pointer; transition:all 0.2s; margin-top:6px; }
+.check-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:4px; }
+.check-item { display:flex; align-items:center; gap:8px; padding:10px 12px; border:0.5px solid var(--border); border-radius:10px; cursor:pointer; font-size:13px; color:var(--navy-60); transition:all 0.2s; user-select:none; }
+.check-item:hover { border-color:var(--green-50); background:var(--green-08); color:var(--navy); }
+.check-item input[type="checkbox"] { accent-color:var(--green); width:15px; height:15px; cursor:pointer; flex-shrink:0; }
+.check-item:has(input:checked) { border-color:var(--green); background:var(--green-15); color:var(--navy); font-weight:500; }
+.bel-group-lbl { font-size:11px; font-weight:600; color:var(--navy-40); text-transform:uppercase; letter-spacing:0.05em; margin-top:10px; margin-bottom:4px; }
 .form-submit:hover { background:#5aaa38; transform:translateY(-2px); box-shadow:0 8px 24px rgba(109,191,74,0.3); }
 .form-note { font-size:12px; color:var(--navy-40); text-align:center; margin-top:10px; }
 .form-success { display:none; text-align:center; padding:40px 0; }
@@ -1005,7 +1011,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
             <div class="form-title">Plan je intake</div>
             <div class="form-row2"><div class="form-group"><label class="form-label">Voornaam</label><input id="pf-voornaam" class="form-input" type="text" placeholder="Jan"></div><div class="form-group"><label class="form-label">Achternaam</label><input id="pf-achternaam" class="form-input" type="text" placeholder="de Vries"></div></div>
             <div class="form-row2"><div class="form-group"><label class="form-label">Telefoonnummer</label><input id="pf-tel" class="form-input" type="tel" placeholder="06 12345678"></div><div class="form-group"><label class="form-label">E-mailadres</label><input id="pf-email" class="form-input" type="email" placeholder="jan@email.nl"></div></div>
-            <div class="form-group"><label class="form-label">Wanneer kan ik je bellen?</label><select id="pf-belbaarheid" class="form-select"><option value="">Kies een moment...</option><option>Doordeweeks avond (na 18:00)</option><option>Zaterdagochtend (9:00–12:00)</option><option>Zaterdagmiddag (13:00–17:00)</option><option>Zondagochtend (9:00–12:00)</option><option>Zondagmiddag (13:00–17:00)</option></select></div>
+            <div class="form-group"><label class="form-label">Wanneer kan ik je bellen? <span style="font-weight:400;color:var(--navy-40);font-size:12px;">meerdere opties mogelijk</span></label><div class="bel-group-lbl">Doordeweeks · avond 18–21</div><div class="check-grid"><label class="check-item"><input type="checkbox" name="belbaarheid" value="Maandag avond"> Maandag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Dinsdag avond"> Dinsdag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Woensdag avond"> Woensdag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Donderdag avond"> Donderdag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Vrijdag avond"> Vrijdag</label></div><div class="bel-group-lbl">Weekend</div><div class="check-grid"><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zaterdag ochtend"> Za ochtend 9–12</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zaterdag middag"> Za middag 12–17</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zondag ochtend"> Zo ochtend 9–12</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zondag middag"> Zo middag 12–17</label></div></div>
             <button class="form-submit" onclick="submitForm('p')">Plan je intake →</button>
             <p class="form-note">Max. 15 minuten · buiten kantoortijden · altijd gratis</p>
           </div>
@@ -1332,10 +1338,9 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
       <div class="section-title">Plan een kennismaking</div>
       <div class="contact-wrap">
         <div class="contact-info">
-          <h3>Ik bel jou terug</h3>
-          <p>Of je nu concrete plannen hebt of nog oriënteert — ik denk graag mee. Laat je nummer achter met een moment waarop ik je kan bereiken. Ik bel buiten kantoortijden terug.</p>
+          <h3>Stuur je aanvraag</h3>
+          <p>Of je nu concrete plannen hebt of nog oriënteert — ik denk graag mee. Laat je gegevens achter en ik neem contact op.</p>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Reactietijd</div><div class="cdet-val">Binnen 48 uur</div></div></div>
-          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Beltijden</div><div class="cdet-val">Avond &amp; weekend</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Kennismaking</div><div class="cdet-val">Eerste gesprek kosteloos</div></div></div>
         </div>
         <div class="form-wrap">
@@ -1345,9 +1350,8 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
             <div class="form-row2"><div class="form-group"><label class="form-label">Bedrijfsnaam</label><input id="zf-bedrijf" class="form-input" type="text" placeholder="Bedrijf BV"></div><div class="form-group"><label class="form-label">Functie</label><input id="zf-functie" class="form-input" type="text" placeholder="HR Manager"></div></div>
             <div class="form-row2"><div class="form-group"><label class="form-label">Zakelijk e-mailadres</label><input id="zf-email" class="form-input" type="email" placeholder="sara@bedrijf.nl"></div><div class="form-group"><label class="form-label">Telefoonnummer</label><input id="zf-tel" class="form-input" type="tel" placeholder="06 12345678"></div></div>
             <div class="form-group"><label class="form-label">Waar kan ik je mee helpen?</label><select id="zf-onderwerp" class="form-select"><option value="">Kies een onderwerp...</option><option>Financieel advies (laadkosten, vergoedingen, laadpassen)</option><option>Technisch advies (laadinfrastructuur pand)</option><option>Totaal advies (financieel + technisch)</option><option>Realisatie &amp; begeleiding</option><option>Webinar voor medewerkers</option><option>Weet ik nog niet precies</option></select></div>
-            <div class="form-group"><label class="form-label">Wanneer kan ik je bellen?</label><select id="zf-belbaarheid" class="form-select"><option value="">Kies een moment...</option><option>Doordeweeks avond (na 18:00)</option><option>Zaterdagochtend (9:00–12:00)</option><option>Zaterdagmiddag (13:00–17:00)</option><option>Zondagochtend (9:00–12:00)</option><option>Zondagmiddag (13:00–17:00)</option></select></div>
             <button class="form-submit" onclick="submitForm('z')">Plan een kennismaking →</button>
-            <p class="form-note">Eerste gesprek kosteloos · buiten kantoortijden · binnen 48 uur</p>
+            <p class="form-note">Eerste gesprek kosteloos · binnen 48 uur</p>
           </div>
           <div class="form-success" id="zf-success"><div class="form-success-check">✓</div><h3>Aanvraag ontvangen!</h3><p>Ik neem binnen 48 uur contact op om een kennismakingsgesprek in te plannen.</p></div>
         </div>
@@ -1487,7 +1491,7 @@ function submitForm(type) {
       achternaam:  document.getElementById('pf-achternaam').value,
       email:       document.getElementById('pf-email').value,
       telefoon:    document.getElementById('pf-tel').value,
-      belbaarheid: document.getElementById('pf-belbaarheid').value,
+      belbaarheid: Array.from(document.querySelectorAll('#pf-inner input[name="belbaarheid"]:checked')).map(c => c.value).join(', ') || 'Niet opgegeven',
       _subject:    'Nieuwe intake-aanvraag — De Schakelaar'
     };
     endpoint = 'https://formspree.io/f/' + FORMSPREE_PARTICULIER;
@@ -1500,7 +1504,7 @@ function submitForm(type) {
       email:       document.getElementById('zf-email').value,
       telefoon:    document.getElementById('zf-tel').value,
       onderwerp:   document.getElementById('zf-onderwerp').value,
-      belbaarheid: document.getElementById('zf-belbaarheid').value,
+      belbaarheid: Array.from(document.querySelectorAll('#zf-inner input[name="belbaarheid"]:checked')).map(c => c.value).join(', ') || 'Niet opgegeven',
       _subject:    'Nieuwe kennismakingsaanvraag — De Schakelaar'
     };
     endpoint = 'https://formspree.io/f/' + FORMSPREE_ZAKELIJK;
