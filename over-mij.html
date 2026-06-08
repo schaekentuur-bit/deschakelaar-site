@@ -11,17 +11,17 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wie Ben Ik? — Onafhankelijk EV-adviseur in Limburg | De Schakelaar</title>
-<meta name="description" content="Ik ben Tuur Schaeken, oprichter van De Schakelaar en Manager EV-Charging & Energy Services. Ik geef onafhankelijk laadpaaladvies in Limburg — zonder verkoopbelang.">
-<meta name="keywords" content="wie is De Schakelaar, over De Schakelaar, EV adviseur Limburg, onafhankelijk laadpaaladvies, Tuur Schaeken, laadpaal expert Limburg, EV Manager Sittard">
+<title>Wie Ben Ik? — Tuur Schaeken, EV-adviseur in Limburg | De Schakelaar</title>
+<meta name="description" content="Ik ben Tuur Schaeken — oprichter van De Schakelaar. Ik geef onafhankelijk laadpaaladvies in Limburg, gebaseerd op mijn dagelijkse werk als EV Manager.">
+<meta name="keywords" content="Tuur Schaeken, wie is De Schakelaar, over De Schakelaar, EV adviseur Limburg, onafhankelijk laadpaaladvies, EV Manager Sittard">
 <link rel="canonical" href="https://deschakelaaradvies.nl/over-mij.html">
 
 <!-- Open Graph -->
 <meta property="og:type"        content="profile">
 <meta property="og:url"         content="https://deschakelaaradvies.nl/over-mij.html">
-<meta property="og:title"       content="Wie Ben Ik? — Onafhankelijk EV-adviseur in Limburg | De Schakelaar">
-<meta property="og:description" content="Manager EV-Charging & Energy Services met dagelijkse praktijkervaring — dat is wat ik inzet bij De Schakelaar. Niet als verkoper, maar als adviseur.">
-<meta property="og:image"       content="https://deschakelaaradvies.nl/og-image.jpg">
+<meta property="og:title"       content="Wie Ben Ik? — Tuur Schaeken, EV-adviseur in Limburg | De Schakelaar">
+<meta property="og:description" content="Ik ben Tuur Schaeken — oprichter van De Schakelaar. Onafhankelijk laadpaaladvies in Limburg, gebaseerd op dagelijkse praktijkervaring als EV Manager.">
+<meta property="og:image"       content="https://deschakelaaradvies.nl/tuur.jpg">
 <meta property="og:locale"      content="nl_NL">
 <meta property="og:site_name"   content="De Schakelaar">
 
@@ -34,9 +34,12 @@
       "@type": "Person",
       "@id": "https://deschakelaaradvies.nl/#person",
       "name": "Tuur Schaeken",
+      "givenName": "Tuur",
+      "familyName": "Schaeken",
       "jobTitle": "Manager EV-Charging & Energy Services",
-      "description": "Onafhankelijk EV-adviseur en oprichter van De Schakelaar. Manager EV-Charging & Energy Services met ervaring in laadinfrastructuur, energiebeheer en laadbeleid.",
+      "description": "Oprichter van De Schakelaar. Geeft onafhankelijk laadpaaladvies in Limburg, gebaseerd op dagelijkse praktijkervaring als EV Manager.",
       "url": "https://deschakelaaradvies.nl/over-mij.html",
+      "image": "https://deschakelaaradvies.nl/tuur.jpg",
       "worksFor": {
         "@type": "Organization",
         "name": "De Schakelaar",
@@ -48,7 +51,7 @@
         "addressRegion": "Limburg",
         "addressCountry": "NL"
       },
-      "knowsAbout": ["Laadinfrastructuur", "EV-advies", "Laadbeleid", "Thuisladen", "Slim laden", "Energiebeheer", "Laadpalen"]
+      "knowsAbout": ["Laadinfrastructuur", "EV-advies", "Laadbeleid", "Thuisladen", "Slim laden", "Energiebeheer"]
     },
     {
       "@type": "BreadcrumbList",
@@ -63,6 +66,46 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="blog/style.css">
+<style>
+  .profile-block {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 48px;
+    align-items: flex-start;
+    margin-bottom: 48px;
+  }
+  .profile-photo {
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+    aspect-ratio: 3/4;
+    display: block;
+  }
+  .profile-intro h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    line-height: 1.15;
+  }
+  .profile-role {
+    font-size: 15px;
+    color: var(--navy-40, rgba(27,46,75,0.4));
+    margin-bottom: 20px;
+  }
+  .profile-intro p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--navy-40, rgba(27,46,75,0.5));
+    margin-bottom: 14px;
+  }
+  .profile-intro p strong { color: var(--navy); font-weight: 500; }
+  @media (max-width: 680px) {
+    .profile-block { grid-template-columns: 1fr; gap: 28px; }
+    .profile-photo { max-width: 200px; aspect-ratio: 1/1; }
+  }
+</style>
 </head>
 <body>
 <nav>
@@ -90,63 +133,48 @@
   <div class="hero">
     <div class="hero-inner">
       <div class="breadcrumb"><a href="/">Home</a> / Wie ben ik?</div>
-      <div class="cat-badge">De Schakelaar</div>
-      <h1>Wie ben ik?</h1>
-      <p class="hero-intro">Ik ben de man achter De Schakelaar — geen installateur, geen verkoper. Ik geef eerlijk advies over laadpalen en elektrisch laden, gebaseerd op dagelijkse praktijkervaring.</p>
-      <div class="article-meta">
-        <span>✍️ Oprichter De Schakelaar</span>
-        <span>📍 Sittard, Limburg</span>
-        <span>🔌 EV-adviseur</span>
-      </div>
     </div>
   </div>
 
   <article class="article">
 
-    <h2>Wie ik ben</h2>
-    <p>Ik ben 26 jaar oud, geboren en opgegroeid in Sittard. Ik woon hier samen met mijn vriendin Eva. Ik rijd al een tijdje elektrisch — en niet alleen omdat het financieel voordelig is. Het is gewoon ook een genot.</p>
-    <p>Door de juiste afstemming van mijn eigen energiesystemen zijn mijn elektrakosten negatief: vorig jaar kreeg ik per saldo geld terug. Dat soort kennis — wanneer slim laden loont, hoe je een laadpaal combineert met zonnepanelen, welk energiecontract echt werkt — deel ik graag met anderen die er net mee beginnen.</p>
-
-    <div class="tip-box">
-      <div class="tip-label">Waarom De Schakelaar?</div>
-      <p>Ik zie dagelijks hoe ingewikkeld elektrisch rijden aanvoelt voor mensen die er net instappen. Terwijl het echt niet zo complex hoeft te zijn — als je maar weet waar je op moet letten. De Schakelaar is mijn manier om die kennis beschikbaar te maken.</p>
+    <div class="profile-block">
+      <img src="tuur.jpg" alt="Tuur Schaeken — oprichter De Schakelaar" class="profile-photo">
+      <div class="profile-intro">
+        <h1>Hoi, ik ben Tuur.</h1>
+        <div class="profile-role">Oprichter De Schakelaar · EV Manager · Sittard, Limburg</div>
+        <p>Ik ben 26 jaar, woon in Sittard samen met mijn vriendin Eva en rijd al een tijdje elektrisch. Niet alleen omdat het financieel loont — al doet het dat zeker — maar gewoon omdat het fijn is.</p>
+        <p>Overdag werk ik als <strong>Manager EV-Charging &amp; Energy Services</strong> bij een parkeerexploitant met meer dan 150 locaties en bijna 2.000 laadpalen. Ik ben dagelijks bezig met laadinfrastructuur, energiecontracten, netcapaciteit en alles wat daarmee samenhangt.</p>
+        <p>Die kennis wil ik ook beschikbaar maken voor mensen die er thuis of bij hun bedrijf mee aan de slag willen. Zonder verkoopbelang, zonder gedoe. Gewoon een eerlijk gesprek.</p>
+      </div>
     </div>
 
-    <h2>Mijn werk als EV Manager</h2>
-    <p>Naast De Schakelaar ben ik in loondienst actief als <strong>Manager EV-Charging &amp; Energy Services</strong> bij een parkeerexploitant met meer dan 150 exploitatielocaties en bijna 2.000 laadpalen. Ik ben verantwoordelijk voor de volledige laadbusiness én het energiebeheer: van het verkrijgen van netcapaciteit tot duurzame oplossingen als energiemanagementsystemen, solar en batterijen.</p>
-    <p>Ik ben in de EV-sector terechtgekomen bij een producent van elektrische vrachtwagens, waar ik analyses maakte ter ondersteuning van accountmanagers. Daarna begon ik als junior projectleider EV-charging bij een parkeerexploitant en groeide ik door naar een volwaardige projectleidersrol — en uiteindelijk naar mijn huidige managementpositie.</p>
-    <p>Die dagelijkse praktijkervaring — met laadinfrastructuur op grote schaal, energiecontracten, vergoedingen en beleid — is precies wat ik inzet bij De Schakelaar. <strong>Niet als verkoper, maar als adviseur.</strong></p>
+    <h2>Waarom De Schakelaar?</h2>
+    <p>Als je een laadpaal wil, kom je al snel terecht bij een installateur die ook zijn eigen merk verkoopt. Of bij een dealer met een aanbieding. Dat advies is nooit puur in jouw belang — er zit altijd een commissie of voorkeur achter.</p>
+    <p>Ik verkoop geen laadpalen en installeer ze ook niet. Ik verdien niets aan een bepaald merk. Dat maakt het verschil: ik kijk alleen naar wat het beste bij jou past.</p>
 
-    <h2>Waarom onafhankelijk?</h2>
-    <p>De meeste mensen die een laadpaal willen, komen terecht bij een installateur die ook meteen een bepaald merk verkoopt. Of bij een dealer die een aanbod heeft. Dat advies is nooit puur in jouw belang — er zit altijd een commercieel belang achter.</p>
-    <p>Ik verkoop geen laadpalen. Ik installeer ze ook niet. Ik heb geen contract met een leverancier en geen provisie van een merk. Dat maakt mijn advies fundamenteel anders: ik kijk alleen naar wat het beste bij jou past.</p>
+    <h2>Mijn achtergrond</h2>
+    <p>Ik ben in de EV-wereld terechtgekomen bij een producent van elektrische vrachtwagens, waar ik analyses maakte voor accountmanagers. Daarna begon ik als junior projectleider EV-charging en groeide ik door naar mijn huidige managementfunctie — verantwoordelijk voor de hele laadbusiness én het energiebeheer van een grote parkeerorganisatie.</p>
+    <p>Door de juiste afstemming van mijn eigen energiesysteem zijn mijn elektrakosten negatief: vorig jaar kreeg ik per saldo geld terug. Dat is precies het soort praktische kennis dat ik graag met anderen deel.</p>
 
-    <h2>Wat ik doe</h2>
-    <ul>
-      <li><strong>Laadpaaladvies aan huis</strong> — voor particulieren in Limburg die een laadpaal thuis willen. Ik bekijk je situatie ter plaatse en geef concreet advies over merk, vermogen, installatie en kosten.</li>
-      <li><strong>Laadbeleid voor werkgevers</strong> — voor MKB-bedrijven die beleid willen opstellen rond thuisladen, laadpassen en laadpalen op het pand. Van financieel overzicht tot praktisch stappenplan.</li>
-      <li><strong>Webinars voor medewerkers</strong> — interactieve sessies over elektrisch rijden, thuisladen en de praktische kant van de overstap.</li>
-    </ul>
+    <div class="tip-box">
+      <div class="tip-label">Wat ik doe</div>
+      <p><strong>Particulieren</strong> — laadpaaladvies aan huis in Limburg. Ik bekijk je situatie ter plaatse en geef concreet, onafhankelijk advies.<br><br>
+      <strong>Werkgevers</strong> — laadbeleid opstellen, laadpalen op het pand, thuislaadvergoeding en webinars voor medewerkers.</p>
+    </div>
 
     <h2>Contact</h2>
-    <p>Wil je weten of ik iets voor jou of jouw organisatie kan betekenen? Bel of mail — of vraag direct een gratis intake aan.</p>
+    <p>Een telefonische intake is altijd gratis en vrijblijvend. Ik bel buiten kantoortijden — 's avonds of in het weekend.</p>
     <ul>
       <li>E-mail: <strong>info@deschakelaaradvies.nl</strong></li>
       <li>Adres: Steegstraat 46, 6133 AL Sittard</li>
     </ul>
 
     <div class="cta-block">
-      <h2>Gratis kennismaking</h2>
-      <p>Een telefonische intake is altijd gratis. In 15 minuten weet je of ik iets voor je kan betekenen.</p>
+      <h2>Gratis intake plannen</h2>
+      <p>In 15 minuten weet je of ik iets voor je kan betekenen. Geen verplichtingen.</p>
       <a href="/?audience=particulier&to=contact" class="cta-btn">Plan je intake</a>
     </div>
-
-    <h2>Meer over De Schakelaar</h2>
-    <ul>
-      <li><a href="laadpaaladvies-limburg.html" style="color:var(--green);font-weight:500;">Laadpaaladvies in Limburg — wat ik doe en hoe het werkt</a></li>
-      <li><a href="laadbeleid-limburg.html" style="color:var(--green);font-weight:500;">Laadbeleid voor werkgevers in Limburg</a></li>
-      <li><a href="blog/kosten-laadpaal-thuis.html" style="color:var(--green);font-weight:500;">Kosten laadpaal thuis: wat betaal je écht?</a></li>
-    </ul>
 
   </article>
 </main>
