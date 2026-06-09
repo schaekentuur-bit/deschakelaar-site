@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18200989510"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18200989510');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog voor Particuliere EV-rijders — Thuisladen, Kosten & Advies | De Schakelaar</title>
+<meta name="description" content="Alle artikelen van De Schakelaar voor particuliere elektrisch rijders: laadpaal thuis, kosten, slim laden, ERE's en meer. Onafhankelijk advies zonder verkoopbelang.">
+<link rel="canonical" href="https://deschakelaaradvies.nl/blog/particulier.html">
+<meta property="og:title" content="Blog voor Particuliere EV-rijders | De Schakelaar">
+<meta property="og:description" content="Alle artikelen van De Schakelaar voor particuliere elektrisch rijders: laadpaal thuis, kosten, slim laden, ERE's en meer.">
+<meta property="og:url" content="https://deschakelaaradvies.nl/blog/particulier.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:site_name" content="De Schakelaar">
+<meta property="og:image" content="https://deschakelaaradvies.nl/og-image.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Blog voor particuliere EV-rijders",
+  "description": "Alle artikelen van De Schakelaar voor particuliere elektrisch rijders.",
+  "url": "https://deschakelaaradvies.nl/blog/particulier.html",
+  "publisher": {"@type": "Organization", "name": "De Schakelaar", "url": "https://deschakelaaradvies.nl/"}
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .overview-hero { background: var(--navy); padding: 64px 0 52px; }
+  .overview-hero .breadcrumb { margin-bottom: 20px; }
+  .overview-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 5vw, 44px); font-weight: 700; color: #fff; margin-bottom: 14px; }
+  .overview-hero p { font-size: 18px; color: rgba(255,255,255,0.7); max-width: 560px; line-height: 1.6; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; margin: 48px 0 36px; }
+  .filter-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1.5px solid var(--border);
+    background: white;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 80px;
+  }
+  .post-card {
+    background: white;
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.22s;
+    display: flex;
+    flex-direction: column;
+  }
+  .post-card:hover { box-shadow: 0 12px 36px rgba(27,46,75,0.1); transform: translateY(-3px); }
+  .post-card.hidden { display: none; }
+
+  .post-img {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+  }
+  .post-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .post-cat {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+  .post-card h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    color: var(--navy);
+  }
+  .post-card p {
+    font-size: 13px;
+    color: var(--navy-40);
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 16px;
+  }
+  .post-meta { font-size: 12px; color: var(--navy-40); }
+
+  .urgency-badge {
+    display: inline-block;
+    background: rgba(192,57,43,0.1);
+    color: #c0392b;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 0;
+    color: var(--navy-40);
+    font-size: 15px;
+    display: none;
+  }
+
+  .overview-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  @media (max-width: 860px) { .posts-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .posts-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><svg class="logo-nav" viewBox="50 88 630 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="60" y="122" width="104" height="56" rx="28" fill="#1B2E4B"/>
+        <circle cx="136" cy="150" r="22" fill="#6DBF4A"/>
+        <path d="M 135 140 L 129 151 L 136 151 L 134 160 L 142 148 L 135 148 Z" fill="#1B2E4B" opacity="0.9"/>
+        <path d="M 136 110 A 40 40 0 0 1 176 150" stroke="#6DBF4A" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M 136 96 A 54 54 0 0 1 190 150" stroke="#6DBF4A" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+        <line x1="208" y1="118" x2="208" y2="182" stroke="#1B2E4B" stroke-width="0.75" opacity="0.18"/>
+        <text x="224" y="158" style="font-family:'Syne',sans-serif;font-weight:700;font-size:40px;"><tspan fill="#6DBF4A">De </tspan><tspan fill="#1B2E4B">Schakelaar</tspan></text>
+      </svg></a>
+    <div class="nav-audience">
+      <a href="/?audience=particulier" class="nav-aud-btn active-part">Particulier</a>
+      <a href="/?audience=zakelijk"    class="nav-aud-btn">Zakelijk</a>
+    </div>
+    <a href="/?audience=particulier&to=contact" class="nav-cta">Plan je intake</a>
+  </div>
+</nav>
+
+<div class="overview-hero">
+  <div class="overview-inner">
+    <div class="breadcrumb" style="color:rgba(255,255,255,0.5);"><a href="/" style="color:rgba(255,255,255,0.5);">Home</a> / Particulier / Blog</div>
+    <h1>Alle artikelen voor particuliere EV-rijders</h1>
+    <p>Onafhankelijke uitleg over thuisladen, kosten, slim laden en meer — zonder verkoopbelang.</p>
+  </div>
+</div>
+
+<main>
+  <div class="overview-inner">
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Alle artikelen</button>
+      <button class="filter-btn" data-filter="thuisladen">Thuisladen</button>
+      <button class="filter-btn" data-filter="kosten">Kosten</button>
+      <button class="filter-btn" data-filter="slim-laden">Slim laden</button>
+      <button class="filter-btn" data-filter="opbrengst">Opbrengst</button>
+      <button class="filter-btn" data-filter="limburg">Limburg</button>
+    </div>
+
+    <div class="posts-grid" id="postsGrid">
+
+      <a href="geld-verdienen-laden-eres.html" class="post-card" data-cat="opbrengst thuisladen">
+        <div class="post-img" style="background:#e8f5e0;">💶</div>
+        <div class="post-body">
+          <div class="post-cat">Thuisladen &amp; opbrengst</div>
+          <h2>Geld verdienen met je laadpaal via ERE's</h2>
+          <p>Elke kWh die je thuis laadt genereert een ERE. Fossiele brandstofbedrijven moeten emissiereductie aantonen — en kopen daarvoor ERE's. Jij ontvangt 7 tot 15 cent per kWh.</p>
+          <div class="post-meta">7 min lezen</div>
+        </div>
+      </a>
+
+      <a href="wachtlijst-kleinverbruik.html" class="post-card" data-cat="thuisladen">
+        <div class="post-img" style="background:#fdecea;">⚠️</div>
+        <div class="post-body">
+          <span class="urgency-badge">Actie vereist vóór 1 juli 2026</span>
+          <h2>Wachtlijst voor een nieuwe stroomaansluiting</h2>
+          <p>Per 1 juli 2026 kunnen ook huishoudens op een wachtlijst belanden bij een aanvraag voor een nieuwe of zwaardere aansluiting. Wat verandert er en wat moet je nu doen?</p>
+          <div class="post-meta">5 min lezen</div>
+        </div>
+      </a>
+
+      <a href="kosten-laadpaal-thuis.html" class="post-card" data-cat="kosten thuisladen">
+        <div class="post-img" style="background:#fff8e6;">🧾</div>
+        <div class="post-body">
+          <div class="post-cat">Kosten</div>
+          <h2>Kosten laadpaal thuis in 2026: wat betaal je écht?</h2>
+          <p>Aanschaf, installatie, netverzwaring — een eerlijk overzicht van wat een thuislaadpaal kost en wanneer het de moeite waard is.</p>
+          <div class="post-meta">6 min lezen</div>
+        </div>
+      </a>
+
+      <a href="laadpaal-installeren-advies.html" class="post-card" data-cat="thuisladen">
+        <div class="post-img" style="background:#e8f5e0;">🔧</div>
+        <div class="post-body">
+          <div class="post-cat">Thuisladen</div>
+          <h2>Laadpaal laten installeren? Dit moet je eerst weten</h2>
+          <p>De meeste mensen bellen direct een installateur. Wie dat doet zonder voorbereiding, betaalt al snel meer dan nodig en mist kansen die elk jaar opnieuw geld opleveren.</p>
+          <div class="post-meta">5 min lezen</div>
+        </div>
+      </a>
+
+      <a href="laadpaal-plaatsen-limburg.html" class="post-card" data-cat="thuisladen limburg">
+        <div class="post-img" style="background:#e8f0fa;">📍</div>
+        <div class="post-body">
+          <div class="post-cat">Thuisladen · Limburg</div>
+          <h2>Laadpaal laten plaatsen in Limburg: zo doe je het slim</h2>
+          <p>Je wil een laadpaal in Limburg — maar voor je het weet vergelijk je merken en prijzen zonder te weten wat het verschil maakt. Dit is hoe je het slim aanpakt.</p>
+          <div class="post-meta">6 min lezen</div>
+        </div>
+      </a>
+
+      <a href="meer-dan-een-laadpaal.html" class="post-card" data-cat="thuisladen">
+        <div class="post-img" style="background:#f0f4ff;">🔌</div>
+        <div class="post-body">
+          <div class="post-cat">Thuisladen</div>
+          <h2>Meer dan een laadpaal: wat komt er écht kijken bij thuisladen?</h2>
+          <p>Een laadoplossing die écht voor je werkt bestaat uit meer lagen dan alleen de paal. De samenhang van aansluiting, contract en laden bepaalt hoeveel voordeel je eruit haalt.</p>
+          <div class="post-meta">5 min lezen</div>
+        </div>
+      </a>
+
+      <a href="laadpaal-thuis.html" class="post-card" data-cat="thuisladen limburg">
+        <div class="post-img" style="background:#e8f5e0;">⚡</div>
+        <div class="post-body">
+          <div class="post-cat">Thuisladen</div>
+          <h2>Laadpaal thuis: waar moet je op letten?</h2>
+          <p>Van je huisaansluiting tot de juiste keuze van laadpaal — dit zijn de vragen die je jezelf moet stellen voordat je een installateur belt.</p>
+          <div class="post-meta">5 min lezen</div>
+        </div>
+      </a>
+
+      <a href="slim-laden.html" class="post-card" data-cat="slim-laden">
+        <div class="post-img" style="background:#fff8e6;">🔋</div>
+        <div class="post-body">
+          <div class="post-cat">Slim laden</div>
+          <h2>Slim laden uitgelegd zonder technische onzin</h2>
+          <p>Wat het is, of jij er voordeel van hebt en hoe je het instelt. In vijf minuten snap je het.</p>
+          <div class="post-meta">5 min lezen</div>
+        </div>
+      </a>
+
+      <a href="kosten-per-kilometer.html" class="post-card" data-cat="kosten">
+        <div class="post-img" style="background:#f0f4ff;">💡</div>
+        <div class="post-body">
+          <div class="post-cat">Kosten</div>
+          <h2>Wat kost elektrisch rijden per kilometer?</h2>
+          <p>Elektrisch rijden is goedkoper dan benzine — maar hoeveel scheelt het écht? Een eerlijk overzicht van laadkosten thuis, onderweg en wat een dynamisch contract oplevert.</p>
+          <div class="post-meta">4 min lezen</div>
+        </div>
+      </a>
+
+      <div class="no-results" id="noResults">Geen artikelen gevonden voor dit filter.</div>
+
+    </div>
+  </div>
+</main>
+
+<footer id="blog-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg class="logo-footer" viewBox="50 88 630 100" xmlns="http://www.w3.org/2000/svg"><rect x="60" y="122" width="104" height="56" rx="28" fill="rgba(255,255,255,0.12)"/><rect x="60" y="122" width="104" height="56" rx="28" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><circle cx="136" cy="150" r="22" fill="#6DBF4A"/><path d="M 135 140 L 129 151 L 136 151 L 134 160 L 142 148 L 135 148 Z" fill="#1B2E4B" opacity="0.9"/><path d="M 136 110 A 40 40 0 0 1 176 150" stroke="#6DBF4A" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 136 96 A 54 54 0 0 1 190 150" stroke="#6DBF4A" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.5"/><line x1="208" y1="118" x2="208" y2="182" stroke="rgba(255,255,255,0.2)" stroke-width="0.75"/><text x="224" y="158" style="font-family:'Syne',sans-serif;font-weight:700;font-size:40px;"><tspan fill="#6DBF4A">De </tspan><tspan fill="rgba(255,255,255,0.8)">Schakelaar</tspan></text></svg>
+      <p>Onafhankelijk laadpaaladvies en laadbeleid advies in Limburg. Persoonlijk aan huis, zonder verkoopbelang.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Particulier</h4>
+      <ul>
+        <li><a href="/?audience=particulier">Naar de particulierenpagina</a></li>
+        <li><a href="/?audience=particulier&to=hoe">Werkwijze &amp; tarieven</a></li>
+        <li><a href="/?audience=particulier&to=contact">Contact &amp; afspraak</a></li>
+        <li><a href="../laadpaaladvies-limburg.html">Laadpaaladvies Limburg</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Zakelijk</h4>
+      <ul>
+        <li><a href="/?audience=zakelijk">Naar de zakelijke pagina</a></li>
+        <li><a href="/?audience=zakelijk&to=werkgever">Voor werkgevers</a></li>
+        <li><a href="/?audience=zakelijk&to=webinar">Voor medewerkers</a></li>
+        <li><a href="/?audience=zakelijk&to=contact">Contact &amp; kennismaking</a></li>
+        <li><a href="../laadbeleid-limburg.html">Laadbeleid Limburg</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>De Schakelaar</h4>
+      <ul>
+        <li><a href="../over-mij.html">Wie ben ik?</a></li>
+        <li><a href="particulier.html">Blog particulier</a></li>
+        <li><a href="zakelijk.html">Blog zakelijk</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Juridisch</h4>
+      <ul>
+        <li><a href="../algemene-voorwaarden.html">Algemene voorwaarden</a></li>
+        <li><a href="../privacyverklaring.html">Privacyverklaring</a></li>
+        <li><a href="../disclaimer.html">Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-info-row">
+    <div class="footer-info-item"><span class="footer-info-lbl">Bedrijfsnaam</span><span class="footer-info-val">De Schakelaar</span></div>
+    <div class="footer-info-item"><span class="footer-info-lbl">Adres</span><span class="footer-info-val">Steegstraat 46, 6133 AL Sittard</span></div>
+    <div class="footer-info-item"><span class="footer-info-lbl">KvK-nummer</span><span class="footer-info-val">12345678</span></div>
+    <div class="footer-info-item"><span class="footer-info-lbl">BTW-nummer</span><span class="footer-info-val">NL000000000B01</span></div>
+  </div>
+  <div class="footer-bottom">
+    <span>&#169; 2026 De Schakelaar &middot; deschakelaaradvies.nl</span>
+    <span>info@deschakelaaradvies.nl</span>
+  </div>
+</footer>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.post-card');
+  const noResults = document.getElementById('noResults');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      let visible = 0;
+
+      cards.forEach(card => {
+        const cats = card.dataset.cat || '';
+        const show = filter === 'all' || cats.includes(filter);
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+    });
+  });
+</script>
+</body>
+</html>
