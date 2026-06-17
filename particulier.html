@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
 <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="a52b71a2-e717-4e93-b265-798301ceafd6" data-blockingmode="auto" type="text/javascript"></script>
@@ -12,6 +12,23 @@
   gtag('config', 'G-GN0DRNNMR5');
   gtag('config', 'AW-18200989510');
 </script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2807720619589029');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2807720619589029&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laadpaal Thuis Limburg — Welke Past bij Jou? | De Schakelaar</title>
@@ -683,6 +700,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   <div class="footer-info-row">
     <div class="footer-info-item"><span class="footer-info-lbl">Bedrijfsnaam</span><span class="footer-info-val">De Schakelaar</span></div>
     <div class="footer-info-item"><span class="footer-info-lbl">Adres</span><span class="footer-info-val">Steegstraat 46, 6133 AL Sittard</span></div>
+    <!-- KVK-PLACEHOLDER: vervang 12345678 door je echte KvK-nummer uit het Handelsregister -->
     <div class="footer-info-item"><span class="footer-info-lbl">KvK-nummer</span><span class="footer-info-val">12345678</span></div>
     <div class="footer-info-item"><span class="footer-info-lbl">BTW-nummer</span><span class="footer-info-val">NL000000000B01</span></div>
   </div>
@@ -715,23 +733,24 @@ function submitForm(e, formId, successId) {
   })
   .then(r => {
     if (r.ok) {
-      form.style.display = 'none';
-      document.getElementById(successId).style.display = 'block';
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'conversion', { 'send_to': 'AW-18200989510/lNCgCIGg5LccEMae9OZD' });
-      }
+      /* Redirect naar bedankpagina — GA4 generate_lead + Ads conversie vuren daar bij page load,
+         ná Cookiebot-consent. Betrouwbaarder dan vuren vanuit deze callback. */
+      window.location.href = '/bedankt.html';
     } else {
       btn.disabled    = false;
-      btn.textContent = 'Verstuur bericht →';
+      btn.textContent = 'Plan je intake →';
       alert('Er ging iets mis. Stuur gerust een e-mail naar info@deschakelaaradvies.nl');
     }
   })
   .catch(() => {
     btn.disabled    = false;
-    btn.textContent = 'Verstuur bericht →';
+    btn.textContent = 'Plan je intake →';
     alert('Er ging iets mis. Stuur gerust een e-mail naar info@deschakelaaradvies.nl');
   });
 }
+</script>
+<script>
+if (typeof fbq !== 'undefined') fbq('track', 'Lead');
 </script>
 </body>
 </html>
