@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=DM+Sans:wght@300&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 300px; height: 300px; overflow: hidden; }
+  .logo {
+    width: 300px;
+    height: 300px;
+    background: #1B2E4B;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .logo svg { width: 160px; height: auto; }
+  .logo-text { text-align: center; line-height: 1.2; }
+  .logo-text .de { font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 22px; color: #6DBF4A; letter-spacing: 0.05em; }
+  .logo-text .schakelaar { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 28px; color: white; letter-spacing: -0.01em; }
+</style>
+</head>
+<body>
+<div class="logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="50 88 150 100">
+    <rect x="60" y="122" width="104" height="56" rx="28" fill="#243D60"/>
+    <circle cx="136" cy="150" r="22" fill="#6DBF4A"/>
+    <path d="M135 140L129 151L136 151L134 160L142 148L135 148Z" fill="#1B2E4B" opacity="0.9"/>
+    <path d="M136 110A40 40 0 0 1 176 150" stroke="#6DBF4A" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M136 96A54 54 0 0 1 190 150" stroke="#6DBF4A" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+  </svg>
+  <div class="logo-text">
+    <div class="de">De</div>
+    <div class="schakelaar">Schakelaar</div>
+  </div>
+</div>
+</body>
+</html>
