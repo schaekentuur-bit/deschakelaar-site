@@ -1,42 +1,28 @@
-// Contactdrempel: WhatsApp-float + sticky mobiele CTA-balk.
-// Balk verschijnt op mobiel pas voorbij de hero; beide elementen verdwijnen
-// zodra de footer of het contactformulier in beeld komt.
+// Contactdrempel: WhatsApp-float, altijd zichtbaar tijdens scrollen.
+// Verbergt alleen zodra de footer of het contactformulier in beeld komt,
+// zodat de knop daar niet overheen valt.
 (function () {
-  var wa  = document.querySelector('.whatsapp-float');
-  var bar = document.querySelector('.sticky-cta-bar');
-  if (!wa && !bar) return;
+  var wa = document.querySelector('.whatsapp-float');
+  if (!wa) return;
 
-  var hero = document.querySelector('.hero, .hero-split, .hero-zak, .hero-part');
   var noFloatZones = document.querySelectorAll('footer, .contact-wrap');
 
-  var pastHero   = !hero; // geen hero op de pagina? dan meteen actief
-  var nearZone   = false;
-
-  function isMobile() { return window.innerWidth <= 640; }
-
   function update() {
-    if (bar) bar.classList.toggle('sticky-visible', isMobile() && pastHero && !nearZone);
-    if (wa)  wa.classList.toggle('wa-hidden', nearZone || (isMobile() && pastHero && !!bar));
-  }
-
-  if (hero && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      pastHero = !entries[0].isIntersecting;
-      update();
-    }, { threshold: 0 }).observe(hero);
-  } else if (hero) {
-    window.addEventListener('scroll', function () {
-      pastHero = window.scrollY > hero.offsetHeight * 0.6;
-      update();
-    }, { passive: true });
+    var nearZone = false;
+    noFloatZones.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) nearZone = true;
+    });
+    wa.classList.toggle('wa-hidden', nearZone);
   }
 
   if (noFloatZones.length && 'IntersectionObserver' in window) {
     var zoneObserver = new IntersectionObserver(function (entries) {
-      nearZone = entries.some(function (e) { return e.isIntersecting; });
       update();
     }, { rootMargin: '0px 0px -5% 0px' });
     noFloatZones.forEach(function (el) { zoneObserver.observe(el); });
+  } else {
+    window.addEventListener('scroll', update, { passive: true });
   }
 
   window.addEventListener('resize', update);

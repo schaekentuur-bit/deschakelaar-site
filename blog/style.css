@@ -28,7 +28,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; ba
 .footer-phone { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.55); text-decoration: none; }
 .footer-phone:hover { color: var(--green); }
 
-/* ── CONTACTDREMPEL: WhatsApp float + sticky mobiele CTA-balk ── */
+/* ── CONTACTDREMPEL: WhatsApp float, altijd zichtbaar behalve bij footer/formulier ── */
 .whatsapp-float {
   position: fixed; right: 20px; bottom: 20px; z-index: 500;
   width: 56px; height: 56px; border-radius: 50%; background: #25D366;
@@ -39,20 +39,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; ba
 .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
 .whatsapp-float.wa-hidden { opacity: 0; visibility: hidden; transform: scale(0.8); pointer-events: none; }
 
-.sticky-cta-bar {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 499;
-  display: none; grid-template-columns: 1fr 1fr;
-  box-shadow: 0 -4px 16px rgba(0,0,0,0.14);
-  transform: translateY(100%); transition: transform 0.25s ease;
-}
-.sticky-cta-bar.sticky-visible { transform: translateY(0); }
-.sticky-cta-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 15px 12px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 14px; text-decoration: none; }
-.sticky-cta-btn svg { width: 17px; height: 17px; }
-.sticky-cta-btn.sc-wa  { background: #25D366; color: white; }
-.sticky-cta-btn.sc-bel { background: var(--navy); color: white; }
-
 @media (max-width: 640px) {
-  .sticky-cta-bar { display: grid; }
   .nav-phone .nav-phone-num { display: none; }
 }
 main { padding-top: 64px; }
