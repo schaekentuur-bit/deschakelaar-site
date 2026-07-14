@@ -682,11 +682,6 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
             <button type="submit" class="form-submit">Plan een kennismaking →</button>
             <p class="form-note">Gratis &amp; vrijblijvend · binnen 24 uur</p>
           </form>
-          <div class="form-success" id="form-success-zak">
-            <div class="form-success-check">✓</div>
-            <h3>Bericht ontvangen!</h3>
-            <p>Ik neem binnen 24 uur contact op voor de kennismaking.</p>
-          </div>
         </div>
       </div>
     </div>
@@ -771,11 +766,8 @@ function submitForm(e, formId, successId) {
   })
   .then(r => {
     if (r.ok) {
-      form.style.display = 'none';
-      document.getElementById(successId).style.display = 'block';
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'conversion', { 'send_to': 'AW-18200989510/lNCgCIGg5LccEMae9OZD' });
-      }
+      /* Redirect naar bedankpagina — conversies vuren daar, niet hier, om dubbeltellen te voorkomen. */
+      window.location.href = '/bedankt.html?type=zakelijk';
     } else {
       btn.disabled    = false;
       btn.textContent = 'Verstuur bericht →';

@@ -750,7 +750,7 @@ function submitForm(e, formId, successId) {
     if (r.ok) {
       /* Redirect naar bedankpagina — GA4 generate_lead + Ads conversie vuren daar bij page load,
          ná Cookiebot-consent. Betrouwbaarder dan vuren vanuit deze callback. */
-      window.location.href = '/bedankt.html';
+      window.location.href = '/bedankt.html?type=particulier';
     } else {
       btn.disabled    = false;
       btn.textContent = 'Plan een gratis intake →';
@@ -759,13 +759,10 @@ function submitForm(e, formId, successId) {
   })
   .catch(() => {
     btn.disabled    = false;
-    btn.textContent = 'Plan je intake →';
+    btn.textContent = 'Plan een gratis intake →';
     alert('Er ging iets mis. Stuur gerust een e-mail naar info@deschakelaaradvies.nl');
   });
 }
-</script>
-<script>
-if (typeof fbq !== 'undefined') fbq('track', 'Lead');
 </script>
 </body>
 </html>

@@ -1131,7 +1131,6 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
             <button class="form-submit" onclick="submitForm('p')">Plan een gratis intake →</button>
             <p class="form-note">Max. 15 minuten · buiten kantoortijden · altijd gratis</p>
           </div>
-          <div class="form-success" id="pf-success"><div class="form-success-check">✓</div><h3>Ontvangen!</h3><p>Ik bel je zo snel mogelijk — binnen 24 uur. Tot snel!</p></div>
         </div>
       </div>
     </div>
@@ -1473,7 +1472,6 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
             <button class="form-submit" onclick="submitForm('z')">Plan een kennismaking →</button>
             <p class="form-note">Eerste gesprek kosteloos · binnen 24 uur</p>
           </div>
-          <div class="form-success" id="zf-success"><div class="form-success-check">✓</div><h3>Aanvraag ontvangen!</h3><p>Ik neem binnen 24 uur contact op om een kennismakingsgesprek in te plannen.</p></div>
         </div>
       </div>
     </div>
@@ -1667,9 +1665,8 @@ function submitForm(type) {
   })
   .then(r => {
     if (r.ok) {
-      document.getElementById(type + 'f-inner').style.display   = 'none';
-      document.getElementById(type + 'f-success').style.display = 'block';
-      if (typeof gtag !== 'undefined') { gtag('event', 'conversion', { 'send_to': 'AW-18200989510/lNCgCIGg5LccEMae9OZD' }); }
+      /* Redirect naar bedankpagina — conversies vuren daar, niet hier, om dubbeltellen te voorkomen. */
+      window.location.href = '/bedankt.html?type=' + (type === 'p' ? 'particulier' : 'zakelijk');
     } else {
       btn.disabled = false;
       btn.textContent = type === 'p' ? 'Plan een gratis intake →' : 'Plan een kennismaking →';

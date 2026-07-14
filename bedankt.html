@@ -169,8 +169,19 @@ footer { background:var(--navy); padding:32px 40px; color:rgba(255,255,255,0.45)
 
 <script>
 /* Conversies vuren zodra deze pagina laadt — betrouwbaarder dan in de form callback,
-   want Cookiebot heeft consent al verwerkt vóór de redirect. */
+   want Cookiebot heeft consent al verwerkt vóór de redirect.
+   Twee beveiligingen tegen onterecht/dubbel tellen:
+   1. Alleen vuren als de bezoeker via een formulier hier kwam (?type=particulier/zakelijk).
+      Geen type-parameter betekent geen conversie — voorkomt tellen bij handmatig bezoek.
+   2. sessionStorage-vlag: vuurt maximaal één keer per sessie, ook bij een refresh van deze pagina. */
 (function() {
+  var type = new URLSearchParams(window.location.search).get('type');
+  if (!type) return;
+
+  var FIRED_KEY = 'schakelaar_conversie_gevuurd';
+  if (sessionStorage.getItem(FIRED_KEY)) return;
+  sessionStorage.setItem(FIRED_KEY, type);
+
   if (typeof gtag === 'undefined') return;
 
   /* GA4: generate_lead event — zichtbaar in GA4 DebugView en Conversies */
