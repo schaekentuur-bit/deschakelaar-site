@@ -27,6 +27,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 64px; ba
 .nav-phone .nav-phone-num { display: inline; }
 .footer-phone { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.55); text-decoration: none; }
 .footer-phone:hover { color: var(--green); }
+.footer-cookie-link { background: none; border: none; padding: 0; margin: 0; font: inherit; font-size: 13px; color: rgba(255,255,255,0.35); text-decoration: underline; cursor: pointer; }
+.footer-cookie-link:hover { color: var(--green); }
 
 /* ── CONTACTDREMPEL: WhatsApp float, altijd zichtbaar behalve bij footer/formulier ── */
 .whatsapp-float {

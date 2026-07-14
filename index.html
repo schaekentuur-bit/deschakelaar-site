@@ -1,34 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="nl">
 <head>
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="a52b71a2-e717-4e93-b265-798301ceafd6" data-blockingmode="auto" type="text/javascript"></script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GN0DRNNMR5"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-GN0DRNNMR5');
-  gtag('config', 'AW-18200989510');
-</script>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '2807720619589029');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=2807720619589029&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+<script src="/js/consent.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Onafhankelijk Laadpaaladvies Limburg | De Schakelaar</title>
@@ -201,6 +174,8 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; backgrou
 .nav-phone:hover { color:var(--green); }
 .footer-phone { color:rgba(255,255,255,0.55); text-decoration:none; }
 .footer-phone:hover { color:var(--green); }
+.footer-cookie-link { background:none; border:none; padding:0; margin:0; font:inherit; font-size:13px; color:rgba(255,255,255,0.35); text-decoration:underline; cursor:pointer; }
+.footer-cookie-link:hover { color:var(--green); }
 
 /* ── Contactdrempel: WhatsApp float + sticky mobiele CTA-balk ── */
 .whatsapp-float { position:fixed; right:20px; bottom:20px; z-index:500; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.22); transition:opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; }
@@ -1757,6 +1732,7 @@ const FOOTER_HTML = `
   <div class="footer-bottom">
     <span>&#169; 2026 De Schakelaar &middot; deschakelaaradvies.nl</span>
     <span>info@deschakelaaradvies.nl &middot; <a href="tel:+31644954671" class="footer-phone">06 44 95 46 71</a></span>
+    <button type="button" class="footer-cookie-link" onclick="window.openCookieSettings && window.openCookieSettings()">Cookie-instellingen</button>
   </div>
 `;
 document.querySelectorAll('#site-footer').forEach(el => el.innerHTML = FOOTER_HTML);

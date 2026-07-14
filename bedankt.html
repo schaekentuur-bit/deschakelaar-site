@@ -1,34 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="nl">
 <head>
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="a52b71a2-e717-4e93-b265-798301ceafd6" data-blockingmode="auto" type="text/javascript"></script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GN0DRNNMR5"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-GN0DRNNMR5');
-  gtag('config', 'AW-18200989510');
-</script>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '2807720619589029');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=2807720619589029&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+<script src="/js/consent.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bericht ontvangen — De Schakelaar</title>
@@ -85,6 +58,8 @@ main { flex:1; display:flex; align-items:center; justify-content:center; padding
 footer { background:var(--navy); padding:32px 40px; color:rgba(255,255,255,0.45); font-size:13px; }
 .footer-inner-simple { max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
 .footer-kvk { font-size:12px; color:rgba(255,255,255,0.35); }
+.footer-cookie-link { background:none; border:none; padding:0; margin:0; font:inherit; font-size:13px; color:rgba(255,255,255,0.35); text-decoration:underline; cursor:pointer; }
+.footer-cookie-link:hover { color:var(--green); }
 /* VERTROUWENSSIGNAAL: KvK zichtbaar in footer */
 .footer-info-row { max-width:1100px; margin:0 auto; display:flex; gap:32px; flex-wrap:wrap; padding:20px 0; border-top:0.5px solid rgba(255,255,255,0.08); border-bottom:0.5px solid rgba(255,255,255,0.08); margin-bottom:20px; }
 .footer-info-item { display:flex; flex-direction:column; gap:4px; }
@@ -164,39 +139,52 @@ footer { background:var(--navy); padding:32px 40px; color:rgba(255,255,255,0.45)
   <div class="footer-inner-simple">
     <svg class="logo-footer" viewBox="50 88 630 100" xmlns="http://www.w3.org/2000/svg"><rect x="60" y="122" width="104" height="56" rx="28" fill="rgba(255,255,255,0.12)"/><rect x="60" y="122" width="104" height="56" rx="28" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/><circle cx="136" cy="150" r="22" fill="#6DBF4A"/><path d="M 135 140 L 129 151 L 136 151 L 134 160 L 142 148 L 135 148 Z" fill="#1B2E4B" opacity="0.9"/><path d="M 136 110 A 40 40 0 0 1 176 150" stroke="#6DBF4A" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 136 96 A 54 54 0 0 1 190 150" stroke="#6DBF4A" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.5"/><line x1="208" y1="118" x2="208" y2="182" stroke="rgba(255,255,255,0.2)" stroke-width="0.75"/><text x="224" y="158" style="font-family:'Syne',sans-serif;font-weight:700;font-size:40px;"><tspan fill="#6DBF4A">De </tspan><tspan fill="rgba(255,255,255,0.8)">Schakelaar</tspan></text></svg>
     <span>&#169; 2026 De Schakelaar &middot; deschakelaaradvies.nl</span>
+    <button type="button" class="footer-cookie-link" onclick="window.openCookieSettings && window.openCookieSettings()">Cookie-instellingen</button>
   </div>
 </footer>
 
 <script>
-/* Conversies vuren zodra deze pagina laadt — betrouwbaarder dan in de form callback,
-   want Cookiebot heeft consent al verwerkt vóór de redirect.
-   Twee beveiligingen tegen onterecht/dubbel tellen:
+/* Conversies vuren zodra deze pagina laadt, en alleen als de bezoeker
+   daadwerkelijk toestemming heeft gegeven (via consent.js, /js/consent.js).
+   Drie beveiligingen:
    1. Alleen vuren als de bezoeker via een formulier hier kwam (?type=particulier/zakelijk).
       Geen type-parameter betekent geen conversie — voorkomt tellen bij handmatig bezoek.
-   2. sessionStorage-vlag: vuurt maximaal één keer per sessie, ook bij een refresh van deze pagina. */
+   2. Zonder consent-keuze (bezoeker heeft de banner nog niet beantwoord) wordt er nog
+      niets gevuurd — en dat is acceptabel. consent.js herlaadt de pagina na een keuze,
+      waarna dit blok opnieuw draait en alsnog (of alsnog niet) kan vuren.
+   3. sessionStorage-vlag: vuurt maximaal één keer per sessie, pas gezet ná een echte
+      consent-beslissing — zodat een vroege "geen consent nog"-aanroep het latere
+      vuren na herlaad niet blokkeert. */
 (function() {
   var type = new URLSearchParams(window.location.search).get('type');
   if (!type) return;
+
+  var consent = window.SchakelaarConsent && window.SchakelaarConsent.get();
+  if (!consent) return; // nog geen keuze gemaakt -> (nog) geen events
 
   var FIRED_KEY = 'schakelaar_conversie_gevuurd';
   if (sessionStorage.getItem(FIRED_KEY)) return;
   sessionStorage.setItem(FIRED_KEY, type);
 
-  if (typeof gtag === 'undefined') return;
+  /* GA4: generate_lead event — zichtbaar in GA4 DebugView en Conversies. Vereist Statistieken-toestemming. */
+  if (consent.statistics && typeof gtag !== 'undefined') {
+    gtag('event', 'generate_lead', {
+      currency: 'EUR',
+      value: 99
+    });
+  }
 
-  /* GA4: generate_lead event — zichtbaar in GA4 DebugView en Conversies */
-  gtag('event', 'generate_lead', {
-    currency: 'EUR',
-    value: 99
-  });
+  /* Google Ads conversie — label staat al correct ingesteld. Vereist Marketing-toestemming. */
+  if (consent.marketing && typeof gtag !== 'undefined') {
+    gtag('event', 'conversion', {
+      send_to: 'AW-18200989510/lNCgCIGg5LccEMae9OZD'
+    });
+  }
 
-  /* Google Ads conversie — label staat al correct ingesteld */
-  gtag('event', 'conversion', {
-    send_to: 'AW-18200989510/lNCgCIGg5LccEMae9OZD'
-  });
-
-  /* Meta Pixel: CompleteRegistration */
-  if (typeof fbq !== 'undefined') fbq('track', 'CompleteRegistration');
+  /* Meta Pixel: CompleteRegistration. Vereist Marketing-toestemming. */
+  if (consent.marketing && typeof fbq !== 'undefined') {
+    fbq('track', 'CompleteRegistration');
+  }
 })();
 </script>
 </body>
