@@ -170,6 +170,21 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; backgrou
 .nav-cta { background:var(--green); color:white; padding:8px 20px; border-radius:24px; font-size:14px; font-weight:500; cursor:pointer; border:none; transition:all 0.2s; margin-left:6px; text-decoration:none; }
 .nav-cta:hover { background:#5aaa38; transform:translateY(-1px); }
 .logo-nav { height:34px; display:block; }
+.nav-phone { display:flex; align-items:center; gap:6px; color:var(--navy); text-decoration:none; font-size:14px; font-weight:500; white-space:nowrap; }
+.nav-phone svg { width:16px; height:16px; flex-shrink:0; }
+.nav-phone:hover { color:var(--green); }
+.footer-phone { color:rgba(255,255,255,0.55); text-decoration:none; }
+.footer-phone:hover { color:var(--green); }
+.whatsapp-float { position:fixed; right:20px; bottom:20px; z-index:500; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.22); transition:opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; }
+.whatsapp-float svg { width:28px; height:28px; fill:white; }
+.whatsapp-float.wa-hidden { opacity:0; visibility:hidden; transform:scale(0.8); pointer-events:none; }
+.sticky-cta-bar { position:fixed; left:0; right:0; bottom:0; z-index:499; display:none; grid-template-columns:1fr 1fr; box-shadow:0 -4px 16px rgba(0,0,0,0.14); transform:translateY(100%); transition:transform 0.25s ease; }
+.sticky-cta-bar.sticky-visible { transform:translateY(0); }
+.sticky-cta-btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:15px 12px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:14px; text-decoration:none; }
+.sticky-cta-btn svg { width:17px; height:17px; }
+.sticky-cta-btn.sc-wa  { background:#25D366; color:white; }
+.sticky-cta-btn.sc-bel { background:var(--navy); color:white; }
+@media (max-width:640px) { .sticky-cta-bar { display:grid; } .nav-phone .nav-phone-num { display:none; } }
 
 .section { padding:96px 40px; }
 .section-inner { max-width:1100px; margin:0 auto; }
@@ -317,9 +332,16 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
       <a href="/particulier.html" class="nav-aud-btn active-part">Particulier</a>
       <a href="/zakelijk.html" class="nav-aud-btn">Zakelijk</a>
     </div>
+    <a href="tel:+31644954671" class="nav-phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="nav-phone-num">06 44 95 46 71</span></a>
     <a href="#part-contact" class="nav-cta">Plan je intake</a>
   </div>
 </nav>
+
+<a href="https://wa.me/31644954671?text=Hoi%20Tuur%2C%20ik%20heb%20een%20vraag%20over%20laadadvies" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Stuur een WhatsApp-bericht"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 0 0 3.85 1h.02a7.95 7.95 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.63zm-5.55 12.2h-.01a6.6 6.6 0 0 1-3.36-.92l-.24-.14-2.5.65.67-2.44-.16-.25a6.6 6.6 0 1 1 12.2-3.5 6.62 6.62 0 0 1-6.6 6.6zm3.6-4.94c-.2-.1-1.17-.58-1.35-.64-.18-.07-.31-.1-.44.1-.13.19-.5.64-.62.78-.11.13-.23.15-.42.05-.2-.1-.83-.3-1.58-.97-.58-.52-.98-1.16-1.09-1.36-.11-.2-.01-.3.09-.4.09-.1.2-.23.3-.34.1-.11.13-.19.2-.32.07-.13.03-.24-.02-.34-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.44-.33h-.38c-.13 0-.34.05-.52.24-.18.2-.68.66-.68 1.6 0 .95.7 1.87.79 2 .1.13 1.37 2.1 3.33 2.94.47.2.83.32 1.11.41.47.15.9.13 1.24.08.38-.06 1.17-.48 1.33-.94.16-.46.16-.85.11-.94-.05-.08-.18-.13-.38-.23z"/></svg></a>
+<div class="sticky-cta-bar">
+  <a href="https://wa.me/31644954671?text=Hoi%20Tuur%2C%20ik%20heb%20een%20vraag%20over%20laadadvies" class="sticky-cta-btn sc-wa" target="_blank" rel="noopener"><svg fill="white" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 0 0 3.85 1h.02a7.95 7.95 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.63zm-5.55 12.2h-.01a6.6 6.6 0 0 1-3.36-.92l-.24-.14-2.5.65.67-2.44-.16-.25a6.6 6.6 0 1 1 12.2-3.5 6.62 6.62 0 0 1-6.6 6.6z"/></svg>WhatsApp</a>
+  <a href="tel:+31644954671" class="sticky-cta-btn sc-bel"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Bel</a>
+</div>
 
 <main>
   <!-- Hero -->
@@ -600,7 +622,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
           </div>
           <div class="cdet">
             <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
-            <div><span class="cdet-lbl">Reactietijd</span><span class="cdet-val">Binnen 48 uur</span></div>
+            <div><span class="cdet-lbl">Reactietijd</span><span class="cdet-val">Binnen 24 uur</span></div>
           </div>
           <div class="cdet">
             <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div>
@@ -610,20 +632,22 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
             <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div>
             <div><span class="cdet-lbl">Kosten</span><span class="cdet-val">Altijd gratis</span></div>
           </div>
+          <div class="cdet">
+            <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 12l4-4 3 3 5-7"/></svg></div>
+            <div><span class="cdet-lbl">Liever bellen of WhatsAppen?</span><span class="cdet-val"><a href="tel:+31644954671" style="color:var(--navy);text-decoration:none;">06 44 95 46 71</a></span></div>
+          </div>
         </div>
         <div class="form-wrap">
           <div class="form-title">Plan je intake</div>
+          <p style="font-size:13px;color:var(--navy-40);margin:-14px 0 18px;line-height:1.6;">Vrijblijvend, je zit nergens aan vast. Ik bel je binnen 24 uur terug.</p>
           <form id="contact-form-part" onsubmit="submitForm(event,'contact-form-part','form-success-part')">
-            <div class="form-row2">
-              <div class="form-group"><label class="form-label">Voornaam</label><input class="form-input" type="text" name="voornaam" required placeholder="Jan"></div>
-              <div class="form-group"><label class="form-label">Achternaam</label><input class="form-input" type="text" name="achternaam" required placeholder="Jansen"></div>
-            </div>
+            <div class="form-group"><label class="form-label">Naam</label><input class="form-input" type="text" name="naam" required placeholder="Jan de Vries"></div>
             <div class="form-row2">
               <div class="form-group"><label class="form-label">Telefoonnummer</label><input class="form-input" type="tel" name="tel" required placeholder="06-12345678"></div>
-              <div class="form-group"><label class="form-label">E-mailadres</label><input class="form-input" type="email" name="email" placeholder="jan@voorbeeld.nl"></div>
+              <div class="form-group"><label class="form-label">E-mailadres <span style="font-weight:400;color:var(--navy-40);font-size:12px;">optioneel</span></label><input class="form-input" type="email" name="email" placeholder="jan@voorbeeld.nl"></div>
             </div>
             <div class="form-group">
-              <label class="form-label">Wanneer kan ik je bellen? <span style="font-weight:400;color:var(--navy-40);font-size:12px;">meerdere opties mogelijk</span></label>
+              <label class="form-label">Wanneer kan ik je bellen? <span style="font-weight:400;color:var(--navy-40);font-size:12px;">optioneel, meerdere opties mogelijk</span></label>
               <div class="bel-group-lbl">Doordeweeks · avond 18–21</div>
               <div class="check-grid">
                 <label class="check-item"><input type="checkbox" name="belbaarheid" value="Maandag avond"> Maandag</label>
@@ -640,13 +664,13 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
                 <label class="check-item"><input type="checkbox" name="belbaarheid" value="Zondag middag"> Zo middag 12–17</label>
               </div>
             </div>
-            <button type="submit" class="form-submit">Plan je intake →</button>
+            <button type="submit" class="form-submit">Plan een gratis intake →</button>
             <p class="form-note">Max. 15 minuten · buiten kantoortijden · altijd gratis</p>
           </form>
           <div class="form-success" id="form-success-part">
             <div class="form-success-check">✓</div>
             <h3>Bericht ontvangen!</h3>
-            <p>Ik neem binnen 48 uur contact met je op voor de intake.</p>
+            <p>Ik neem binnen 24 uur contact met je op voor de intake.</p>
           </div>
         </div>
       </div>
@@ -706,10 +730,11 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   </div>
   <div class="footer-bottom">
     <span>&#169; 2026 De Schakelaar &middot; deschakelaaradvies.nl</span>
-    <span>info@deschakelaaradvies.nl</span>
+    <span>info@deschakelaaradvies.nl &middot; <a href="tel:+31644954671" class="footer-phone">06 44 95 46 71</a></span>
   </div>
 </footer>
 
+<script src="blog/cta.js" defer></script>
 <script>
 function toggleFaq(btn) {
   const item = btn.closest('.faq-item');
@@ -738,7 +763,7 @@ function submitForm(e, formId, successId) {
       window.location.href = '/bedankt.html';
     } else {
       btn.disabled    = false;
-      btn.textContent = 'Plan je intake →';
+      btn.textContent = 'Plan een gratis intake →';
       alert('Er ging iets mis. Stuur gerust een e-mail naar info@deschakelaaradvies.nl');
     }
   })

@@ -196,6 +196,23 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; backgrou
 .nav-link:hover { background:var(--navy-06); color:var(--navy); }
 .nav-cta { background:var(--green); color:white; padding:8px 20px; border-radius:24px; font-size:14px; font-weight:500; cursor:pointer; border:none; transition:all 0.2s; margin-left:6px; }
 .nav-cta:hover { background:#5aaa38; transform:translateY(-1px); }
+.nav-phone { display:flex; align-items:center; gap:6px; color:var(--navy); text-decoration:none; font-size:14px; font-weight:500; white-space:nowrap; }
+.nav-phone svg { width:16px; height:16px; flex-shrink:0; }
+.nav-phone:hover { color:var(--green); }
+.footer-phone { color:rgba(255,255,255,0.55); text-decoration:none; }
+.footer-phone:hover { color:var(--green); }
+
+/* ── Contactdrempel: WhatsApp float + sticky mobiele CTA-balk ── */
+.whatsapp-float { position:fixed; right:20px; bottom:20px; z-index:500; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(0,0,0,0.22); transition:opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; }
+.whatsapp-float svg { width:28px; height:28px; fill:white; }
+.whatsapp-float.wa-hidden { opacity:0; visibility:hidden; transform:scale(0.8); pointer-events:none; }
+.sticky-cta-bar { position:fixed; left:0; right:0; bottom:0; z-index:499; display:none; grid-template-columns:1fr 1fr; box-shadow:0 -4px 16px rgba(0,0,0,0.14); transform:translateY(100%); transition:transform 0.25s ease; }
+.sticky-cta-bar.sticky-visible { transform:translateY(0); }
+.sticky-cta-btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:15px 12px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:14px; text-decoration:none; }
+.sticky-cta-btn svg { width:17px; height:17px; }
+.sticky-cta-btn.sc-wa  { background:#25D366; color:white; }
+.sticky-cta-btn.sc-bel { background:var(--navy); color:white; }
+@media (max-width:640px) { .sticky-cta-bar { display:grid; } .nav-phone .nav-phone-num { display:none; } }
 
 /* SHARED */
 .section { padding:96px 40px; }
@@ -313,6 +330,18 @@ button:focus-visible, .nav-link:focus-visible, .nav-cta:focus-visible {
 
 /* ── DIENSTEN ── */
 .dienst-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:52px; }
+.review-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:44px; }
+.review-card { background:white; border:0.5px solid var(--border); border-radius:16px; padding:28px 30px; }
+.review-stars { display:flex; gap:3px; margin-bottom:16px; }
+.review-stars svg { width:16px; height:16px; fill:#F5A623; }
+.review-quote { font-size:15px; line-height:1.75; color:var(--navy-60); margin-bottom:18px; }
+.review-author { display:flex; align-items:center; gap:10px; }
+.review-avatar { width:36px; height:36px; border-radius:50%; background:var(--green-15); color:var(--green); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:700; font-size:14px; flex-shrink:0; }
+.review-name { font-size:14px; font-weight:600; }
+.review-source { font-size:12px; color:var(--navy-40); }
+.review-cta { text-align:center; margin-top:28px; }
+.review-cta a { color:var(--green); text-decoration:none; font-size:14px; font-weight:500; }
+.review-cta a:hover { text-decoration:underline; }
 .dienst-card { background:white; border:0.5px solid var(--border); border-radius:16px; padding:32px; transition:all 0.25s; display:flex; flex-direction:column; gap:14px; }
 .dienst-card:hover { border-color:var(--green); box-shadow:0 0 0 3px var(--green-15); transform:translateY(-3px); }
 .dienst-icon { width:46px; height:46px; border-radius:13px; background:var(--green-15); display:flex; align-items:center; justify-content:center; }
@@ -498,6 +527,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   .how-grid,
   .dienst-grid,
   .blog-grid { grid-template-columns: 1fr 1fr; }
+  .review-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
 
   /* Nieuwe 4-kolom grids: terugzetten naar 2 */
   div[style*="grid-template-columns:repeat(4,1fr)"] { grid-template-columns: repeat(2,1fr) !important; }
@@ -558,6 +588,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   .how-grid,
   .dienst-grid,
   .blog-grid { grid-template-columns: 1fr; }
+  .review-grid { grid-template-columns: 1fr; }
   .dienst-card { padding: 24px; }
 
   /* Nieuwe 4-kolom grids: terugzetten naar 1 kolom op mobiel */
@@ -688,6 +719,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
         <text x="224" y="158" style="font-family:'Syne',sans-serif;font-weight:700;font-size:40px;"><tspan fill="#6DBF4A">De </tspan><tspan fill="#1B2E4B">Schakelaar</tspan></text>
       </svg>
     </div>
+    <a href="tel:+31644954671" class="nav-phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="nav-phone-num">06 44 95 46 71</span></a>
     <div id="nav-aud" style="display:none;" class="nav-audience">
       <button class="nav-aud-btn" id="btn-part" onclick="setAudience('particulier')">Particulier</button>
       <button class="nav-aud-btn" id="btn-zak"  onclick="setAudience('zakelijk')">Zakelijk</button>
@@ -715,6 +747,12 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
     <button class="mobile-menu-cta" id="mobile-menu-cta-btn" onclick="mobileContact();closeMobileMenu()">Plan je intake →</button>
   </div>
 </nav>
+
+<a href="https://wa.me/31644954671?text=Hoi%20Tuur%2C%20ik%20heb%20een%20vraag%20over%20laadadvies" id="wa-float" class="whatsapp-float wa-hidden" target="_blank" rel="noopener" aria-label="Stuur een WhatsApp-bericht"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 0 0 3.85 1h.02a7.95 7.95 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.63zm-5.55 12.2h-.01a6.6 6.6 0 0 1-3.36-.92l-.24-.14-2.5.65.67-2.44-.16-.25a6.6 6.6 0 1 1 12.2-3.5 6.62 6.62 0 0 1-6.6 6.6zm3.6-4.94c-.2-.1-1.17-.58-1.35-.64-.18-.07-.31-.1-.44.1-.13.19-.5.64-.62.78-.11.13-.23.15-.42.05-.2-.1-.83-.3-1.58-.97-.58-.52-.98-1.16-1.09-1.36-.11-.2-.01-.3.09-.4.09-.1.2-.23.3-.34.1-.11.13-.19.2-.32.07-.13.03-.24-.02-.34-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.44-.33h-.38c-.13 0-.34.05-.52.24-.18.2-.68.66-.68 1.6 0 .95.7 1.87.79 2 .1.13 1.37 2.1 3.33 2.94.47.2.83.32 1.11.41.47.15.9.13 1.24.08.38-.06 1.17-.48 1.33-.94.16-.46.16-.85.11-.94-.05-.08-.18-.13-.38-.23z"/></svg></a>
+<div id="sticky-cta" class="sticky-cta-bar">
+  <a href="https://wa.me/31644954671?text=Hoi%20Tuur%2C%20ik%20heb%20een%20vraag%20over%20laadadvies" class="sticky-cta-btn sc-wa" target="_blank" rel="noopener"><svg fill="white" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 0 0 3.85 1h.02a7.95 7.95 0 0 0 7.94-7.94 7.9 7.9 0 0 0-2.4-5.63zm-5.55 12.2h-.01a6.6 6.6 0 0 1-3.36-.92l-.24-.14-2.5.65.67-2.44-.16-.25a6.6 6.6 0 1 1 12.2-3.5 6.62 6.62 0 0 1-6.6 6.6z"/></svg>WhatsApp</a>
+  <a href="tel:+31644954671" class="sticky-cta-btn sc-bel"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Bel</a>
+</div>
 
 <!-- ══ KEUZE SCHERM ══ -->
 <div id="pg-home" class="page active">
@@ -846,6 +884,46 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
         </div>
 
       </div>
+    </div>
+  </div>
+
+  <!-- Sociaal bewijs — reviews -->
+  <div class="section" id="part-reviews">
+    <div class="section-inner">
+      <div class="section-label">Wat klanten zeggen</div>
+      <div class="section-title">Eerlijk advies, geen verkooppraatjes</div>
+      <div class="review-grid">
+        <div class="review-card">
+          <div class="review-stars">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          </div>
+          <p class="review-quote">"Fijn en eerlijk advies zonder verkooppraatjes. Tuur neemt de tijd om alles duidelijk uit te leggen, van laadpalen tot slim laden en energie."</p>
+          <div class="review-author">
+            <div class="review-avatar">G</div>
+            <div><div class="review-name">Google-review</div><div class="review-source">Particuliere klant</div></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          </div>
+          <p class="review-quote">"Tuur heeft ons goed op weg geholpen met slim laden bij de overstap naar een elektrische auto. Duidelijke uitleg en praktisch advies, precies wat we nodig hadden."</p>
+          <div class="review-author">
+            <div class="review-avatar">D</div>
+            <div><div class="review-name">Dick</div><div class="review-source">Particuliere klant</div></div>
+          </div>
+        </div>
+      </div>
+      <!-- CID-LINK: check dat deze doorverwijst naar de Maps-vermelding met reviews; pas anders aan -->
+      <div class="review-cta"><a href="https://www.google.com/maps?cid=13168863784019662120" target="_blank" rel="noopener">Bekijk alle reviews op Google →</a></div>
     </div>
   </div>
 
@@ -1048,20 +1126,22 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
           <p>Laat je nummer achter en geef aan wanneer ik je kan bereiken. Ik bel je terug voor een gesprek van max. 15 minuten — alles komt aan bod, geen voorbereiding nodig.</p>
           <p style="font-size:14px;color:var(--navy-40);">Ik bel buiten kantoortijden: doordeweeks na 18:00 of in het weekend.</p>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Gespreksduur</div><div class="cdet-val">Max. 15 minuten</div></div></div>
-          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Reactietijd</div><div class="cdet-val">Binnen 48 uur</div></div></div>
+          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Reactietijd</div><div class="cdet-val">Binnen 24 uur</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Beltijden</div><div class="cdet-val">Avond &amp; weekend</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Kosten</div><div class="cdet-val">Altijd gratis</div></div></div>
+          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 12l4-4 3 3 5-7"/></svg></div><div><div class="cdet-lbl">Liever bellen of WhatsAppen?</div><div class="cdet-val"><a href="tel:+31644954671" style="color:var(--navy);text-decoration:none;">06 44 95 46 71</a></div></div></div>
         </div>
         <div class="form-wrap">
           <div id="pf-inner">
             <div class="form-title">Plan je intake</div>
-            <div class="form-row2"><div class="form-group"><label class="form-label">Voornaam</label><input id="pf-voornaam" class="form-input" type="text" placeholder="Jan"></div><div class="form-group"><label class="form-label">Achternaam</label><input id="pf-achternaam" class="form-input" type="text" placeholder="de Vries"></div></div>
-            <div class="form-row2"><div class="form-group"><label class="form-label">Telefoonnummer</label><input id="pf-tel" class="form-input" type="tel" placeholder="06 12345678"></div><div class="form-group"><label class="form-label">E-mailadres</label><input id="pf-email" class="form-input" type="email" placeholder="jan@email.nl"></div></div>
-            <div class="form-group"><label class="form-label">Wanneer kan ik je bellen? <span style="font-weight:400;color:var(--navy-40);font-size:12px;">meerdere opties mogelijk</span></label><div class="bel-group-lbl">Doordeweeks · avond 18–21</div><div class="check-grid"><label class="check-item"><input type="checkbox" name="belbaarheid" value="Maandag avond"> Maandag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Dinsdag avond"> Dinsdag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Woensdag avond"> Woensdag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Donderdag avond"> Donderdag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Vrijdag avond"> Vrijdag</label></div><div class="bel-group-lbl">Weekend</div><div class="check-grid"><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zaterdag ochtend"> Za ochtend 9–12</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zaterdag middag"> Za middag 12–17</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zondag ochtend"> Zo ochtend 9–12</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zondag middag"> Zo middag 12–17</label></div></div>
-            <button class="form-submit" onclick="submitForm('p')">Plan je intake →</button>
+            <p style="font-size:13px;color:var(--navy-40);margin:-14px 0 18px;line-height:1.6;">Vrijblijvend, je zit nergens aan vast. Ik bel je binnen 24 uur terug.</p>
+            <div class="form-group"><label class="form-label">Naam</label><input id="pf-naam" class="form-input" type="text" placeholder="Jan de Vries" required></div>
+            <div class="form-row2"><div class="form-group"><label class="form-label">Telefoonnummer</label><input id="pf-tel" class="form-input" type="tel" placeholder="06 12345678" required></div><div class="form-group"><label class="form-label">E-mailadres <span style="font-weight:400;color:var(--navy-40);font-size:12px;">optioneel</span></label><input id="pf-email" class="form-input" type="email" placeholder="jan@email.nl"></div></div>
+            <div class="form-group"><label class="form-label">Wanneer kan ik je bellen? <span style="font-weight:400;color:var(--navy-40);font-size:12px;">optioneel, meerdere opties mogelijk</span></label><div class="bel-group-lbl">Doordeweeks · avond 18–21</div><div class="check-grid"><label class="check-item"><input type="checkbox" name="belbaarheid" value="Maandag avond"> Maandag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Dinsdag avond"> Dinsdag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Woensdag avond"> Woensdag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Donderdag avond"> Donderdag</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Vrijdag avond"> Vrijdag</label></div><div class="bel-group-lbl">Weekend</div><div class="check-grid"><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zaterdag ochtend"> Za ochtend 9–12</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zaterdag middag"> Za middag 12–17</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zondag ochtend"> Zo ochtend 9–12</label><label class="check-item"><input type="checkbox" name="belbaarheid" value="Zondag middag"> Zo middag 12–17</label></div></div>
+            <button class="form-submit" onclick="submitForm('p')">Plan een gratis intake →</button>
             <p class="form-note">Max. 15 minuten · buiten kantoortijden · altijd gratis</p>
           </div>
-          <div class="form-success" id="pf-success"><div class="form-success-check">✓</div><h3>Ontvangen!</h3><p>Ik bel je zo snel mogelijk — binnen 48 uur. Tot snel!</p></div>
+          <div class="form-success" id="pf-success"><div class="form-success-check">✓</div><h3>Ontvangen!</h3><p>Ik bel je zo snel mogelijk — binnen 24 uur. Tot snel!</p></div>
         </div>
       </div>
     </div>
@@ -1105,7 +1185,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
     <div class="stats-inner">
       <div><div class="stat-num">Limburg</div><div class="stat-lbl">mijn werkgebied —<br>van Venlo tot Maastricht</div></div>
       <div><div class="stat-num">100%</div><div class="stat-lbl">onafhankelijk — geen leverancier,<br>geen product</div></div>
-      <div><div class="stat-num">48u</div><div class="stat-lbl">reactietijd —<br>altijd persoonlijk contact</div></div>
+      <div><div class="stat-num">24u</div><div class="stat-lbl">reactietijd —<br>altijd persoonlijk contact</div></div>
     </div>
   </div>
 
@@ -1389,8 +1469,9 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
         <div class="contact-info">
           <h3>Stuur je aanvraag</h3>
           <p>Of je nu concrete plannen hebt of nog oriënteert — ik denk graag mee. Laat je gegevens achter en ik neem contact op.</p>
-          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Reactietijd</div><div class="cdet-val">Binnen 48 uur</div></div></div>
+          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div><div class="cdet-lbl">Reactietijd</div><div class="cdet-val">Binnen 24 uur</div></div></div>
           <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div><div><div class="cdet-lbl">Kennismaking</div><div class="cdet-val">Eerste gesprek kosteloos</div></div></div>
+          <div class="cdet"><div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 12l4-4 3 3 5-7"/></svg></div><div><div class="cdet-lbl">Liever direct bellen?</div><div class="cdet-val"><a href="tel:+31644954671" style="color:var(--navy);text-decoration:none;">06 44 95 46 71</a></div></div></div>
         </div>
         <div class="form-wrap">
           <div id="zf-inner">
@@ -1400,9 +1481,9 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
             <div class="form-row2"><div class="form-group"><label class="form-label">Zakelijk e-mailadres</label><input id="zf-email" class="form-input" type="email" placeholder="sara@bedrijf.nl"></div><div class="form-group"><label class="form-label">Telefoonnummer</label><input id="zf-tel" class="form-input" type="tel" placeholder="06 12345678"></div></div>
             <div class="form-group"><label class="form-label">Waar kan ik je mee helpen?</label><select id="zf-onderwerp" class="form-select"><option value="">Kies een onderwerp...</option><option>Financieel advies (laadkosten, vergoedingen, laadpassen)</option><option>Technisch advies (laadinfrastructuur pand)</option><option>Totaal advies (financieel + technisch)</option><option>Realisatie &amp; begeleiding</option><option>Webinar voor medewerkers</option><option>Weet ik nog niet precies</option></select></div>
             <button class="form-submit" onclick="submitForm('z')">Plan een kennismaking →</button>
-            <p class="form-note">Eerste gesprek kosteloos · binnen 48 uur</p>
+            <p class="form-note">Eerste gesprek kosteloos · binnen 24 uur</p>
           </div>
-          <div class="form-success" id="zf-success"><div class="form-success-check">✓</div><h3>Aanvraag ontvangen!</h3><p>Ik neem binnen 48 uur contact op om een kennismakingsgesprek in te plannen.</p></div>
+          <div class="form-success" id="zf-success"><div class="form-success-check">✓</div><h3>Aanvraag ontvangen!</h3><p>Ik neem binnen 24 uur contact op om een kennismakingsgesprek in te plannen.</p></div>
         </div>
       </div>
     </div>
@@ -1415,6 +1496,32 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
 
 <script>
 let audience = null;
+
+// ── Contactdrempel: WhatsApp float + sticky mobiele CTA-balk (alleen particulier) ──
+function updateContactWidgets() {
+  const wa  = document.getElementById('wa-float');
+  const bar = document.getElementById('sticky-cta');
+  if (!wa || !bar) return;
+  if (audience !== 'particulier') {
+    wa.classList.add('wa-hidden');
+    bar.classList.remove('sticky-visible');
+    return;
+  }
+  const hero    = document.querySelector('#pg-particulier .hero-part');
+  const noFloat = document.querySelectorAll('#pg-particulier .contact-wrap, #pg-particulier footer');
+  let pastHero = true;
+  if (hero) { const r = hero.getBoundingClientRect(); pastHero = r.bottom < 80; }
+  let nearZone = false;
+  noFloat.forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) nearZone = true;
+  });
+  const isMobile = window.innerWidth <= 640;
+  bar.classList.toggle('sticky-visible', isMobile && pastHero && !nearZone);
+  wa.classList.toggle('wa-hidden', nearZone || (isMobile && pastHero));
+}
+window.addEventListener('scroll', updateContactWidgets, { passive: true });
+window.addEventListener('resize', updateContactWidgets);
 
 function mobileContact() {
   const contactId = audience === 'particulier' ? 'part-contact' : audience === 'zakelijk' ? 'zak-contact' : null;
@@ -1451,6 +1558,7 @@ function goHome(pushHistory) {
   });
   document.getElementById('pg-home').classList.add('active');
   window.scrollTo({ top: 0 });
+  updateContactWidgets();
 }
 
 function navScroll(section) {
@@ -1487,6 +1595,7 @@ function setAudience(aud, pushHistory) {
   if (menuCta) menuCta.textContent = aud === 'zakelijk' ? 'Plan een gesprek →' : 'Plan je intake →';
   const mobileLink2 = document.getElementById('mobile-nav-link-2');
   if (mobileLink2) mobileLink2.textContent = aud === 'zakelijk' ? 'Aanpak' : 'Werkwijze';
+  updateContactWidgets();
   closeMobileMenu();
 }
 
@@ -1529,6 +1638,16 @@ const FORMSPREE_PARTICULIER = 'mbdbygla';
 const FORMSPREE_ZAKELIJK    = 'mbdbygla';
 
 function submitForm(type) {
+  if (type === 'p') {
+    const naam = document.getElementById('pf-naam');
+    const tel  = document.getElementById('pf-tel');
+    if (!naam.value.trim() || !tel.value.trim()) {
+      alert('Vul je naam en telefoonnummer in, dan bel ik je terug.');
+      (naam.value.trim() ? tel : naam).focus();
+      return;
+    }
+  }
+
   const btn = document.querySelector('#' + type + 'f-inner .form-submit');
   btn.disabled = true;
   btn.textContent = 'Versturen…';
@@ -1536,8 +1655,7 @@ function submitForm(type) {
   let data, endpoint;
   if (type === 'p') {
     data = {
-      voornaam:    document.getElementById('pf-voornaam').value,
-      achternaam:  document.getElementById('pf-achternaam').value,
+      naam:        document.getElementById('pf-naam').value,
       email:       document.getElementById('pf-email').value,
       telefoon:    document.getElementById('pf-tel').value,
       belbaarheid: Array.from(document.querySelectorAll('#pf-inner input[name="belbaarheid"]:checked')).map(c => c.value).join(', ') || 'Niet opgegeven',
@@ -1571,13 +1689,13 @@ function submitForm(type) {
       if (typeof gtag !== 'undefined') { gtag('event', 'conversion', { 'send_to': 'AW-18200989510/lNCgCIGg5LccEMae9OZD' }); }
     } else {
       btn.disabled = false;
-      btn.textContent = type === 'p' ? 'Plan je intake →' : 'Plan een kennismaking →';
+      btn.textContent = type === 'p' ? 'Plan een gratis intake →' : 'Plan een kennismaking →';
       alert('Er ging iets mis. Stuur gerust een e-mail naar info@deschakelaaradvies.nl');
     }
   })
   .catch(() => {
     btn.disabled = false;
-    btn.textContent = type === 'p' ? 'Plan je intake →' : 'Plan een kennismaking →';
+    btn.textContent = type === 'p' ? 'Plan een gratis intake →' : 'Plan een kennismaking →';
     alert('Er ging iets mis. Stuur gerust een e-mail naar info@deschakelaaradvies.nl');
   });
 }
@@ -1658,7 +1776,7 @@ const FOOTER_HTML = `
   </div>
   <div class="footer-bottom">
     <span>&#169; 2026 De Schakelaar &middot; deschakelaaradvies.nl</span>
-    <span>info@deschakelaaradvies.nl</span>
+    <span>info@deschakelaaradvies.nl &middot; <a href="tel:+31644954671" class="footer-phone">06 44 95 46 71</a></span>
   </div>
 `;
 document.querySelectorAll('#site-footer').forEach(el => el.innerHTML = FOOTER_HTML);

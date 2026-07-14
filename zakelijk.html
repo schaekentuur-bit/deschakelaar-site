@@ -151,6 +151,12 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; backgrou
 .nav-cta { background:var(--green); color:white; padding:8px 20px; border-radius:24px; font-size:14px; font-weight:500; cursor:pointer; border:none; transition:all 0.2s; margin-left:6px; text-decoration:none; }
 .nav-cta:hover { background:#5aaa38; transform:translateY(-1px); }
 .logo-nav { height:34px; display:block; }
+.nav-phone { display:flex; align-items:center; gap:6px; color:var(--navy); text-decoration:none; font-size:14px; font-weight:500; white-space:nowrap; }
+.nav-phone svg { width:16px; height:16px; flex-shrink:0; }
+.nav-phone:hover { color:var(--green); }
+.footer-phone { color:rgba(255,255,255,0.55); text-decoration:none; }
+.footer-phone:hover { color:var(--green); }
+@media (max-width:640px) { .nav-phone .nav-phone-num { display:none; } }
 
 .section { padding:96px 40px; }
 .section-inner { max-width:1100px; margin:0 auto; }
@@ -303,6 +309,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
       <a href="/particulier.html" class="nav-aud-btn">Particulier</a>
       <a href="/zakelijk.html" class="nav-aud-btn active-zak">Zakelijk</a>
     </div>
+    <a href="tel:+31644954671" class="nav-phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="nav-phone-num">06 44 95 46 71</span></a>
     <a href="#zak-contact" class="nav-cta">Plan een kennismaking</a>
   </div>
 </nav>
@@ -344,7 +351,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
     <div class="stats-inner">
       <div><div class="stat-num">Limburg</div><div class="stat-lbl">mijn werkgebied —<br>van Venlo tot Maastricht</div></div>
       <div><div class="stat-num">100%</div><div class="stat-lbl">onafhankelijk — geen leverancier,<br>geen product</div></div>
-      <div><div class="stat-num">48u</div><div class="stat-lbl">reactietijd —<br>altijd persoonlijk contact</div></div>
+      <div><div class="stat-num">24u</div><div class="stat-lbl">reactietijd —<br>altijd persoonlijk contact</div></div>
     </div>
   </div>
 
@@ -634,7 +641,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
           <p>Laat je gegevens achter en ik neem contact op voor een kort kennismakingsgesprek — gratis en vrijblijvend.</p>
           <div class="cdet">
             <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div>
-            <div><span class="cdet-lbl">Reactietijd</span><span class="cdet-val">Binnen 48 uur</span></div>
+            <div><span class="cdet-lbl">Reactietijd</span><span class="cdet-val">Binnen 24 uur</span></div>
           </div>
           <div class="cdet">
             <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div>
@@ -643,6 +650,10 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
           <div class="cdet">
             <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M3 9l3 3 7-8"/></svg></div>
             <div><span class="cdet-lbl">Kennismaking</span><span class="cdet-val">Altijd gratis</span></div>
+          </div>
+          <div class="cdet">
+            <div class="cdet-icon"><svg viewBox="0 0 16 16" fill="none" stroke="#6DBF4A" stroke-width="1.5" stroke-linecap="round"><path d="M2 12l4-4 3 3 5-7"/></svg></div>
+            <div><span class="cdet-lbl">Liever direct bellen?</span><span class="cdet-val"><a href="tel:+31644954671" style="color:var(--navy);text-decoration:none;">06 44 95 46 71</a></span></div>
           </div>
         </div>
         <div class="form-wrap">
@@ -669,12 +680,12 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
               </select>
             </div>
             <button type="submit" class="form-submit">Plan een kennismaking →</button>
-            <p class="form-note">Gratis &amp; vrijblijvend · binnen 48 uur</p>
+            <p class="form-note">Gratis &amp; vrijblijvend · binnen 24 uur</p>
           </form>
           <div class="form-success" id="form-success-zak">
             <div class="form-success-check">✓</div>
             <h3>Bericht ontvangen!</h3>
-            <p>Ik neem binnen 48 uur contact op voor de kennismaking.</p>
+            <p>Ik neem binnen 24 uur contact op voor de kennismaking.</p>
           </div>
         </div>
       </div>
@@ -733,7 +744,7 @@ footer { background:var(--navy); padding:60px 40px 32px; color:rgba(255,255,255,
   </div>
   <div class="footer-bottom">
     <span>&#169; 2026 De Schakelaar &middot; deschakelaaradvies.nl</span>
-    <span>info@deschakelaaradvies.nl</span>
+    <span>info@deschakelaaradvies.nl &middot; <a href="tel:+31644954671" class="footer-phone">06 44 95 46 71</a></span>
   </div>
 </footer>
 
