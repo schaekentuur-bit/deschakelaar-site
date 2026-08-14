@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Situatieschets laden — De Schakelaar</title>
+<title>Situatieschets laden | De Schakelaar</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -244,7 +244,7 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
         <path d="M144 60A40 40 0 0 1 184 100" stroke="#6DBF4A" stroke-width="4" fill="none" stroke-linecap="round"/>
         <path d="M144 46A54 54 0 0 1 198 100" stroke="#6DBF4A" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".5"/>
       </svg>
-      De Schakelaar — Advies aan huis
+      De Schakelaar, advies aan huis
     </div>
     <h1>Financiële situatieschets laden</h1>
     <p>Vul samen met de klant de situatie in. De uitkomst wordt live bijgewerkt.</p>
@@ -284,15 +284,15 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
         <label>Eigen oprit of garage?</label>
         <select id="oprit" onchange="calc()">
           <option value="ja">Ja</option>
-          <option value="nee">Nee — geen vaste laadplek</option>
+          <option value="nee">Nee, geen vaste laadplek</option>
         </select>
       </div>
       <div class="field">
         <label>Huisaansluiting</label>
         <select id="aansluiting" onchange="calc()">
-          <option value="1x35">1×35A — max. 8 kW (1-fase)</option>
-          <option value="3x25" selected>3×25A — max. 17 kW (standaard)</option>
-          <option value="3x35">3×35A — max. 24 kW (nieuwbouw)</option>
+          <option value="1x35">1×35A, max. 8 kW (1-fase)</option>
+          <option value="3x25" selected>3×25A, max. 17 kW (standaard)</option>
+          <option value="3x35">3×35A, max. 24 kW (nieuwbouw)</option>
         </select>
       </div>
     </div>
@@ -336,34 +336,34 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
     <div class="field">
       <label>Type laadpaal</label>
       <div class="tog-row" id="paal-tog">
-        <button class="tog-btn" data-v="0" onclick="setPaal(this,0)">Al een paal / straat laden — €0</button>
-        <button class="tog-btn" data-v="800" onclick="setPaal(this,800)">Eenvoudig — €800</button>
-        <button class="tog-btn active" data-v="1200" onclick="setPaal(this,1200)">Slim OCPP — €1.200</button>
-        <button class="tog-btn" data-v="1500" onclick="setPaal(this,1500)">Complexe situatie — €1.500+</button>
+        <button class="tog-btn" data-v="0" onclick="setPaal(this,0)">Al een paal / straat laden: €0</button>
+        <button class="tog-btn" data-v="800" onclick="setPaal(this,800)">Eenvoudig: €800</button>
+        <button class="tog-btn active" data-v="1200" onclick="setPaal(this,1200)">Slim OCPP: €1.200</button>
+        <button class="tog-btn" data-v="1500" onclick="setPaal(this,1500)">Complexe situatie: €1.500+</button>
       </div>
     </div>
     <div class="row" id="paal-opties">
       <div class="field">
         <label>MID-meter (vereist voor ERE's)</label>
         <select id="mid" onchange="calc();toggleERE()">
-          <option value="nee">Nee — niet nodig</option>
-          <option value="ja_inbegrepen">Ja — inbegrepen in paal</option>
-          <option value="ja_extra">Ja — als add-on (+€75)</option>
+          <option value="nee">Nee, niet nodig</option>
+          <option value="ja_inbegrepen">Ja, inbegrepen in paal</option>
+          <option value="ja_extra">Ja, als add-on (+€75)</option>
         </select>
       </div>
       <div class="field">
         <label>Aansluiting paal</label>
         <select id="kabel" onchange="calc()">
-          <option value="kabel">Vaste kabel — meest praktisch</option>
-          <option value="t2">Type 2 stopcontact — flexibeler</option>
+          <option value="kabel">Vaste kabel, meest praktisch</option>
+          <option value="t2">Type 2 stopcontact, flexibeler</option>
         </select>
       </div>
       <div class="field">
         <label>Load balancing</label>
         <select id="lb" onchange="calc()">
-          <option value="nee">Nee — niet nodig</option>
-          <option value="inbegrepen">Ja — inbegrepen in paal</option>
-          <option value="extra">Ja — als add-on (+€100)</option>
+          <option value="nee">Nee, niet nodig</option>
+          <option value="inbegrepen">Ja, inbegrepen in paal</option>
+          <option value="extra">Ja, als add-on (+€100)</option>
         </select>
       </div>
     </div>
@@ -497,7 +497,7 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
 <div class="step" id="s5">
   <div class="step-head" onclick="toggleStep(5)">
     <div class="step-num">05</div>
-    <h2>ERE's — Emissie Reductie Eenheden</h2>
+    <h2>ERE's: Emissie Reductie Eenheden</h2>
     <span class="toggle-icon open" id="ti5">▾</span>
   </div>
   <div class="step-body" id="sb5">
@@ -537,8 +537,8 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
     <div class="field">
       <label>Meenemen in vergelijking?</label>
       <div class="tog-row" id="huidig-tog">
-        <button class="tog-btn" data-v="nee" onclick="setHuidig(this,'nee')">Nee — overslaan</button>
-        <button class="tog-btn active" data-v="ja" onclick="setHuidig(this,'ja')">Ja — kosten invullen</button>
+        <button class="tog-btn" data-v="nee" onclick="setHuidig(this,'nee')">Nee, overslaan</button>
+        <button class="tog-btn active" data-v="ja" onclick="setHuidig(this,'ja')">Ja, kosten invullen</button>
       </div>
     </div>
     <div id="huidig-details" class="details-wrap">
@@ -608,7 +608,7 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
 <div class="step optional" id="s7">
   <div class="step-head" onclick="toggleStep(7)">
     <div class="step-num">07</div>
-    <h2>Nieuwe EV — vaste lasten <span class="badge-opt">optioneel</span></h2>
+    <h2>Nieuwe EV: vaste lasten <span class="badge-opt">optioneel</span></h2>
     <span class="toggle-icon open" id="ti7">▾</span>
   </div>
   <div class="step-body" id="sb7">
@@ -616,8 +616,8 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
     <div class="field">
       <label>Meenemen in vergelijking?</label>
       <div class="tog-row" id="nieuw-tog">
-        <button class="tog-btn" data-v="nee" onclick="setNieuw(this,'nee')">Nee — overslaan</button>
-        <button class="tog-btn active" data-v="ja" onclick="setNieuw(this,'ja')">Ja — kosten invullen</button>
+        <button class="tog-btn" data-v="nee" onclick="setNieuw(this,'nee')">Nee, overslaan</button>
+        <button class="tog-btn active" data-v="ja" onclick="setNieuw(this,'ja')">Ja, kosten invullen</button>
       </div>
     </div>
     <div id="nieuw-details" class="details-wrap">
@@ -704,7 +704,7 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
 <div class="step optional" id="s8" style="display:none;">
   <div class="step-head" onclick="toggleStep(8)">
     <div class="step-num">08</div>
-    <h2>Nieuwe hybride — vaste lasten <span class="badge-opt">optioneel</span></h2>
+    <h2>Nieuwe hybride: vaste lasten <span class="badge-opt">optioneel</span></h2>
     <span class="toggle-icon open" id="ti8">▾</span>
   </div>
   <div class="step-body" id="sb8">
@@ -712,8 +712,8 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
     <div class="field">
       <label>Meenemen in vergelijking?</label>
       <div class="tog-row" id="nieuw-hybrid-tog">
-        <button class="tog-btn" data-v="nee" onclick="setNieuwHybrid(this,'nee')">Nee — overslaan</button>
-        <button class="tog-btn active" data-v="ja" onclick="setNieuwHybrid(this,'ja')">Ja — kosten invullen</button>
+        <button class="tog-btn" data-v="nee" onclick="setNieuwHybrid(this,'nee')">Nee, overslaan</button>
+        <button class="tog-btn active" data-v="ja" onclick="setNieuwHybrid(this,'ja')">Ja, kosten invullen</button>
       </div>
     </div>
     <div id="nieuw-hybrid-details" class="details-wrap">
@@ -801,7 +801,7 @@ button,.tog-btn,.rb-sc-btn,.step-head,.export-btn,.reset-btn{touch-action:manipu
 <!-- RESULTAAT -->
 <div class="result-box" id="result-box">
   <div class="rb-header">
-    <div class="rb-title">Uitkomst — financieel overzicht</div>
+    <div class="rb-title">Uitkomst: financieel overzicht</div>
     <div class="rb-live"><span class="live-dot"></span> Live bijgewerkt</div>
   </div>
   <div class="rb-scenario-wrap">
@@ -953,7 +953,7 @@ function setVoertuig(el, val) {
   document.getElementById('hybrid-section-title').textContent = isBeide ? 'Hybride / PHEV' : 'Hybride verdeling';
   document.getElementById('verbruik-label').textContent = isHybrid ? 'EV-verbruik (kWh/100 km)' : 'Verbruik per 100 km (kWh)';
   const s7h2 = document.querySelector('#s7 .step-head h2');
-  s7h2.innerHTML = (isHybrid ? 'Nieuwe auto' : 'Nieuwe EV') + ' — vaste lasten <span class="badge-opt">optioneel</span>';
+  s7h2.innerHTML = (isHybrid ? 'Nieuwe auto' : 'Nieuwe EV') + ': vaste lasten <span class="badge-opt">optioneel</span>';
   document.getElementById('s7').style.display = (val === 'ev' || val === 'beide') ? '' : 'none';
   document.getElementById('s8').style.display = (val === 'hybride' || val === 'beide') ? '' : 'none';
   calc();
@@ -1421,7 +1421,7 @@ function resetAll() {
   document.getElementById('hybrid_huidig_afsj_jaren').value = 7;
   document.getElementById('hybrid_huidig_afsj_v').textContent = '7';
   document.getElementById('verbruik-label').textContent = 'Verbruik per 100 km (kWh)';
-  document.querySelector('#s7 .step-head h2').innerHTML = 'Nieuwe EV — vaste lasten <span class="badge-opt">optioneel</span>';
+  document.querySelector('#s7 .step-head h2').innerHTML = 'Nieuwe EV: vaste lasten <span class="badge-opt">optioneel</span>';
   document.getElementById('verbruik_hybrid').value = 18;
   document.getElementById('vb_hybrid_v').textContent = '18.0';
   document.getElementById('new_ev_split').value = 60;
@@ -1553,7 +1553,7 @@ function generateExport() {
     row('Eigen oprit / garage', selText('oprit')),
     row('Huisaansluiting', selText('aansluiting')),
     row('Afstand meterkast → laadplek', selText('afstand')),
-    row('Zonnepanelen', zon==='ja'?'Ja — '+fval('zon_pct')+'% eigen opwek':'Nee'),
+    row('Zonnepanelen', zon==='ja'?'Ja, '+fval('zon_pct')+'% eigen opwek':'Nee'),
   ].join('');
 
   // 02 Laadpaal
@@ -1566,8 +1566,8 @@ function generateExport() {
 
   // 03 Energiecontract
   let tariefInfo = togActive('tarief-tog');
-  if (tariefType==='vast') tariefInfo += ' — '+fval('tarief_vast')+' €/kWh';
-  else if (tariefType==='dynamisch') tariefInfo += ' — gem. '+fval('tarief_dyn')+' €/kWh';
+  if (tariefType==='vast') tariefInfo += ': '+fval('tarief_vast')+' €/kWh';
+  else if (tariefType==='dynamisch') tariefInfo += ': gem. '+fval('tarief_dyn')+' €/kWh';
   const s3 = row('Contract', tariefInfo) + row('Publiek laadtarief', fval('tarief_pub')+' €/kWh');
 
   // 04 Rijgedrag
@@ -1586,7 +1586,7 @@ function generateExport() {
 
   // 05 ERE's
   const ereOn = ereActief==='ja' && document.getElementById('mid').value!=='nee';
-  const s5 = row('ERE-registratie', ereOn?'Actief — '+fval('ere_kwh')+' €/kWh netto':'Niet actief');
+  const s5 = row('ERE-registratie', ereOn?'Actief: '+fval('ere_kwh')+' €/kWh netto':'Niet actief');
 
   // 06 Huidige auto
   let s6='';
@@ -1749,14 +1749,14 @@ function generateExport() {
       </tbody>
     </table>` : '';
 
-  const s7Title = isHybridOnly ? 'Nieuwe hybride — vaste lasten' : 'Nieuwe EV — vaste lasten';
+  const s7Title = isHybridOnly ? 'Nieuwe hybride: vaste lasten' : 'Nieuwe EV: vaste lasten';
 
   document.getElementById('export-view').innerHTML = `
     <div class="ev-topbar">
       <div class="ev-topbar-inner">
         ${logoSVG}
         <div>
-          <div class="ev-topbar-brand">De Schakelaar — Advies aan huis</div>
+          <div class="ev-topbar-brand">De Schakelaar, advies aan huis</div>
           <div class="ev-topbar-title">Financiële situatieschets laden</div>
         </div>
       </div>
@@ -1769,17 +1769,17 @@ function generateExport() {
     ${section('05','ERE\'s', s5)}
     ${huidigActief==='ja'?section('06','Huidige auto', s6):''}
     ${showS7?section('07',s7Title, s7):''}
-    ${showS8?section(showS7?'08':'07','Nieuwe hybride — vaste lasten', s8):''}
+    ${showS8?section(showS7?'08':'07','Nieuwe hybride: vaste lasten', s8):''}
     <div class="ev-section">
       <div class="ev-section-head">
         <div class="ev-snum" style="background:rgba(27,46,75,.10);border-color:rgba(27,46,75,.2);color:#1B2E4B;">✦</div>
-        <div class="ev-stitle">Uitkomst — alle scenario's vergeleken</div>
+        <div class="ev-stitle">Uitkomst: alle scenario's vergeleken</div>
       </div>
       ${mainResults}
       ${vergelijkResults}
     </div>
     <div class="ev-footer">
-      <span>De Schakelaar — deschakelaaradvies.nl</span>
+      <span>De Schakelaar | deschakelaaradvies.nl</span>
       <span>Gegenereerd op ${now}</span>
     </div>`;
 
