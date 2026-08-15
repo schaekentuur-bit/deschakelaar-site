@@ -4,6 +4,7 @@ import {
   localAmsterdamWallTimeToIso,
   localAmsterdamWallTimesToIso,
   formatAmsterdamWallTime,
+  utcMsToAmsterdamIso,
   detectIntervalMs
 } from '../src/core/amsterdamTime.js';
 
@@ -79,6 +80,12 @@ test('localAmsterdamWallTimesToIso disambiguates the repeated autumn DST hour by
   assert.equal(Date.parse(isos[6]) - Date.parse(isos[5]), 15 * 60000);
   // In totaal 1 uur (4 kwartieren) langer dan een normale nacht.
   assert.equal(Date.parse(isos[10]) - Date.parse(isos[0]), (11 - 1) * 15 * 60000);
+});
+
+test('utcMsToAmsterdamIso converts a real UTC instant unambiguously across the autumn DST boundary', () => {
+  // Transitie-instant is 2025-10-26T01:00:00Z: 03:00 CEST -> 02:00 CET.
+  assert.equal(utcMsToAmsterdamIso(Date.parse('2025-10-26T00:59:00Z')), '2025-10-26T02:59:00+02:00');
+  assert.equal(utcMsToAmsterdamIso(Date.parse('2025-10-26T01:00:00Z')), '2025-10-26T02:00:00+01:00');
 });
 
 test('localAmsterdamWallTimesToIso leaves an unambiguous sequence unchanged', () => {

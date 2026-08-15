@@ -12,3 +12,6 @@ energie-rekentool/**/*homewizard*.csv
 energie-rekentool/**/*HomeWizard*.csv
 energie-rekentool/**/*Homewizard*.csv
 energie-rekentool/klantdata/
+
+# Lokale prijzencache (regenereerbaar, hoort niet in de repo)
+energie-rekentool/.cache/

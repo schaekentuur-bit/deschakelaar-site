@@ -40,7 +40,13 @@ function parseWallTime(wallTime) {
   };
 }
 
-function isoFromAmsterdamInstant(utcMs) {
+/**
+ * Zet een absoluut UTC-instant (ms sinds epoch) om naar een ISO 8601-string
+ * met het Europe/Amsterdam-offset op dat instant. In tegenstelling tot de
+ * wandkloktijd-functies hierboven is dit ondubbelzinnig: een echt UTC-instant
+ * kan nooit in het overgeslagen of herhaalde DST-uur vallen.
+ */
+export function utcMsToAmsterdamIso(utcMs) {
   const offset = amsterdamOffsetMinutesAt(utcMs);
   // Lokale wandkloktijd = UTC-instant + offset; UTC-getters op die verschoven
   // waarde geven direct de lokale kalendercijfers, zonder extra Intl-call.
@@ -70,7 +76,7 @@ export function localAmsterdamWallTimeToIso(wallTime) {
   // Herbevestig op de kandidaat-instant, voor het geval de gok net over een
   // DST-grens heen viel.
   const offset = amsterdamOffsetMinutesAt(candidateUtcMs);
-  return isoFromAmsterdamInstant(guessUtcMs - offset * 60000);
+  return utcMsToAmsterdamIso(guessUtcMs - offset * 60000);
 }
 
 /**
@@ -109,7 +115,7 @@ export function localAmsterdamWallTimesToIso(wallTimes) {
       if (chosenUtcMs === undefined) chosenUtcMs = validCandidates[validCandidates.length - 1];
     }
 
-    results.push(isoFromAmsterdamInstant(chosenUtcMs));
+    results.push(utcMsToAmsterdamIso(chosenUtcMs));
     previousUtcMs = chosenUtcMs;
   }
 
