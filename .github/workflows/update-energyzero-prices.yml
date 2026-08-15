@@ -1,0 +1,53 @@
+name: Update EnergyZero-prijzen
+
+on:
+  schedule:
+    # 04:00 UTC, ruim na sluiting van de day-ahead-markt (vorige middag) en
+    # ruim voor het begin van de dag in Nederland.
+    - cron: '0 4 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-energyzero-prices
+  cancel-in-progress: false
+
+jobs:
+  update-prices:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      # continue-on-error: een gat wordt hard gerapporteerd (zie hieronder),
+      # maar de reeds opgehaalde/samengevoegde bestanden moeten alsnog
+      # gecommit worden — daarna faalt de run alsnog expliciet.
+      - name: Haal EnergyZero-prijzen op en merge ze in data/prices/energyzero/
+        id: fetch-prices
+        continue-on-error: true
+        working-directory: energie-rekentool
+        run: node src/cli/update-energyzero-prices.js
+
+      - name: Commit en push als er wijzigingen zijn
+        working-directory: energie-rekentool
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/prices/energyzero
+          if git diff --cached --quiet; then
+            echo "Geen wijzigingen in de prijsbestanden."
+          else
+            git commit -m "Update EnergyZero-prijzen ($(date -u +%Y-%m-%d))"
+            git push
+          fi
+
+      - name: Laat de run falen als er een gat gevonden is
+        if: steps.fetch-prices.outcome == 'failure'
+        run: |
+          echo "::error::De prijsupdate liep tegen een gat of fout aan — zie de 'Haal EnergyZero-prijzen op'-stap hierboven. Bestanden zijn wel gecommit, maar dit moet handmatig opgelost worden."
+          exit 1
