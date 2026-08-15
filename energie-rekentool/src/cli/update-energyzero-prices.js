@@ -1,10 +1,14 @@
 #!/usr/bin/env node
-// Draait dagelijks via een GitHub Action. Haalt een recent venster
-// EnergyZero-uurprijzen op en merget dat in de gepubliceerde, per-maand
-// gesplitste prijsbestanden onder data/prices/energyzero/. Dit zijn gewone
-// statische bestanden die de (nog te bouwen) webpagina rechtstreeks van
-// hetzelfde domein laadt — geen CORS, geen backend, geen schijf-cache nodig
-// in de browser.
+// Draait dagelijks via een GitHub Action zonder argumenten (rollend venster
+// van WINDOW_DAYS). Haalt EnergyZero-uurprijzen op en merget dat in de
+// gepubliceerde, per-maand gesplitste prijsbestanden onder
+// data/prices/energyzero/. Dit zijn gewone statische bestanden die de
+// webpagina rechtstreeks van hetzelfde domein laadt — geen CORS, geen
+// backend, geen schijf-cache nodig in de browser.
+//
+// Eenmalige backfill van een zelfgekozen periode (bv. een heel jaar), zonder
+// de dagelijkse workflow aan te passen:
+//   node src/cli/update-energyzero-prices.js --from 2025-08-11 --till 2026-08-11
 //
 // Herbruikt fetchEnergyZeroHourlyPrices (cli/lib) en parsePriceCsv/
 // serializePriceCsv (core) ongewijzigd: er is maar één plek waar het
@@ -14,6 +18,7 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
 import { fetchEnergyZeroHourlyPrices } from './lib/energyZeroClient.js';
 import { parsePriceCsv, serializePriceCsv } from '../core/priceCsv.js';
+import { parseArgs } from './lib/loadConsumptionAndPrices.js';
 
 const DATA_DIR = 'data/prices/energyzero';
 const WINDOW_DAYS = 4; // ruimer dan 1 dag: self-helend bij een gemiste run
@@ -108,11 +113,45 @@ function updateManifest() {
   );
 }
 
-async function main() {
-  const now = Date.now();
-  const fromDateUtcIso = utcDayFloorIso(now - WINDOW_DAYS * 86400000);
-  const tillDateUtcIso = utcDayFloorIso(now + 86400000); // t/m eind vandaag (UTC)
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
+/**
+ * Bepaalt het op te halen tijdvak. Standaard het dagelijkse rollende venster
+ * (WINDOW_DAYS), tenzij --from/--till zijn opgegeven voor een eenmalige
+ * backfill van een zelfgekozen periode (bv. een heel jaar terugvullen nadat
+ * de publicatie pas later gestart is). De dagelijkse workflow roept dit
+ * script zonder argumenten aan en blijft dus ongewijzigd.
+ */
+function resolveDateRange(args) {
+  if (!args.from && !args.till) {
+    const now = Date.now();
+    return {
+      fromDateUtcIso: utcDayFloorIso(now - WINDOW_DAYS * 86400000),
+      tillDateUtcIso: utcDayFloorIso(now + 86400000), // t/m eind vandaag (UTC)
+      isBackfill: false
+    };
+  }
+  if (!args.from || !args.till) {
+    throw new Error('--from en --till moeten samen opgegeven worden, bv. --from 2025-08-11 --till 2026-08-11');
+  }
+  if (!DATE_RE.test(args.from) || !DATE_RE.test(args.till)) {
+    throw new Error(`--from/--till moeten "YYYY-MM-DD" zijn (gevonden: --from ${args.from} --till ${args.till})`);
+  }
+  const fromDateUtcIso = new Date(`${args.from}T00:00:00.000Z`).toISOString();
+  const tillDateUtcIso = new Date(`${args.till}T00:00:00.000Z`).toISOString();
+  if (Date.parse(tillDateUtcIso) <= Date.parse(fromDateUtcIso)) {
+    throw new Error(`--till (${args.till}) moet na --from (${args.from}) liggen`);
+  }
+  return { fromDateUtcIso, tillDateUtcIso, isBackfill: true };
+}
+
+async function main() {
+  const args = parseArgs(process.argv.slice(2));
+  const { fromDateUtcIso, tillDateUtcIso, isBackfill } = resolveDateRange(args);
+
+  if (isBackfill) {
+    console.log(`Eenmalige backfill (niet het dagelijkse venster): ${args.from} t/m ${args.till}`);
+  }
   console.log(`Ophalen EnergyZero-uurprijzen: ${fromDateUtcIso} t/m ${tillDateUtcIso}`);
   const freshPrices = await fetchEnergyZeroHourlyPrices(fromDateUtcIso, tillDateUtcIso, { inclBtw: true });
   console.log(`${freshPrices.length} prijspunten opgehaald van EnergyZero`);
@@ -129,7 +168,8 @@ async function main() {
     throw new Error(
       `${totalGaps} gat(en) gevonden in ${monthsWithGaps.length} bijgewerkt(e) maandbestand(en): ` +
         monthsWithGaps.map((m) => m.month).join(', ') +
-        '. Bestanden zijn wel weggeschreven; los het gat handmatig op (bv. een grotere WINDOW_DAYS of een eenmalige backfill).'
+        '. Bestanden zijn wel weggeschreven; los het gat handmatig op met een backfill, ' +
+        'bv. node src/cli/update-energyzero-prices.js --from YYYY-MM-DD --till YYYY-MM-DD.'
     );
   }
 }

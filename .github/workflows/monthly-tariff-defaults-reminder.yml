@@ -1,0 +1,32 @@
+name: Maandelijkse tarievenupdate-reminder
+
+on:
+  schedule:
+    # 08:00 UTC op de 1e van elke maand.
+    - cron: '0 8 1 * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  create-reminder-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 'lts/*'
+
+      - name: Genereer issue-tekst en maak de issue aan
+        working-directory: energie-rekentool
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node src/cli/generate-tariff-update-issue.js > /tmp/issue-body.md
+          gh issue create \
+            --title "Maandelijkse update: marktgemiddelden tariefvelden ($(date -u +%Y-%m))" \
+            --body-file /tmp/issue-body.md \
+            --repo "${{ github.repository }}"

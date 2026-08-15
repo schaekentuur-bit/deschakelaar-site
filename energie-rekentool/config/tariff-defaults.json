@@ -1,0 +1,52 @@
+{
+  "_lees_dit": "Marktgemiddelden om het tarievenformulier op de pagina en in tariffs.example.json mee voor te vullen. Elke klant past deze aan naar zijn eigen contract. Bij elk veld staat de bron-URL en de peildatum, zodat een update tegen dezelfde bron gebeurt. Werk dit maandelijks bij (zie de automatische reminder-issue) en verzin geen cijfers: onderbouw elke wijziging met een vindplaats.",
+  "velden": {
+    "currentContractType": {
+      "waarde": "vast",
+      "opmerking": "Standaardkeuze, geen marktgemiddelde: de meeste klanten die overwegen over te stappen zitten nu op een vast contract."
+    },
+    "currentSupplyRateInclVatEurPerKwh": {
+      "waarde": 0.28,
+      "bron": "https://www.energievergelijk.nl/energieprijzen/stroomprijs",
+      "peildatum": "2026-08-14",
+      "opmerking": "Gemiddelde kWh-prijs voor een 1-jaar vast contract, incl. energiebelasting en btw, zoals vermeld op de bronpagina."
+    },
+    "currentFeedInRateEurPerKwh": {
+      "waarde": 0.121,
+      "bron": "https://www.overstappen.nl/energie/energieprijzen/terugleververgoeding/",
+      "peildatum": "2026-08-06",
+      "bandbreedte": { "min": 0.01, "max": 0.165 },
+      "opmerking": "Gemiddelde van de volledige tabel op de bronpagina (32 leverancier/looptijd-combinaties, van €0,01000 tot €0,16500, gemiddeld €0,1213). Dit is de werkelijke, directe terugleververgoeding per kWh die leveranciers uitbetalen — NIET de salderingswaarde (die dicht bij het leveringstarief ligt omdat teruglevering tot 1 januari 2027 nog tegen verbruik weggestreept mag worden). De vorige versie van dit veld (€0,245) verwarde die twee: dat cijfer kwam uit een bandbreedte die feitelijk de salderingswaarde beschreef, niet de kale vergoeding. Let op: dezelfde bronpagina meldt dat de vergoeding na 1 januari 2027 fors daalt (naar schatting rond de €0,05 of lager) zodra de salderingsregeling eindigt — dit veld verdient dan een nieuwe controle, niet alleen de reguliere maandelijkse update. bandbreedte-veld: gebruikt op de pagina om dit tarief zichtbaarder als 'pas aan' te markeren dan de andere velden, omdat de spreiding tussen leveranciers hier zo groot is dat het gemiddelde geen veilige aanname is."
+    },
+    "currentFixedFeedInCostsPerMonth": {
+      "waarde": 0,
+      "bron": "https://www.energievergelijk.nl/onderwerpen/terugleverkosten-zonnepanelen",
+      "peildatum": "2026-08-14",
+      "opmerking": "Onder de huidige salderingsregeling (tot 1 januari 2027) rekenen de meeste leveranciers geen apart vast maandbedrag voor teruglevering. Controleer dit veld expliciet opnieuw zodra de nieuwe regeling ingaat."
+    },
+    "dynamicMarkupEurPerKwh": {
+      "waarde": 0.02,
+      "bron": "https://jeroen.nl/dynamische-energie/aanbieders",
+      "peildatum": "2026-08-16",
+      "opmerking": "Gemiddelde inkoopopslag per kWh over 7 vergeleken leveranciers (Zonneplan, NextEnergy, Frank Energie, Tibber, Energiek, BudgetEnergie, Pure Energie: €0,0168–€0,0248, gemiddeld ≈€0,0199), bronpagina gedateerd augustus 2026."
+    },
+    "dynamicFeedInMarkupEurPerKwh": {
+      "waarde": 0.02,
+      "bron": "https://jeroen.nl/dynamische-energie/aanbieders",
+      "peildatum": "2026-08-16",
+      "opmerking": "De opslag op teruglevering loopt sterk uiteen per leverancier op de bronpagina (van €0 tot dezelfde opslag als afname, tot een expliciete aftrek zoals Energiek −€0,0180/kWh). Als benadering is dezelfde ordegrootte als de afname-opslag aangehouden."
+    },
+    "currentFixedSupplyCostsPerMonth": {
+      "waarde": 6.5,
+      "bron": "https://www.futurened.com/actueel/vastrechttarieven-2026-hoe-zit-het-en-wat-betaalt-u-eigenlijk-voor-uw-energierekening",
+      "peildatum": "2026-08-14",
+      "opmerking": "Middenwaarde van de op de bronpagina genoemde praktijkbandbreedte (€70–€100/jaar ≈ €5,83–€8,33/maand) voor vaste leveringskosten stroom."
+    },
+    "dynamicFixedSupplyCostsPerMonth": {
+      "waarde": 5.77,
+      "bron": "https://jeroen.nl/dynamische-energie/aanbieders",
+      "peildatum": "2026-08-16",
+      "opmerking": "Gemiddelde vaste maandkosten over 7 vergeleken leveranciers (Zonneplan €6,25, NextEnergy €5,99, Frank Energie €7,25, Tibber €5,99, Energiek €5,99, BudgetEnergie €5,99, Pure Energie €2,92), bronpagina gedateerd augustus 2026."
+    }
+  }
+}

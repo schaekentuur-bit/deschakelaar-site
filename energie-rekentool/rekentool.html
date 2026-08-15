@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dynamisch energiecontract doorrekenen</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root {
+    color-scheme: light;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --accent: #2563eb;
+    --warn-bg: #fffbeb;
+    --warn-border: #fde68a;
+    --warn-text: #92400e;
+    --error-bg: #fef2f2;
+    --error-border: #fecaca;
+    --error-text: #991b1b;
+    --ok-bg: #f0fdf4;
+    --ok-border: #bbf7d0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem 4rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  h1 { font-size: 1.6rem; margin-bottom: 0.25rem; }
+  h2 { font-size: 1.15rem; margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+  section {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    background: #fff;
+  }
+  section[data-disabled="true"] { opacity: 0.5; pointer-events: none; }
+  .privacy-note {
+    background: var(--ok-bg);
+    border: 1px solid var(--ok-border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.92rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .warning, .error, .info, .ok {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    margin: 0.75rem 0;
+    white-space: pre-line;
+  }
+  .warning { background: var(--warn-bg); border: 1px solid var(--warn-border); color: var(--warn-text); }
+  .error { background: var(--error-bg); border: 1px solid var(--error-border); color: var(--error-text); }
+  .ok { background: var(--ok-bg); border: 1px solid var(--ok-border); color: #14532d; }
+  .info { background: #f8fafc; border: 1px solid var(--border); color: var(--muted); }
+  label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.2rem; }
+  .field { margin-bottom: 0.9rem; }
+  .field input, .field select {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  .field-hint { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+  .field-caution {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    border-radius: 8px;
+    padding: 0.5rem 0.6rem 0.6rem;
+  }
+  .field-caution label { color: var(--warn-text); font-weight: 600; }
+  .field-caution-hint { font-size: 0.78rem; color: var(--warn-text); margin: 0.3rem 0 0; }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.5rem; }
+  @media (max-width: 640px) { .field-grid { grid-template-columns: 1fr; } }
+  button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.4rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  button:disabled { background: #94a3b8; cursor: not-allowed; }
+  a.template-link { color: var(--accent); }
+  input[type="file"] { display: block; margin: 0.75rem 0; }
+  table.summary { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin-top: 0.75rem; }
+  table.summary th { text-align: left; color: var(--muted); font-weight: 600; width: 45%; padding: 0.25rem 0.5rem; }
+  table.summary td { padding: 0.25rem 0.5rem; border-bottom: 1px solid #f1f5f9; }
+  #report-frame { width: 100%; height: 1400px; border: 1px solid var(--border); border-radius: 8px; margin-top: 1rem; display: none; }
+  footer.credit { color: var(--muted); font-size: 0.8rem; margin-top: 2rem; }
+</style>
+</head>
+<body>
+  <h1>Dynamisch energiecontract doorrekenen</h1>
+  <p>Upload een kwartierverbruiksbestand en zie meteen wat overstappen naar een dynamisch energiecontract had opgeleverd — inclusief een grafiek van piekmomenten tegenover dure en goedkope uren.</p>
+
+  <div class="privacy-note">
+    🔒 <strong>Je bestand verlaat je computer niet.</strong> Alle verwerking — inlezen, koppelen aan prijzen, berekenen — gebeurt lokaal in je browser. Er wordt niets naar een server geüpload.
+  </div>
+
+  <section id="tariff-defaults-warning" style="display:none"></section>
+
+  <section id="upload-section">
+    <h2>1. Verbruiksbestand</h2>
+    <p>Upload een ruwe HomeWizard P1-export, of een bestand dat al in het interne format staat (<code>timestamp,import_kwh,export_kwh</code>) — het format wordt automatisch herkend.</p>
+    <p><a class="template-link" href="public/voorbeeld-verbruik-homewizard.csv" download>Download een voorbeeldbestand</a> om het verwachte datumformaat en decimaalteken te zien.</p>
+    <input type="file" id="consumption-file" accept=".csv,text/csv">
+    <div id="upload-status"></div>
+  </section>
+
+  <section id="tariffs-section" data-disabled="true">
+    <h2>2. Tarieven</h2>
+    <p class="field-hint" id="tariff-defaults-note">Deze velden staan vooringevuld op marktgemiddelden — pas ze aan naar het eigen contract van de klant.</p>
+    <div class="field-grid">
+      <div class="field">
+        <label for="f-currentContractType">Huidig contracttype</label>
+        <select id="f-currentContractType">
+          <option value="vast">Vast</option>
+          <option value="variabel">Variabel</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-currentSupplyRateInclVatEurPerKwh">Huidig leveringstarief incl. btw (EUR/kWh)</label>
+        <input type="number" step="0.001" id="f-currentSupplyRateInclVatEurPerKwh">
+      </div>
+      <div class="field">
+        <label for="f-currentFeedInRateEurPerKwh">Huidige terugleververgoeding (EUR/kWh)</label>
+        <input type="number" step="0.001" id="f-currentFeedInRateEurPerKwh">
+      </div>
+      <div class="field">
+        <label for="f-currentFixedFeedInCostsPerMonth">Huidige vaste terugleverkosten (EUR/maand)</label>
+        <input type="number" step="0.01" id="f-currentFixedFeedInCostsPerMonth">
+      </div>
+      <div class="field">
+        <label for="f-currentFixedSupplyCostsPerMonth">Huidige vaste leveringskosten (EUR/maand)</label>
+        <input type="number" step="0.01" id="f-currentFixedSupplyCostsPerMonth">
+      </div>
+      <div class="field">
+        <label for="f-dynamicMarkupEurPerKwh">Dynamische opslag op afname (EUR/kWh)</label>
+        <input type="number" step="0.001" id="f-dynamicMarkupEurPerKwh">
+      </div>
+      <div class="field">
+        <label for="f-dynamicFeedInMarkupEurPerKwh">Dynamische opslag op teruglevering (EUR/kWh)</label>
+        <input type="number" step="0.001" id="f-dynamicFeedInMarkupEurPerKwh">
+      </div>
+      <div class="field">
+        <label for="f-dynamicFixedSupplyCostsPerMonth">Dynamische vaste leveringskosten (EUR/maand)</label>
+        <input type="number" step="0.01" id="f-dynamicFixedSupplyCostsPerMonth">
+      </div>
+    </div>
+  </section>
+
+  <section id="calculate-section" data-disabled="true">
+    <h2>3. Resultaat</h2>
+    <button id="calculate-button" disabled>Bereken</button>
+    <div id="calculate-status"></div>
+    <iframe id="report-frame" title="Energierapport"></iframe>
+  </section>
+
+  <footer class="credit">Interne rekentool — nog niet gekoppeld aan de site-navigatie, geen toegangsbeveiliging.</footer>
+
+  <script type="module" src="public/app.js"></script>
+</body>
+</html>

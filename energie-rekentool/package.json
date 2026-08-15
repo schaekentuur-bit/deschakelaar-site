@@ -13,6 +13,7 @@
     "inspect": "node src/cli/inspect.js",
     "match-prices": "node src/cli/match-prices.js",
     "calculate": "node src/cli/calculate.js",
-    "update-prices": "node src/cli/update-energyzero-prices.js"
+    "update-prices": "node src/cli/update-energyzero-prices.js",
+    "check-tariff-defaults": "node src/cli/check-tariff-defaults.js"
   }
 }
