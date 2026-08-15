@@ -1,0 +1,10 @@
+{
+  "currentContractType": "vast",
+  "currentSupplyRateInclVatEurPerKwh": 0.28,
+  "currentFeedInRateEurPerKwh": 0.09,
+  "currentFixedFeedInCostsPerMonth": 0,
+  "dynamicMarkupEurPerKwh": 0.02,
+  "dynamicFeedInMarkupEurPerKwh": 0.01,
+  "currentFixedSupplyCostsPerMonth": 6.17,
+  "dynamicFixedSupplyCostsPerMonth": 4.99
+}
