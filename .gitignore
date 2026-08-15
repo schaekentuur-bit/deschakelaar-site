@@ -4,3 +4,11 @@ rapport-de-schakelaar.html
 
 # Claude Code lokale instellingen
 .claude/settings.local.json
+
+# Energie-rekentool: echte HomeWizard-exports bevatten verbruiksgedrag van een
+# klant en mogen nooit meegecommit worden. Synthetische fixtures in
+# energie-rekentool/fixtures/ zijn wel toegestaan (staan niet op dit patroon).
+energie-rekentool/**/*homewizard*.csv
+energie-rekentool/**/*HomeWizard*.csv
+energie-rekentool/**/*Homewizard*.csv
+energie-rekentool/klantdata/
