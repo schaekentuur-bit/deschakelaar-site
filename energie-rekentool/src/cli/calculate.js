@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 // Dunne CLI-schil: leest verbruik + prijzen (via de gedeelde loader uit stap
-// 2) en een tarievenbestand van schijf, roept core/tariffCalculation.js aan
-// en print het volledige, navolgbare rapport. Nog geen grafiek/output-laag
-// (stap 4) — alleen de eindbedragen en het verschil.
+// 2) en een tarievenbestand van schijf, roept core/tariffCalculation.js en
+// core/htmlReport.js aan, print het tekstrapport en schrijft het navolgbare
+// HTML-rapport (met grafiek) naar schijf.
 'use strict';
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { dirname, basename } from 'node:path';
 import { parseArgs, loadConsumptionAndMatchedPrices, assertPriceCoverageSufficient } from './lib/loadConsumptionAndPrices.js';
 import { calculateScenarioComparison } from '../core/tariffCalculation.js';
+import { buildHtmlReport } from '../core/htmlReport.js';
 
 function formatEur(n) {
   const sign = n < 0 ? '-' : '';
@@ -20,7 +22,7 @@ async function main() {
   if (!consumptionPath || !args.tariffs) {
     console.error(
       'Gebruik: node src/cli/calculate.js <verbruik.csv> --tariffs <tarieven.json> ' +
-        '[--prices <eigen-prijzen.csv>] [--cache-dir .cache/energyzero] [--excl-btw]'
+        '[--prices <eigen-prijzen.csv>] [--cache-dir .cache/energyzero] [--excl-btw] [--out <rapport.html>]'
     );
     process.exit(1);
   }
@@ -91,9 +93,22 @@ async function main() {
   } else {
     console.log('Verschil: geen verschil tussen beide scenario\'s over deze periode.');
   }
-  console.log(
-    '\n(Dit is het bedrag over de gemeten periode, geen jaarindicatie — die volgt in de output/grafiek-stap.)'
-  );
+  console.log('\n(Dit is het bedrag over de gemeten periode, geen jaarindicatie.)');
+
+  const outPath = args.out || `rapporten/${basename(consumptionPath).replace(/\.csv$/i, '')}.rapport.html`;
+  const html = buildHtmlReport({
+    generatedAt: new Date().toISOString(),
+    consumptionPath,
+    format,
+    consumptionSummary,
+    consumptionWarnings,
+    priceSource,
+    coverage,
+    result
+  });
+  mkdirSync(dirname(outPath), { recursive: true });
+  writeFileSync(outPath, html, 'utf8');
+  console.log(`\nHTML-rapport (met grafiek) geschreven naar: ${outPath}`);
 }
 
 main().catch((err) => {
