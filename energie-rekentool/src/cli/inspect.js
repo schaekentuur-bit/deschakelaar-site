@@ -3,11 +3,11 @@
 // Doet nog geen berekening (stap 3) — alleen inlezen, normaliseren en valideren.
 'use strict';
 
-import { readFileSync } from 'node:fs';
 import { detectFormat } from '../core/formatDetect.js';
 import { parseHomeWizardCsv, toIntervalReadings } from '../core/homewizardCsv.js';
 import { parseInternalCsv } from '../core/internalCsv.js';
 import { computeCoverageSummary } from '../core/validate.js';
+import { readConsumptionFileAsCsvText } from './lib/loadConsumptionAndPrices.js';
 
 function normalize(csvText) {
   const format = detectFormat(csvText);
@@ -23,11 +23,11 @@ function normalize(csvText) {
 function main() {
   const path = process.argv[2];
   if (!path) {
-    console.error('Gebruik: node src/cli/inspect.js <pad-naar-csv>');
+    console.error('Gebruik: node src/cli/inspect.js <pad-naar-csv-of-xlsx>');
     process.exit(1);
   }
 
-  const csvText = readFileSync(path, 'utf8');
+  const csvText = readConsumptionFileAsCsvText(path);
   const { format, intervals, warnings } = normalize(csvText);
   const summary = computeCoverageSummary(intervals);
 

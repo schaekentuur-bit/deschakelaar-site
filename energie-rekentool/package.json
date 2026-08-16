@@ -15,5 +15,8 @@
     "calculate": "node src/cli/calculate.js",
     "update-prices": "node src/cli/update-energyzero-prices.js",
     "check-tariff-defaults": "node src/cli/check-tariff-defaults.js"
+  },
+  "dependencies": {
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
 }

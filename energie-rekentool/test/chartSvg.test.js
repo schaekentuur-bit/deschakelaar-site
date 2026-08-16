@@ -79,9 +79,9 @@ test('omits import/export bar strokes when a series is entirely zero', () => {
     iv('2025-06-01T00:15:00+02:00', 1, 0, 0.2),
     iv('2025-06-01T00:30:00+02:00', 2, 0, 0.2)
   ]);
-  const exportPath = onlyImport.match(/<path d="([^"]*)" stroke="#16a34a"/)[1];
+  const exportPath = onlyImport.match(/<path d="([^"]*)" stroke="#6DBF4A"/)[1];
   assert.equal(exportPath.trim(), '');
-  const importPath = onlyImport.match(/<path d="([^"]*)" stroke="#2563eb"/)[1];
+  const importPath = onlyImport.match(/<path d="([^"]*)" stroke="#1B2E4B"/)[1];
   assert.notEqual(importPath.trim(), '');
 });
 

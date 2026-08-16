@@ -12,11 +12,11 @@
       "opmerking": "Gemiddelde kWh-prijs voor een 1-jaar vast contract, incl. energiebelasting en btw, zoals vermeld op de bronpagina."
     },
     "currentFeedInRateEurPerKwh": {
-      "waarde": 0.121,
+      "waarde": 0.05,
       "bron": "https://www.overstappen.nl/energie/energieprijzen/terugleververgoeding/",
       "peildatum": "2026-08-06",
       "bandbreedte": { "min": 0.01, "max": 0.165 },
-      "opmerking": "Gemiddelde van de volledige tabel op de bronpagina (32 leverancier/looptijd-combinaties, van €0,01000 tot €0,16500, gemiddeld €0,1213). Dit is de werkelijke, directe terugleververgoeding per kWh die leveranciers uitbetalen — NIET de salderingswaarde (die dicht bij het leveringstarief ligt omdat teruglevering tot 1 januari 2027 nog tegen verbruik weggestreept mag worden). De vorige versie van dit veld (€0,245) verwarde die twee: dat cijfer kwam uit een bandbreedte die feitelijk de salderingswaarde beschreef, niet de kale vergoeding. Let op: dezelfde bronpagina meldt dat de vergoeding na 1 januari 2027 fors daalt (naar schatting rond de €0,05 of lager) zodra de salderingsregeling eindigt — dit veld verdient dan een nieuwe controle, niet alleen de reguliere maandelijkse update. bandbreedte-veld: gebruikt op de pagina om dit tarief zichtbaarder als 'pas aan' te markeren dan de andere velden, omdat de spreiding tussen leveranciers hier zo groot is dat het gemiddelde geen veilige aanname is."
+      "opmerking": "Op 2026-08-16 door Tuur bewust verlaagd naar €0,05: het tabelgemiddelde van de bronpagina (32 leverancier/looptijd-combinaties, van €0,01000 tot €0,16500, gemiddeld €0,1213) werd als vooringevulde aanname te hoog bevonden. €0,05 sluit aan bij wat diezelfde bronpagina noemt als verwachte terugleververgoeding zodra de salderingsregeling op 1 januari 2027 eindigt en de vergoeding losstaat van het leveringstarief — zie hieronder. Dit is de werkelijke, directe terugleververgoeding per kWh die leveranciers uitbetalen — NIET de salderingswaarde (die dicht bij het leveringstarief ligt omdat teruglevering tot 1 januari 2027 nog tegen verbruik weggestreept mag worden). De vorige versie van dit veld (€0,245) verwarde die twee: dat cijfer kwam uit een bandbreedte die feitelijk de salderingswaarde beschreef, niet de kale vergoeding. Let op: dezelfde bronpagina meldt dat de vergoeding na 1 januari 2027 fors daalt (naar schatting rond de €0,05 of lager) zodra de salderingsregeling eindigt — dit veld verdient dan een nieuwe controle tegen een actuelere bron, niet alleen de reguliere maandelijkse update. bandbreedte-veld: gebruikt op de pagina om dit tarief zichtbaarder als 'pas aan' te markeren dan de andere velden, omdat de spreiding tussen leveranciers hier zo groot is dat het gemiddelde geen veilige aanname is."
     },
     "currentFixedFeedInCostsPerMonth": {
       "waarde": 0,
@@ -28,7 +28,14 @@
       "waarde": 0.02,
       "bron": "https://jeroen.nl/dynamische-energie/aanbieders",
       "peildatum": "2026-08-16",
-      "opmerking": "Gemiddelde inkoopopslag per kWh over 7 vergeleken leveranciers (Zonneplan, NextEnergy, Frank Energie, Tibber, Energiek, BudgetEnergie, Pure Energie: €0,0168–€0,0248, gemiddeld ≈€0,0199), bronpagina gedateerd augustus 2026."
+      "opmerking": "Gemiddelde inkoopopslag per kWh over 7 vergeleken leveranciers (Zonneplan, NextEnergy, Frank Energie, Tibber, Energiek, BudgetEnergie, Pure Energie: €0,0168–€0,0248, gemiddeld ≈€0,0199), bronpagina gedateerd augustus 2026. Btw-behandeling: de bronpagina specificeert niet expliciet of dit incl. of excl. btw is — dat staat nergens in deze codebase vast (gecontroleerd op 2026-08-16 in tests, HTML-labels en eerdere config-comments, geen van alle noemt btw voor dit veld). Op 2026-08-16 is ervoor gekozen dit als incl. btw te behandelen, voor consistentie met de rest van de tarieven (EnergyZero-spotprijs incl. btw, vast-tarieven incl. btw) — dit is een keuze van Tuur, geen bevestigd feit uit de bron. Zie dynamicEnergyTaxEurPerKwh, die dezelfde aanname volgt."
+    },
+    "dynamicEnergyTaxEurPerKwh": {
+      "waarde": 0.11085,
+      "bron": "https://www.vattenfall.nl/grootzakelijk/energiebelasting/tarieven-2026/ (excl. btw, gekruist met https://pure-energie.nl/kennisbank/energiebelasting/ en https://www.overstappen.nl/energie/energieprijzen/energiebelasting/ voor het incl.-btw-cijfer)",
+      "peildatum": "2026-08-16",
+      "maxAgeDays": 366,
+      "opmerking": "Energiebelastingtarief elektriciteit schijf 1+2 (0–10.000 kWh/jaar), geldig per 1-1-2026: €0,09161/kWh excl. btw = €0,11085/kWh incl. 21% btw (rekencontrole klopt: 0,09161 × 1,21 = 0,110848…). Incl.-btw-cijfer gebruikt voor consistentie met de rest van de tarieven, zelfde keuze en zelfde onderbouwing als bij dynamicMarkupEurPerKwh (zie dat veld) — ook hier een gemaakte keuze, geen bevestigd feit uit de bron over hoe leveranciersopslag en energiebelasting samen op de rekening staan. Alleen toegepast op afname, nooit op teruglevering (energiebelasting geldt niet voor teruglevering). Schijf 3 (10.001–50.000 kWh/jaar) is lager: €0,06671 excl. btw / ≈€0,08072 incl. btw — dit vlakke tarief dekt dat niet; de pagina waarschuwt zelf wanneer het geëxtrapoleerde jaarverbruik van de geüploade periode richting 10.000 kWh gaat (zie public/app.js, estimateAnnualImportKwh). maxAgeDays op 366 i.p.v. de standaard 6 weken: energiebelastingtarieven worden één keer per jaar op 1 januari vastgesteld en blijven het hele jaar geldig, dus een jaarlijkse cadans is hier correcter dan de 6-wekendrempel die bedoeld is voor maandelijks bewegende marktgemiddelden."
     },
     "dynamicFeedInMarkupEurPerKwh": {
       "waarde": 0.02,
@@ -41,6 +48,31 @@
       "bron": "https://www.futurened.com/actueel/vastrechttarieven-2026-hoe-zit-het-en-wat-betaalt-u-eigenlijk-voor-uw-energierekening",
       "peildatum": "2026-08-14",
       "opmerking": "Middenwaarde van de op de bronpagina genoemde praktijkbandbreedte (€70–€100/jaar ≈ €5,83–€8,33/maand) voor vaste leveringskosten stroom."
+    },
+    "newSupplyRateInclVatEurPerKwh": {
+      "waarde": 0.275,
+      "bron": "https://www.energievergelijk.nl/energievergelijker/vast-contract-energie",
+      "peildatum": "2026-08-16",
+      "opmerking": "Gemiddelde kWh-prijs van de 5 goedkoopste 1-jaar vaste contracten voor nieuwe klanten (Energiedirect €0,260, Essent €0,280, UnitedConsumers €0,282, Vandebron €0,270, Engie €0,282; berekend bij 2.300 kWh/900 m³, incl. vaste kosten en loyaliteitskortingen volgens de bronpagina). Bewust een ander cijfer dan currentSupplyRateInclVatEurPerKwh (€0,28, marktbreed gemiddelde incl. lopende contracten): leveranciers bieden nieuwe klanten doorgaans scherpere tarieven dan het gemiddelde van bestaande contracten (\"je huidige leverancier doet vaak een aanbod dat duurder is dan wat je als nieuwe klant elders krijgt\", aldus dezelfde bronfamilie). Welkomstkortingen (eenmalig, €320–€450) zijn hierin niet verrekend — dit model rekent alleen met het structurele kWh-tarief."
+    },
+    "newFeedInRateEurPerKwh": {
+      "waarde": 0.05,
+      "bron": "https://www.overstappen.nl/energie/energieprijzen/terugleververgoeding/",
+      "peildatum": "2026-08-06",
+      "bandbreedte": { "min": 0.01, "max": 0.165 },
+      "opmerking": "Op 2026-08-16 door Tuur bewust verlaagd naar €0,05, gelijk aan currentFeedInRateEurPerKwh (zie dat veld voor de onderbouwing): dezelfde bronpagina noemt €0,05 als verwachte terugleververgoeding zodra de salderingsregeling op 1 januari 2027 eindigt, en dat toekomstige niveau geldt evengoed voor nieuw af te sluiten contracten als voor bestaande. Bandbreedte daarom ook gelijkgetrokken met currentFeedInRateEurPerKwh (volledige tabel, €0,01–€0,165) in plaats van alleen de top-5. Oorspronkelijke onderbouwing ter referentie: gemiddelde van de 5 hoogste terugleververgoedingen in dezelfde tabel als currentFeedInRateEurPerKwh (DELTA Energie €0,16500, Mega €0,16464, Mega 2jr €0,15524, OXXIO €0,15156, Eneco €0,15088) — de aanbiedingen waarmee leveranciers destijds actief nieuwe klanten met zonnepanelen wierven, in plaats van het gemiddelde over alle 32 combinaties (dat tabelgemiddelde is €0,121). Net als bij currentFeedInRateEurPerKwh: dit is de werkelijke vergoeding, niet de salderingswaarde."
+    },
+    "newFixedFeedInCostsPerMonth": {
+      "waarde": 0,
+      "bron": "https://www.energievergelijk.nl/onderwerpen/terugleverkosten-zonnepanelen",
+      "peildatum": "2026-08-14",
+      "opmerking": "Geen aanwijzing gevonden dat nieuwe-klant-aanbiedingen een apart vast maandbedrag voor teruglevering rekenen bovenop wat lopende contracten al niet rekenen (zie currentFixedFeedInCostsPerMonth) — zelfde waarde en onderbouwing aangehouden totdat een aparte bron beschikbaar is."
+    },
+    "newFixedSupplyCostsPerMonth": {
+      "waarde": 6.5,
+      "bron": "https://www.energievergelijk.nl/energievergelijker/vast-contract-energie",
+      "peildatum": "2026-08-16",
+      "opmerking": "De bronpagina voor nieuwe-klant-aanbiedingen splitst vastrecht niet los van de kWh-prijs uit (totaalbedrag incl. welkomstkorting). Geen aparte aanwijzing gevonden dat vastrecht voor nieuwe klanten structureel afwijkt van lopende contracten, dus zelfde waarde als currentFixedSupplyCostsPerMonth aangehouden — controleer dit bij de eerstvolgende update tegen een bron die vastrecht wél apart vermeldt."
     },
     "dynamicFixedSupplyCostsPerMonth": {
       "waarde": 5.77,

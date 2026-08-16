@@ -3,8 +3,13 @@
   "currentSupplyRateInclVatEurPerKwh": 0.28,
   "currentFeedInRateEurPerKwh": 0.09,
   "currentFixedFeedInCostsPerMonth": 0,
+  "currentFixedSupplyCostsPerMonth": 6.17,
+  "newSupplyRateInclVatEurPerKwh": 0.275,
+  "newFeedInRateEurPerKwh": 0.16,
+  "newFixedFeedInCostsPerMonth": 0,
+  "newFixedSupplyCostsPerMonth": 6.5,
   "dynamicMarkupEurPerKwh": 0.02,
   "dynamicFeedInMarkupEurPerKwh": 0.01,
-  "currentFixedSupplyCostsPerMonth": 6.17,
+  "dynamicEnergyTaxEurPerKwh": 0.11085,
   "dynamicFixedSupplyCostsPerMonth": 4.99
 }

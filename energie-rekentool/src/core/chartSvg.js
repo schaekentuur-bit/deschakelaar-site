@@ -118,21 +118,25 @@ export function buildConsumptionPriceChartSvg(perInterval, opts = {}) {
     const x = round(xScale(i));
     const label = esc(formatTick(perInterval[i].timestamp, showTimeOnly));
     gridAndTicks +=
-      `<line x1="${x}" y1="${pricePanelTop}" x2="${x}" y2="${consumptionPanelBottom}" stroke="#e2e8f0" stroke-width="1" />` +
-      `<text x="${x}" y="${consumptionPanelBottom + 16}" font-size="11" fill="#475569" text-anchor="middle">${label}</text>`;
+      `<line x1="${x}" y1="${pricePanelTop}" x2="${x}" y2="${consumptionPanelBottom}" stroke="rgba(27,46,75,.08)" stroke-width="1" />` +
+      `<text x="${x}" y="${consumptionPanelBottom + 16}" font-size="11" fill="rgba(27,46,75,.45)" text-anchor="middle">${label}</text>`;
   }
 
+  // Huisstijlkleuren (zie deschakelaar-financiële-situatieschets.html): navy
+  // voor afname, groen voor teruglevering/positief, amber voor de prijslijn
+  // (zelfde accent als de "hint.warn"-stijl), rood alleen voor het negatieve-
+  // prijsvlak (zelfde rood als foutmeldingen elders op de site).
   const svg = `
-<svg viewBox="0 0 ${width} ${height}" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, sans-serif">
+<svg viewBox="0 0 ${width} ${height}" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="'DM Sans', sans-serif">
   <rect x="0" y="0" width="${width}" height="${height}" fill="#ffffff" />
 
   <!-- Legenda -->
-  <g font-size="12" fill="#334155">
-    <rect x="${plotLeft}" y="6" width="10" height="10" fill="#d97706" />
+  <g font-size="12" fill="#1B2E4B">
+    <rect x="${plotLeft}" y="6" width="10" height="10" fill="#e5a000" />
     <text x="${plotLeft + 16}" y="15">Prijs (EUR/kWh)</text>
-    <rect x="${plotLeft + 150}" y="6" width="10" height="10" fill="#2563eb" />
+    <rect x="${plotLeft + 150}" y="6" width="10" height="10" fill="#1B2E4B" />
     <text x="${plotLeft + 166}" y="15">Afname (kWh)</text>
-    <rect x="${plotLeft + 280}" y="6" width="10" height="10" fill="#16a34a" />
+    <rect x="${plotLeft + 280}" y="6" width="10" height="10" fill="#6DBF4A" />
     <text x="${plotLeft + 296}" y="15">Teruglevering (kWh)</text>
   </g>
 
@@ -144,21 +148,21 @@ export function buildConsumptionPriceChartSvg(perInterval, opts = {}) {
       <rect x="${plotLeft}" y="${round(priceZeroY)}" width="${plotRight - plotLeft}" height="${round(Math.max(0, pricePanelBottom - priceZeroY))}" />
     </clipPath>
   </defs>
-  <line x1="${plotLeft}" y1="${round(priceZeroY)}" x2="${plotRight}" y2="${round(priceZeroY)}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
-  <path d="${priceAreaD}" fill="#dc2626" fill-opacity="0.12" stroke="none" clip-path="url(#below-zero-clip)" />
-  <path d="${pricePathD.trim()}" fill="none" stroke="#d97706" stroke-width="1.5" />
-  <text x="${plotRight + 6}" y="${pricePanelTop + 4}" font-size="10" fill="#64748b">${round(priceMax + pricePad, 3)}</text>
-  <text x="${plotRight + 6}" y="${round(priceZeroY) + 4}" font-size="10" fill="#64748b">0</text>
-  <text x="${plotRight + 6}" y="${pricePanelBottom}" font-size="10" fill="#64748b">${round(priceMin - pricePad, 3)}</text>
+  <line x1="${plotLeft}" y1="${round(priceZeroY)}" x2="${plotRight}" y2="${round(priceZeroY)}" stroke="rgba(27,46,75,.3)" stroke-width="1" stroke-dasharray="3,3" />
+  <path d="${priceAreaD}" fill="#e53e3e" fill-opacity="0.12" stroke="none" clip-path="url(#below-zero-clip)" />
+  <path d="${pricePathD.trim()}" fill="none" stroke="#e5a000" stroke-width="1.5" />
+  <text x="${plotRight + 6}" y="${pricePanelTop + 4}" font-size="10" fill="rgba(27,46,75,.5)">${round(priceMax + pricePad, 3)}</text>
+  <text x="${plotRight + 6}" y="${round(priceZeroY) + 4}" font-size="10" fill="rgba(27,46,75,.5)">0</text>
+  <text x="${plotRight + 6}" y="${pricePanelBottom}" font-size="10" fill="rgba(27,46,75,.5)">${round(priceMin - pricePad, 3)}</text>
 
   <!-- Verbruikspaneel -->
-  <text x="${plotLeft}" y="${consumptionPanelTop - 8}" font-size="12" fill="#475569">Verbruik (kWh) — afname boven, teruglevering onder</text>
-  <line x1="${plotLeft}" y1="${round(consumptionMidY)}" x2="${plotRight}" y2="${round(consumptionMidY)}" stroke="#94a3b8" stroke-width="1" />
-  <path d="${importBarsD.trim()}" stroke="#2563eb" stroke-width="${round(barStrokeWidth, 2)}" />
-  <path d="${exportBarsD.trim()}" stroke="#16a34a" stroke-width="${round(barStrokeWidth, 2)}" />
-  <text x="${plotRight + 6}" y="${consumptionPanelTop + 4}" font-size="10" fill="#64748b">${round(maxImport, 2)}</text>
-  <text x="${plotRight + 6}" y="${round(consumptionMidY) + 4}" font-size="10" fill="#64748b">0</text>
-  <text x="${plotRight + 6}" y="${consumptionPanelBottom}" font-size="10" fill="#64748b">${round(maxExport, 2)}</text>
+  <text x="${plotLeft}" y="${consumptionPanelTop - 8}" font-size="12" fill="rgba(27,46,75,.45)">Verbruik (kWh) — afname boven, teruglevering onder</text>
+  <line x1="${plotLeft}" y1="${round(consumptionMidY)}" x2="${plotRight}" y2="${round(consumptionMidY)}" stroke="rgba(27,46,75,.3)" stroke-width="1" />
+  <path d="${importBarsD.trim()}" stroke="#1B2E4B" stroke-width="${round(barStrokeWidth, 2)}" />
+  <path d="${exportBarsD.trim()}" stroke="#6DBF4A" stroke-width="${round(barStrokeWidth, 2)}" />
+  <text x="${plotRight + 6}" y="${consumptionPanelTop + 4}" font-size="10" fill="rgba(27,46,75,.5)">${round(maxImport, 2)}</text>
+  <text x="${plotRight + 6}" y="${round(consumptionMidY) + 4}" font-size="10" fill="rgba(27,46,75,.5)">0</text>
+  <text x="${plotRight + 6}" y="${consumptionPanelBottom}" font-size="10" fill="rgba(27,46,75,.5)">${round(maxExport, 2)}</text>
 </svg>`.trim();
 
   return svg;

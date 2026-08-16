@@ -60,40 +60,44 @@ async function main() {
 
   console.log('');
   console.log(`Gemeten periode:      ${result.periodDays.toFixed(2)} dagen (${result.intervalCount} intervallen)`);
+
   console.log('');
-  console.log('Gebruikte tarieven (per klant aangeleverd, niets hardcoded):');
-  console.log(`  Huidig contracttype:                 ${tariffs.currentContractType}`);
-  console.log(`  Huidig leveringstarief incl. btw:     ${tariffs.currentSupplyRateInclVatEurPerKwh} EUR/kWh`);
-  console.log(`  Huidige terugleververgoeding:         ${tariffs.currentFeedInRateEurPerKwh} EUR/kWh`);
-  console.log(`  Huidige vaste terugleverkosten:       ${tariffs.currentFixedFeedInCostsPerMonth} EUR/maand`);
-  console.log(`  Huidige vaste leveringskosten:        ${tariffs.currentFixedSupplyCostsPerMonth} EUR/maand`);
-  console.log(`  Dynamische opslag op afname:          ${tariffs.dynamicMarkupEurPerKwh} EUR/kWh (bij de spotprijs opgeteld)`);
-  console.log(`  Dynamische opslag op teruglevering:    ${tariffs.dynamicFeedInMarkupEurPerKwh} EUR/kWh (van de spotprijs afgetrokken)`);
-  console.log(`  Dynamische vaste leveringskosten:      ${tariffs.dynamicFixedSupplyCostsPerMonth} EUR/maand`);
+  console.log(`Huidig contract (${tariffs.currentContractType}), per klant aangeleverd:`);
+  console.log(`  Leveringstarief incl. btw:  ${tariffs.currentSupplyRateInclVatEurPerKwh} EUR/kWh`);
+  console.log(`  Terugleververgoeding:       ${tariffs.currentFeedInRateEurPerKwh} EUR/kWh`);
+  console.log(`  Vaste terugleverkosten:     ${tariffs.currentFixedFeedInCostsPerMonth} EUR/maand`);
+  console.log(`  Vaste leveringskosten:      ${tariffs.currentFixedSupplyCostsPerMonth} EUR/maand`);
+
+  console.log('');
+  console.log('Nieuw vast contract, per klant aangeleverd:');
+  console.log(`  Leveringstarief incl. btw:  ${tariffs.newSupplyRateInclVatEurPerKwh} EUR/kWh`);
+  console.log(`  Terugleververgoeding:       ${tariffs.newFeedInRateEurPerKwh} EUR/kWh`);
+  console.log(`  Vaste terugleverkosten:     ${tariffs.newFixedFeedInCostsPerMonth} EUR/maand`);
+  console.log(`  Vaste leveringskosten:      ${tariffs.newFixedSupplyCostsPerMonth} EUR/maand`);
+
+  console.log('');
+  console.log('Nieuw dynamisch contract, per klant aangeleverd:');
+  console.log(`  Opslag op afname:           ${tariffs.dynamicMarkupEurPerKwh} EUR/kWh (bij de spotprijs opgeteld)`);
+  console.log(`  Opslag op teruglevering:    ${tariffs.dynamicFeedInMarkupEurPerKwh} EUR/kWh (van de spotprijs afgetrokken)`);
+  console.log(`  Energiebelasting op afname: ${tariffs.dynamicEnergyTaxEurPerKwh} EUR/kWh (alleen bij afname, niet bij teruglevering)`);
+  console.log(`  Vaste leveringskosten:      ${tariffs.dynamicFixedSupplyCostsPerMonth} EUR/maand`);
   console.log(`  Vaste kosten geprorateerd over ${result.periodDays.toFixed(2)} dagen (gemiddelde maandlengte: 30,44 dagen)`);
 
   console.log('');
-  console.log(`Huidig contract (${tariffs.currentContractType}):`);
-  console.log(`  Variabel (afname/teruglevering):     ${formatEur(result.current.variableCostEur)}`);
-  console.log(`  Vaste leveringskosten:               ${formatEur(result.current.fixedCostEur)}`);
-  console.log(`  Vaste terugleverkosten:               ${formatEur(result.current.fixedFeedInCostEur)}`);
-  console.log(`  Totaal over de gemeten periode:       ${formatEur(result.current.totalEur)}`);
+  console.log(`Huidig vast — totaal:       ${formatEur(result.current.totalEur)} (variabel ${formatEur(result.current.variableCostEur)} + vast ${formatEur(result.current.fixedCostEur)} + terugleverkosten ${formatEur(result.current.fixedFeedInCostEur)})`);
+  console.log(`Nieuw vast — totaal:        ${formatEur(result.newFixed.totalEur)} (variabel ${formatEur(result.newFixed.variableCostEur)} + vast ${formatEur(result.newFixed.fixedCostEur)} + terugleverkosten ${formatEur(result.newFixed.fixedFeedInCostEur)})`);
+  console.log(`Nieuw dynamisch — totaal:   ${formatEur(result.dynamic.totalEur)} (variabel ${formatEur(result.dynamic.variableCostEur)} + vast ${formatEur(result.dynamic.fixedCostEur)})`);
 
   console.log('');
-  console.log('Dynamisch contract:');
-  console.log(`  Variabel (afname/teruglevering):     ${formatEur(result.dynamic.variableCostEur)}`);
-  console.log(`  Vaste leveringskosten:               ${formatEur(result.dynamic.fixedCostEur)}`);
-  console.log(`  Totaal over de gemeten periode:       ${formatEur(result.dynamic.totalEur)}`);
-
-  console.log('');
-  if (result.differenceEur > 0) {
-    console.log(`Verschil: overstappen naar dynamisch bespaart ${formatEur(result.differenceEur)} over deze periode.`);
-  } else if (result.differenceEur < 0) {
-    console.log(`Verschil: overstappen naar dynamisch kost ${formatEur(-result.differenceEur)} extra over deze periode.`);
-  } else {
-    console.log('Verschil: geen verschil tussen beide scenario\'s over deze periode.');
+  const scenarioNames = { current: 'huidig vast contract', newFixed: 'nieuw vast contract', dynamic: 'nieuw dynamisch contract' };
+  for (const comparison of Object.values(result.comparisons)) {
+    if (comparison.cheaper === null) {
+      console.log(`${comparison.label}: geen verschil over deze periode.`);
+    } else {
+      console.log(`${comparison.label}: ${scenarioNames[comparison.cheaper]} is ${formatEur(Math.abs(comparison.differenceEur))} goedkoper over deze periode.`);
+    }
   }
-  console.log('\n(Dit is het bedrag over de gemeten periode, geen jaarindicatie.)');
+  console.log('\n(Dit zijn de bedragen over de gemeten periode, geen jaarindicatie. Een negatief totaal betekent een tegoed: de teruglevering overtreft de afname.)');
 
   const outPath = args.out || `rapporten/${basename(consumptionPath).replace(/\.csv$/i, '')}.rapport.html`;
   const html = buildHtmlReport({

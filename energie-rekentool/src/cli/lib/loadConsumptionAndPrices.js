@@ -14,6 +14,19 @@ import { matchIntervalsToPrices } from '../../core/priceMatching.js';
 import { computePriceCoverage, assertPriceCoverageSufficient } from '../../core/priceCoverage.js';
 import { fetchEnergyZeroHourlyPrices } from './energyZeroClient.js';
 import { readPriceCache, writePriceCache } from './priceCache.js';
+import { convertXlsxToCsvText } from '../../io/xlsxToCsv.js';
+
+export function readConsumptionFileAsCsvText(path) {
+  if (!/\.xlsx$/i.test(path)) {
+    return readFileSync(path, 'utf8');
+  }
+  const bytes = new Uint8Array(readFileSync(path));
+  const { csvText, sheetCount, usedSheetName } = convertXlsxToCsvText(bytes);
+  if (sheetCount > 1) {
+    console.warn(`Let op: xlsx-bestand "${path}" bevat ${sheetCount} sheets; alleen de eerste ("${usedSheetName}") is gebruikt.`);
+  }
+  return csvText;
+}
 
 export function parseArgs(argv) {
   const opts = { _: [] };
@@ -71,7 +84,7 @@ async function getEnergyZeroPrices({ firstTimestamp, lastTimestamp, cacheDir, in
 export async function loadConsumptionAndMatchedPrices(opts) {
   const { consumptionPath, pricesPath, cacheDir = '.cache/energyzero', inclBtw = true } = opts;
 
-  const consumptionCsv = readFileSync(consumptionPath, 'utf8');
+  const consumptionCsv = readConsumptionFileAsCsvText(consumptionPath);
   const { format, intervals, warnings: consumptionWarnings } = normalizeConsumption(consumptionCsv);
   const consumptionSummary = computeCoverageSummary(intervals);
 

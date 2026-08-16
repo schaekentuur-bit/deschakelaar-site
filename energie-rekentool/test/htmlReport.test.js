@@ -4,8 +4,8 @@ import { buildHtmlReport } from '../src/core/htmlReport.js';
 
 function baseInput(overrides = {}) {
   const perInterval = [
-    { timestamp: '2025-06-01T00:15:00+02:00', importKwh: 1, exportKwh: 0, priceEurKwh: 0.2, dynamicCostEur: 0.22, currentCostEur: 0.28 },
-    { timestamp: '2025-06-01T00:30:00+02:00', importKwh: 0, exportKwh: 1, priceEurKwh: 0.25, dynamicCostEur: -0.24, currentCostEur: -0.09 }
+    { timestamp: '2025-06-01T00:15:00+02:00', importKwh: 1, exportKwh: 0, priceEurKwh: 0.2, dynamicCostEur: 0.22 },
+    { timestamp: '2025-06-01T00:30:00+02:00', importKwh: 0, exportKwh: 1, priceEurKwh: 0.25, dynamicCostEur: -0.24 }
   ];
   return {
     generatedAt: '2026-08-15T10:00:00.000Z',
@@ -42,14 +42,24 @@ function baseInput(overrides = {}) {
         currentSupplyRateInclVatEurPerKwh: 0.28,
         currentFeedInRateEurPerKwh: 0.09,
         currentFixedFeedInCostsPerMonth: 0,
+        currentFixedSupplyCostsPerMonth: 6.17,
+        newSupplyRateInclVatEurPerKwh: 0.26,
+        newFeedInRateEurPerKwh: 0.16,
+        newFixedFeedInCostsPerMonth: 0,
+        newFixedSupplyCostsPerMonth: 5.5,
         dynamicMarkupEurPerKwh: 0.02,
         dynamicFeedInMarkupEurPerKwh: 0.01,
-        currentFixedSupplyCostsPerMonth: 6.17,
+        dynamicEnergyTaxEurPerKwh: 0.11085,
         dynamicFixedSupplyCostsPerMonth: 4.99
       },
-      dynamic: { variableCostEur: -0.02, fixedCostEur: 0.08, totalEur: 0.06 },
       current: { variableCostEur: 0.19, fixedCostEur: 0.1, fixedFeedInCostEur: 0, totalEur: 0.29 },
-      differenceEur: 0.23,
+      newFixed: { variableCostEur: 0.15, fixedCostEur: 0.05, fixedFeedInCostEur: 0, totalEur: 0.2 },
+      dynamic: { variableCostEur: -0.02, fixedCostEur: 0.08, totalEur: 0.06 },
+      comparisons: {
+        currentVsNewFixed: { label: 'Huidig vast contract vs. nieuw vast contract', differenceEur: 0.09, cheaper: 'newFixed' },
+        currentVsDynamic: { label: 'Huidig vast contract vs. nieuw dynamisch contract', differenceEur: 0.23, cheaper: 'dynamic' },
+        newFixedVsDynamic: { label: 'Nieuw vast contract vs. nieuw dynamisch contract', differenceEur: 0.14, cheaper: 'dynamic' }
+      },
       perInterval
     },
     ...overrides
@@ -64,9 +74,9 @@ test('produces a complete, well-formed html document with an embedded svg chart'
   assert.match(html, /<\/svg>/);
 });
 
-test('shows all eight tariff fields explicitly', () => {
+test('shows all thirteen tariff fields explicitly, across all three scenarios', () => {
   const html = buildHtmlReport(baseInput());
-  for (const value of [0.28, 0.09, 0.02, 0.01, 6.17, 4.99, 'vast']) {
+  for (const value of [0.28, 0.09, 6.17, 0.26, 0.16, 5.5, 0.02, 0.01, 0.11085, 4.99, 'vast']) {
     assert.match(html, new RegExp(String(value).replace('.', '\\.')));
   }
 });
@@ -81,7 +91,7 @@ test('shows coverage data from stap 1 and 2: period, interval counts, gaps, pric
 test('renders the known-limitation note prominently when present', () => {
   const html = buildHtmlReport(baseInput());
   assert.match(html, /BEKENDE BEPERKING \(niet opgelost\): test-notitie\./);
-  assert.match(html, /class="warning"/);
+  assert.match(html, /class="ev-hint warn"/);
 });
 
 test('omits the limitation box when there is no limitation', () => {
@@ -91,18 +101,42 @@ test('omits the limitation box when there is no limitation', () => {
   assert.doesNotMatch(html, /BEKENDE BEPERKING/);
 });
 
-test('shows both scenario totals and a savings message when dynamic is cheaper', () => {
+test('shows all three scenario totals and three clearly labeled comparison sentences', () => {
   const html = buildHtmlReport(baseInput());
-  assert.match(html, /€ 0\.06/); // dynamic total
-  assert.match(html, /€ 0\.29/); // current total
-  assert.match(html, /bespaart.*€ 0\.23/s);
+  assert.match(html, /€ 0\.29/); // huidig vast
+  assert.match(html, /€ 0\.20/); // nieuw vast
+  assert.match(html, /€ 0\.06/); // dynamisch
+
+  assert.match(html, /Huidig vast contract vs\. nieuw vast contract.*nieuw vast contract.*€ 0\.09 goedkoper/s);
+  assert.match(html, /Huidig vast contract vs\. nieuw dynamisch contract.*nieuw dynamisch contract.*€ 0\.23 goedkoper/s);
+  assert.match(html, /Nieuw vast contract vs\. nieuw dynamisch contract.*nieuw dynamisch contract.*€ 0\.14 goedkoper/s);
 });
 
-test('shows an extra-cost message when the current contract is cheaper', () => {
+test('renders a neutral (non-green) comparison when the current contract is cheaper', () => {
   const input = baseInput();
-  input.result = { ...input.result, differenceEur: -1.5 };
+  input.result = {
+    ...input.result,
+    comparisons: {
+      ...input.result.comparisons,
+      currentVsNewFixed: { label: 'Huidig vast contract vs. nieuw vast contract', differenceEur: -0.5, cheaper: 'current' }
+    }
+  };
   const html = buildHtmlReport(input);
-  assert.match(html, /kost.*€ 1\.50.*extra/s);
+  assert.match(html, /huidig vast contract.*€ 0\.50 goedkoper/s);
+  assert.match(html, /class="ev-difference neutral"/);
+});
+
+test('renders a neutral message when two scenarios are exactly equal', () => {
+  const input = baseInput();
+  input.result = {
+    ...input.result,
+    comparisons: {
+      ...input.result.comparisons,
+      currentVsNewFixed: { label: 'Huidig vast contract vs. nieuw vast contract', differenceEur: 0, cheaper: null }
+    }
+  };
+  const html = buildHtmlReport(input);
+  assert.match(html, /Huidig vast contract vs\. nieuw vast contract: geen verschil over deze periode\./);
 });
 
 test('escapes untrusted string fields to prevent HTML injection', () => {

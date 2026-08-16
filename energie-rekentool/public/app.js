@@ -14,16 +14,37 @@ import { checkPriceDataAvailability } from '../src/core/priceDataAvailability.js
 import { calculateScenarioComparison } from '../src/core/tariffCalculation.js';
 import { buildHtmlReport } from '../src/core/htmlReport.js';
 import { checkTariffDefaultsFreshness } from '../src/core/tariffDefaultsFreshness.js';
+import { estimateAnnualImportKwh } from '../src/core/annualConsumptionEstimate.js';
+import { convertXlsxToCsvText } from '../src/io/xlsxToCsv.js';
 
 const NUMERIC_TARIFF_FIELDS = [
   'currentSupplyRateInclVatEurPerKwh',
   'currentFeedInRateEurPerKwh',
   'currentFixedFeedInCostsPerMonth',
+  'currentFixedSupplyCostsPerMonth',
+  'newSupplyRateInclVatEurPerKwh',
+  'newFeedInRateEurPerKwh',
+  'newFixedFeedInCostsPerMonth',
+  'newFixedSupplyCostsPerMonth',
   'dynamicMarkupEurPerKwh',
   'dynamicFeedInMarkupEurPerKwh',
-  'currentFixedSupplyCostsPerMonth',
+  'dynamicEnergyTaxEurPerKwh',
   'dynamicFixedSupplyCostsPerMonth'
 ];
+
+// Boven welk geëxtrapoleerd jaarverbruik (kWh) de vlakke energiebelasting-
+// aanname (schijf 1+2, tot 10.000 kWh/jaar) een waarschuwing verdient — zie
+// config/tariff-defaults.json (dynamicEnergyTaxEurPerKwh) voor de tarieven.
+const ENERGY_TAX_BRACKET_LIMIT_KWH = 10000;
+const ENERGY_TAX_BRACKET_NEARING_KWH = 8000;
+
+// Velden met een eigen "bandbreedte" in de config krijgen een zichtbaar
+// prominentere aansporing dan de rest (zie loadTariffDefaults), in het
+// bijbehorende containerelement op de pagina.
+const HIGH_VARIANCE_FIELD_CONTAINERS = {
+  currentFeedInRateEurPerKwh: 'feed-in-rate-caution',
+  newFeedInRateEurPerKwh: 'new-feed-in-rate-caution'
+};
 
 const state = {
   intervals: null,
@@ -40,35 +61,17 @@ function el(id) {
   return document.getElementById(id);
 }
 
-function addMessage(container, className, text) {
-  const div = document.createElement('div');
-  div.className = className;
-  div.textContent = text;
-  container.appendChild(div);
-  return div;
-}
-
 function clear(container) {
   container.innerHTML = '';
 }
 
-/**
- * Markeert een tarief-veld dat een grote spreiding tussen leveranciers heeft
- * (zie config/tariff-defaults.json's "bandbreedte") zichtbaar prominenter dan
- * de andere velden: de vooringevulde marktgemiddelde is hier geen veilige
- * aanname — bij een individuele klant kan de werkelijke waarde een veelvoud
- * schelen, en dat werkt direct door in het eindresultaat.
- */
-function markFieldAsHighVariance(field, bandbreedte, defaultValue) {
-  const fieldDiv = el(`f-${field}`).closest('.field');
-  fieldDiv.classList.add('field-caution');
-  const hint = document.createElement('p');
-  hint.className = 'field-caution-hint';
-  hint.textContent =
-    `⚠ Grote spreiding tussen leveranciers: €${bandbreedte.min}–€${bandbreedte.max}/kWh. ` +
-    `De vooringevulde €${defaultValue} is een marktgemiddelde, geen veilige aanname zoals bijvoorbeeld ` +
-    'het leveringstarief — controleer dit altijd tegen het echte contract van de klant.';
-  fieldDiv.appendChild(hint);
+/** Voegt een hint-box toe, zelfde visuele taal als het situatieschets-hulpmiddel. */
+function addHint(container, variant, text) {
+  const div = document.createElement('div');
+  div.className = variant ? `hint ${variant}` : 'hint';
+  div.textContent = text;
+  container.appendChild(div);
+  return div;
 }
 
 async function loadTariffDefaults() {
@@ -78,9 +81,7 @@ async function loadTariffDefaults() {
 
   el('f-currentContractType').value = config.velden.currentContractType.waarde;
   for (const field of NUMERIC_TARIFF_FIELDS) {
-    const info = config.velden[field];
-    el(`f-${field}`).value = info.waarde;
-    if (info.bandbreedte) markFieldAsHighVariance(field, info.bandbreedte, info.waarde);
+    el(`f-${field}`).value = config.velden[field].waarde;
   }
 
   const peildatums = Object.values(config.velden)
@@ -93,19 +94,58 @@ async function loadTariffDefaults() {
       'pas ze aan naar het eigen contract van de klant.';
   }
 
+  // Terugleververgoeding (huidig én nieuw) heeft een grote spreiding tussen
+  // leveranciers: het marktgemiddelde is hier geen veilige aanname, dus
+  // krijgen deze velden een zichtbaar prominentere aansporing dan de rest
+  // (zelfde hint.warn-stijl, maar altijd zichtbaar, niet alleen bij een
+  // verouderde peildatum) — gestuurd door "bandbreedte" in de config, niet
+  // hardcoded, zodat een toekomstig ander hoog-variant veld dezelfde
+  // behandeling automatisch meekrijgt.
+  for (const [field, containerId] of Object.entries(HIGH_VARIANCE_FIELD_CONTAINERS)) {
+    const info = config.velden[field];
+    if (!info?.bandbreedte) continue;
+    addHint(
+      el(containerId),
+      'warn',
+      `⚠ Grote spreiding tussen leveranciers: €${info.bandbreedte.min}–€${info.bandbreedte.max}/kWh. ` +
+        `De vooringevulde €${info.waarde} is een marktgemiddelde, geen offerte en geen veilige aanname zoals ` +
+        'bijvoorbeeld het leveringstarief — controleer dit altijd tegen het echte contract van de klant.'
+    );
+  }
+
   const freshness = checkTariffDefaultsFreshness(config, Date.now());
   if (freshness.isStale) {
     const banner = el('tariff-defaults-warning');
-    banner.style.display = '';
     clear(banner);
-    addMessage(
+    addHint(
       banner,
-      'warning',
+      'warn',
       `⚠ De marktgemiddelden zijn niet meer actueel: ${freshness.staleFields
         .map((f) => `${f.field} (${f.ageDays} dagen oud)`)
         .join(', ')}. Vooringevulde waarden kunnen verouderd zijn — controleer ze voordat je rekent.`
     );
   }
+}
+
+function isXlsxFile(file) {
+  return (
+    /\.xlsx$/i.test(file.name) ||
+    file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  );
+}
+
+async function readConsumptionFileText(file) {
+  if (!isXlsxFile(file)) {
+    return { text: await file.text(), xlsxNotice: null };
+  }
+
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  const { csvText, sheetCount, usedSheetName } = convertXlsxToCsvText(bytes);
+  const xlsxNotice =
+    sheetCount > 1
+      ? `Xlsx-bestand bevat ${sheetCount} sheets; alleen de eerste ("${usedSheetName}") is gebruikt.`
+      : null;
+  return { text: csvText, xlsxNotice };
 }
 
 function normalizeConsumption(text) {
@@ -120,20 +160,53 @@ function normalizeConsumption(text) {
 }
 
 function renderConsumptionSummary(container, format, summary, warnings) {
-  addMessage(
+  addHint(
     container,
-    'ok',
+    '',
     `Herkend als ${format}-format. Periode ${summary.firstTimestamp} t/m ${summary.lastTimestamp}, ` +
       `${summary.actualCount} van ${summary.expectedCount} intervallen ` +
       `(${summary.missingPercentage.toFixed(2)}% ontbrekende intervallen).`
   );
   if (warnings.length > 0) {
-    addMessage(container, 'warning', `${warnings.length} waarschuwing(en) bij het inlezen van het verbruiksbestand.`);
+    addHint(container, 'warn', `${warnings.length} waarschuwing(en) bij het inlezen van het verbruiksbestand.`);
+  }
+}
+
+/**
+ * Waarschuwt zichtbaar naast het energiebelastingveld wanneer het
+ * geëxtrapoleerde jaarverbruik van de geüploade periode richting (of over)
+ * de 10.000 kWh-grens van schijf 1+2 gaat, i.p.v. een statische kanttekening
+ * die voor iedere klant hetzelfde zou zijn.
+ */
+function renderEnergyTaxScopeWarning(consumptionSummary) {
+  const container = el('energy-tax-caution');
+  clear(container);
+  const annualKwh = estimateAnnualImportKwh(consumptionSummary);
+  const rounded = Math.round(annualKwh).toLocaleString('nl-NL');
+
+  if (annualKwh >= ENERGY_TAX_BRACKET_LIMIT_KWH) {
+    addHint(
+      container,
+      'warn',
+      `⚠ Geëxtrapoleerd jaarverbruik op basis van deze periode: ~${rounded} kWh — dat ligt boven de 10.000 kWh-grens ` +
+        'van energiebelastingschijf 1+2. Vanaf daar geldt een lager tarief (schijf 3), dat het vooringevulde tarief ' +
+        'hierboven niet dekt — pas dit handmatig aan voor deze klant. (Ruwe schatting op basis van de gemeten ' +
+        'periode, geen jaarmeting.)'
+    );
+  } else if (annualKwh >= ENERGY_TAX_BRACKET_NEARING_KWH) {
+    addHint(
+      container,
+      'warn',
+      `⚠ Geëxtrapoleerd jaarverbruik op basis van deze periode: ~${rounded} kWh — dat nadert de 10.000 kWh-grens ` +
+        'van energiebelastingschijf 1+2. Bij overschrijding geldt vanaf dat punt een lager tarief (schijf 3) — ' +
+        'controleer het werkelijke jaarverbruik van de klant. (Ruwe schatting op basis van de gemeten periode, ' +
+        'geen jaarmeting.)'
+    );
   }
 }
 
 async function loadAndMatchPrices(container) {
-  addMessage(container, 'info', 'Prijzen ophalen...');
+  addHint(container, 'info', 'Prijzen ophalen...');
 
   const manifestRes = await fetch('data/prices/energyzero/index.json');
   if (!manifestRes.ok) throw new Error(`Kan het prijzenmanifest niet laden (HTTP ${manifestRes.status})`);
@@ -165,14 +238,14 @@ async function loadAndMatchPrices(container) {
   state.coverage = coverage;
   state.priceSource = `EnergyZero-uurprijzen (statisch gepubliceerd, laatst bijgewerkt ${manifest.lastUpdatedUtc})`;
 
-  addMessage(
+  addHint(
     container,
-    'ok',
+    '',
     `Prijzen gekoppeld: ${coverage.matchedCount} van ${coverage.totalCount} intervallen ` +
       `(${coverage.missingPercentage.toFixed(2)}% ontbreekt).`
   );
   if (coverage.limitationNote) {
-    addMessage(container, 'warning', coverage.limitationNote);
+    addHint(container, 'warn', coverage.limitationNote);
   }
 
   // Gooit bij >5% ontbrekende prijzen — zelfde weigeringsregel als de CLI.
@@ -197,16 +270,16 @@ async function handleFileChange(event) {
   if (!file) return;
 
   el('calculate-button').disabled = true;
-  el('tariffs-section').dataset.disabled = 'true';
-  el('calculate-section').dataset.disabled = 'true';
+  el('tariffs-step').dataset.disabled = 'true';
+  el('calculate-step').dataset.disabled = 'true';
   el('report-frame').style.display = 'none';
 
   const statusEl = el('upload-status');
   clear(statusEl);
-  addMessage(statusEl, 'info', 'Bestand wordt ingelezen...');
+  addHint(statusEl, 'info', 'Bestand wordt ingelezen...');
 
   try {
-    const text = await file.text();
+    const { text, xlsxNotice } = await readConsumptionFileText(file);
     const { format, intervals, warnings } = normalizeConsumption(text);
     const consumptionSummary = computeCoverageSummary(intervals);
 
@@ -217,15 +290,19 @@ async function handleFileChange(event) {
     state.consumptionFileName = file.name;
 
     clear(statusEl);
+    if (xlsxNotice) {
+      addHint(statusEl, 'info', xlsxNotice);
+    }
     renderConsumptionSummary(statusEl, format, consumptionSummary, warnings);
+    renderEnergyTaxScopeWarning(consumptionSummary);
 
     await loadAndMatchPrices(statusEl);
 
-    el('tariffs-section').dataset.disabled = 'false';
-    el('calculate-section').dataset.disabled = 'false';
+    el('tariffs-step').dataset.disabled = 'false';
+    el('calculate-step').dataset.disabled = 'false';
     el('calculate-button').disabled = false;
   } catch (err) {
-    addMessage(statusEl, 'error', `Fout: ${err.message}`);
+    addHint(statusEl, 'error', `Fout: ${err.message}`);
   }
 }
 
@@ -251,15 +328,36 @@ function handleCalculate() {
     frame.style.display = 'block';
     frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (err) {
-    addMessage(statusEl, 'error', `Fout bij berekenen: ${err.message}`);
+    addHint(statusEl, 'error', `Fout bij berekenen: ${err.message}`);
   }
+}
+
+function handleReset() {
+  el('consumption-file').value = '';
+  clear(el('upload-status'));
+  clear(el('calculate-status'));
+  clear(el('energy-tax-caution'));
+  el('tariffs-step').dataset.disabled = 'true';
+  el('calculate-step').dataset.disabled = 'true';
+  el('calculate-button').disabled = true;
+  const frame = el('report-frame');
+  frame.style.display = 'none';
+  frame.srcdoc = '';
+
+  state.intervals = null;
+  state.consumptionWarnings = null;
+  state.consumptionSummary = null;
+  state.format = null;
+  state.consumptionFileName = null;
+  state.matchResult = null;
+  state.coverage = null;
+  state.priceSource = null;
 }
 
 el('consumption-file').addEventListener('change', handleFileChange);
 el('calculate-button').addEventListener('click', handleCalculate);
+el('reset-button').addEventListener('click', handleReset);
 
 loadTariffDefaults().catch((err) => {
-  const banner = el('tariff-defaults-warning');
-  banner.style.display = '';
-  addMessage(banner, 'error', `Kan de standaard-tariefwaarden niet laden: ${err.message}`);
+  addHint(el('tariff-defaults-warning'), 'error', `Kan de standaard-tariefwaarden niet laden: ${err.message}`);
 });
