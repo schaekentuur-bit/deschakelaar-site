@@ -75,7 +75,7 @@ function addHint(container, variant, text) {
 }
 
 async function loadTariffDefaults() {
-  const res = await fetch('config/tariff-defaults.json');
+  const res = await fetch('energie-rekentool/config/tariff-defaults.json');
   if (!res.ok) throw new Error(`Kan config/tariff-defaults.json niet laden (HTTP ${res.status})`);
   const config = await res.json();
 
@@ -208,7 +208,7 @@ function renderEnergyTaxScopeWarning(consumptionSummary) {
 async function loadAndMatchPrices(container) {
   addHint(container, 'info', 'Prijzen ophalen...');
 
-  const manifestRes = await fetch('data/prices/energyzero/index.json');
+  const manifestRes = await fetch('energie-rekentool/data/prices/energyzero/index.json');
   if (!manifestRes.ok) throw new Error(`Kan het prijzenmanifest niet laden (HTTP ${manifestRes.status})`);
   const manifest = await manifestRes.json();
 
@@ -224,7 +224,7 @@ async function loadAndMatchPrices(container) {
 
   const pricesPerMonth = await Promise.all(
     availability.neededMonths.map(async (month) => {
-      const res = await fetch(`data/prices/energyzero/${month}.csv`);
+      const res = await fetch(`energie-rekentool/data/prices/energyzero/${month}.csv`);
       if (!res.ok) throw new Error(`Kan prijsbestand voor ${month} niet laden (HTTP ${res.status})`);
       return parsePriceCsv(await res.text());
     })
