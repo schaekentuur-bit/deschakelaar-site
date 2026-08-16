@@ -76,6 +76,58 @@ test('import and export both > 0 in the same interval are kept as-is, not netted
   assert.ok(Math.abs(intervals[0].exportKwh - 0.8) < 1e-9);
 });
 
+test('empty kWh fields (dongle offline) are treated as missing, not as a meter reading of 0', () => {
+  const rows = parseHomeWizardCsv(
+    csv([
+      '2025-06-01 00:00,100.000,10.000,5.000,1.000,0,0,0',
+      // meerdere opeenvolgende, volledig lege rijen: een gat, geen 0-meting
+      '2025-06-01 00:15,,,,,,,',
+      '2025-06-01 00:30,,,,,,,',
+      '2025-06-01 00:45,,,,,,,',
+      // meterstanden lopen na het gat gewoon door vanaf hun oude niveau
+      '2025-06-01 01:00,101.000,10.500,5.200,1.000,10,20,30'
+    ])
+  );
+
+  const { intervals, phasePower, warnings } = toIntervalReadings(rows);
+
+  // Geen enkel interval mag over of vanuit een lege rij berekend zijn: van de
+  // 4 mogelijke intervallen (00:15, 00:30, 00:45, 01:00) blijft er geen over,
+  // want elk grenst aan minstens één lege rij.
+  assert.equal(intervals.length, 0);
+  assert.equal(phasePower.length, 0);
+  assert.equal(warnings.length, 0);
+});
+
+test('a gap of empty rows does not trigger the corrupt-file (descending reading) check, and is reported as a gap by computeCoverageSummary', async () => {
+  const { computeCoverageSummary } = await import('../src/core/validate.js');
+  const rows = parseHomeWizardCsv(
+    csv([
+      '2025-06-01 00:00,100.000,0,0,0,0,0,0', // baseline, geen interval
+      '2025-06-01 00:15,100.300,0,0,0,0,0,0', // normaal interval vóór het gat
+      '2025-06-01 00:30,100.600,0,0,0,0,0,0', // nog een normaal interval (15 min na de vorige)
+      // dongle offline: 00:45 t/m 01:30 (4 kwartieren) volledig leeg
+      '2025-06-01 00:45,,,,,,,',
+      '2025-06-01 01:00,,,,,,,',
+      '2025-06-01 01:15,,,,,,,',
+      '2025-06-01 01:30,,,,,,,',
+      // hervat vanaf een fors hogere, maar wel degelijk stijgende meterstand
+      '2025-06-01 01:45,105.000,0,0,0,0,0,0', // eerste rij ná het gat: grenst nog aan de lege 01:30, dus zelf niet berekenbaar
+      '2025-06-01 02:00,105.300,0,0,0,0,0,0' // normaal interval, 15 min na 01:45
+    ])
+  );
+
+  // Geen "corrupt bestand"-fout: het parseren zelf mag niet meer stuklopen op dit gat,
+  // ook al ligt de meterstand na het gat (105.000) fors boven de laatste bekende (100.600).
+  const { intervals } = toIntervalReadings(rows);
+  assert.equal(intervals.length, 3); // 00:15, 00:30 en 02:00 zijn berekenbaar; 01:45 grenst aan een lege rij
+
+  const summary = computeCoverageSummary(intervals);
+  assert.equal(summary.expectedCount, 8); // 00:15 t/m 02:00 in kwartieren
+  assert.equal(summary.actualCount, 3);
+  assert.equal(summary.missingCount, 5); // het gat (00:45 t/m 01:30) + het onberekenbare randinterval 01:45
+});
+
 test('phase power is kept alongside intervals, unused but preserved (can be negative)', () => {
   const rows = parseHomeWizardCsv(
     csv(['2025-06-01 00:00,100.000,0,0,0,0,0,0', '2025-06-01 00:15,100.500,0,0.200,0,-120,80,-40'])
