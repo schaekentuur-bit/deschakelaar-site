@@ -230,6 +230,7 @@ html,body{background:#F7F8FA;color:#1B2E4B;font-family:'DM Sans',sans-serif;font
         <div class="ev-rc-sub">variabel ${eur(result.dynamic.variableCostEur)} + vast ${eur(result.dynamic.fixedCostEur)}</div>
       </div>
     </div>
+    <div class="ev-hint warn">&#9888; Het bedrag bij <strong>Huidig vast</strong> houdt geen rekening met de salderingsregeling, die tot 1 januari 2027 nog gedeeltelijk geldt. Tot die datum kan de werkelijke rekening van de klant hierdoor gunstiger uitvallen dan hier getoond — vergelijk dit bedrag dus niet zonder meer met de actuele jaarafrekening van de klant.</div>
     <div class="ev-comparisons">${comparisonBoxes}</div>
     <p class="ev-footnote">Dit zijn de bedragen over de gemeten periode, geen jaarindicatie. Een negatief bedrag betekent dat de teruglevering de afname overtreft: per saldo een tegoed in plaats van een rekening.</p>
   </div>

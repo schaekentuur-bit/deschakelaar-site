@@ -112,6 +112,17 @@ test('shows all three scenario totals and three clearly labeled comparison sente
   assert.match(html, /Nieuw vast contract vs\. nieuw dynamisch contract.*nieuw dynamisch contract.*€ 0\.14 goedkoper/s);
 });
 
+test('warns near "Huidig vast" that saldering (t/m 1 januari 2027) niet is meegerekend', () => {
+  const html = buildHtmlReport(baseInput());
+  assert.match(html, /Huidig vast<\/strong> houdt geen rekening met de salderingsregeling/);
+  assert.match(html, /1 januari 2027/);
+  // De waarschuwing hoort direct bij het resultaatblok (sectie 03), vóór de vergelijkingen.
+  const resultSectionIndex = html.indexOf('Resultaat over de gemeten periode');
+  const hintIndex = html.indexOf('salderingsregeling');
+  const comparisonsIndex = html.indexOf('class="ev-comparisons"');
+  assert.ok(resultSectionIndex < hintIndex && hintIndex < comparisonsIndex);
+});
+
 test('renders a neutral (non-green) comparison when the current contract is cheaper', () => {
   const input = baseInput();
   input.result = {
