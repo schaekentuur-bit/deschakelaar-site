@@ -128,6 +128,51 @@ test('a gap of empty rows does not trigger the corrupt-file (descending reading)
   assert.equal(summary.missingCount, 5); // het gat (00:45 t/m 01:30) + het onberekenbare randinterval 01:45
 });
 
+test('a file that ends with an empty block is flagged as ending in a gap, not as an active fault', () => {
+  const rows = parseHomeWizardCsv(
+    csv([
+      '2025-06-01 00:00,100.000,0,0,0,0,0,0',
+      '2025-06-01 00:15,100.100,0,0,0,0,0,0',
+      '2025-06-01 00:30,100.200,0,0,0,0,0,0',
+      '2025-06-01 00:45,100.300,0,0,0,0,0,0',
+      '2025-06-01 01:00,100.400,0,0,0,0,0,0',
+      '2025-06-01 01:15,100.500,0,0,0,0,0,0',
+      '2025-06-01 01:30,100.600,0,0,0,0,0,0',
+      '2025-06-01 01:45,100.700,0,0,0,0,0,0',
+      '2025-06-01 02:00,100.800,0,0,0,0,0,0',
+      '2025-06-01 02:15,100.900,0,0,0,0,0,0',
+      // export stopt hier abrupt: de dongle was blijkbaar nog offline op het
+      // moment dat deze export werd gegenereerd (niet gesimuleerd als "actieve
+      // storing nu", puur als "dit bestand eindigt met een gat")
+      '2025-06-01 02:30,,,,,,,',
+      '2025-06-01 02:45,,,,,,,',
+      '2025-06-01 03:00,,,,,,,'
+    ])
+  );
+  const { warnings } = toIntervalReadings(rows);
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /dit bestand eindigt met een gat in de meting/i);
+  assert.match(warnings[0], /leeg vanaf 2025-06-01 02:30/);
+  assert.match(warnings[0], /controleer of dit de gewenste periode dekt/i);
+  // Geen suggestie van een lopende/actieve storing op het moment van gebruik.
+  assert.doesNotMatch(warnings[0], /storing|offline/i);
+});
+
+test('a normal, fully populated file does not trigger a false trailing-gap warning', () => {
+  const rows = parseHomeWizardCsv(
+    csv(
+      Array.from({ length: 40 }, (_, i) => {
+        const hh = String(Math.floor(i / 4)).padStart(2, '0');
+        const mm = String((i % 4) * 15).padStart(2, '0');
+        return `2025-06-01 ${hh}:${mm},${(100 + i * 0.1).toFixed(3)},0,0,0,0,0,0`;
+      })
+    )
+  );
+  const { intervals, warnings } = toIntervalReadings(rows);
+  assert.equal(intervals.length, 39);
+  assert.equal(warnings.length, 0);
+});
+
 test('phase power is kept alongside intervals, unused but preserved (can be negative)', () => {
   const rows = parseHomeWizardCsv(
     csv(['2025-06-01 00:00,100.000,0,0,0,0,0,0', '2025-06-01 00:15,100.500,0,0.200,0,-120,80,-40'])

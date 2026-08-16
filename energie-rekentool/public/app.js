@@ -167,8 +167,8 @@ function renderConsumptionSummary(container, format, summary, warnings) {
       `${summary.actualCount} van ${summary.expectedCount} intervallen ` +
       `(${summary.missingPercentage.toFixed(2)}% ontbrekende intervallen).`
   );
-  if (warnings.length > 0) {
-    addHint(container, 'warn', `${warnings.length} waarschuwing(en) bij het inlezen van het verbruiksbestand.`);
+  for (const warning of warnings) {
+    addHint(container, 'warn', warning);
   }
 }
 

@@ -29,7 +29,8 @@ async function main() {
   console.log(`Totale afname:        ${consumptionSummary.totalImportKwh.toFixed(3)} kWh`);
   console.log(`Totale teruglevering: ${consumptionSummary.totalExportKwh.toFixed(3)} kWh`);
   if (consumptionWarnings.length > 0) {
-    console.log(`Waarschuwingen (verbruik): ${consumptionWarnings.length}`);
+    console.log(`Waarschuwingen (verbruik, ${consumptionWarnings.length}):`);
+    for (const w of consumptionWarnings) console.log(`  - ${w}`);
   }
 
   console.log('');

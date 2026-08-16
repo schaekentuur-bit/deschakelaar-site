@@ -94,6 +94,16 @@ test('renders the known-limitation note prominently when present', () => {
   assert.match(html, /class="ev-hint warn"/);
 });
 
+test('renders the actual text of each consumption warning, not just a count', () => {
+  const input = baseInput();
+  input.consumptionWarnings = [
+    'Dit bestand eindigt met een gat in de meting (leeg vanaf 2026-07-30 08:15) — controleer of dit de gewenste periode dekt.'
+  ];
+  const html = buildHtmlReport(input);
+  assert.match(html, /Dit bestand eindigt met een gat in de meting \(leeg vanaf 2026-07-30 08:15\)/);
+  assert.doesNotMatch(html, /1 waarschuwing\(en\)/);
+});
+
 test('omits the limitation box when there is no limitation', () => {
   const input = baseInput();
   input.coverage = { ...input.coverage, limitationNote: null };

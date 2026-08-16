@@ -27,6 +27,60 @@ function parseNullableNumber(value, context) {
   return n;
 }
 
+// Hoeveel van de laatste rijen leeg mogen zijn voordat het bestand als
+// "eindigt met een gat" wordt gesignaleerd. Hergebruikt de bestaande 5%-grens
+// uit priceCoverage.js (assertPriceCoverageSufficient: >5% ontbrekende
+// prijzen wordt geweigerd) — dezelfde tool hanteert daar al 5% als de grens
+// tussen "normale, kleine hiaten" en "genoeg om iets mee te doen". Een
+// percentage van het eigen rijenaantal i.p.v. een vast aantal rijen schaalt
+// vanzelf mee met zowel de bestandslengte als de intervalduur (kwartier- of
+// uurdata): bij een kort bestand is een klein aantal rijen al 5%, bij een
+// jaarbestand pas een navenant groter blok. Ondergrens van 1 rij zodat ook
+// een minimaal bestand (2 rijen) een leeg laatste rij kan signaleren.
+const TRAILING_GAP_FRACTION = 0.05;
+
+function isEmptyRow(row) {
+  return (
+    row.importT1Kwh === null &&
+    row.importT2Kwh === null &&
+    row.exportT1Kwh === null &&
+    row.exportT2Kwh === null
+  );
+}
+
+/**
+ * Signaleert wanneer een bestand eindigt met een aaneengesloten blok volledig
+ * lege rijen (bv. de HomeWizard-dongle was nog offline op het moment van
+ * exporteren). Dit is GEEN melding dat er nu, op het moment van gebruik, nog
+ * een storing loopt — het bestand kan intussen allang zijn hervat, alleen
+ * niet in déze export. Het signaleert alleen dat de export zelf met een gat
+ * eindigt, waardoor de gerapporteerde periode (zie computeCoverageSummary in
+ * validate.js, die alleen gaten TUSSEN de eerste en laatste bekende meting
+ * telt) eerder kan ophouden dan de klant verwacht, zonder dat dat uit "0
+ * gaten" valt af te leiden.
+ *
+ * @param {Array<{time: string, importT1Kwh: number|null, importT2Kwh: number|null, exportT1Kwh: number|null, exportT2Kwh: number|null}>} rows - uit parseHomeWizardCsv()
+ * @returns {string|null} waarschuwingstekst, of null als het bestand niet met een leeg blok eindigt
+ */
+export function detectTrailingEmptyBlock(rows) {
+  const thresholdCount = Math.max(1, Math.round(rows.length * TRAILING_GAP_FRACTION));
+
+  let emptyTailCount = 0;
+  for (let i = rows.length - 1; i >= 0 && isEmptyRow(rows[i]); i--) {
+    emptyTailCount++;
+  }
+
+  if (emptyTailCount < thresholdCount) {
+    return null;
+  }
+
+  const firstEmptyRow = rows[rows.length - emptyTailCount];
+  return (
+    `Dit bestand eindigt met een gat in de meting (leeg vanaf ${firstEmptyRow.time}) — ` +
+    'controleer of dit de gewenste periode dekt.'
+  );
+}
+
 /**
  * Parseert de ruwe HomeWizard-CSV-tekst naar rijen met cumulatieve meterstanden.
  * Doet geen normalisatie/diffing — dat is toIntervalReadings().
@@ -86,6 +140,11 @@ export function toIntervalReadings(parsedRows) {
   const intervals = [];
   const phasePower = [];
   const warnings = [];
+
+  const trailingGapWarning = detectTrailingEmptyBlock(parsedRows);
+  if (trailingGapWarning) {
+    warnings.push(trailingGapWarning);
+  }
 
   // In één keer resolven over de hele, chronologisch gesorteerde reeks, zodat
   // het herhaalde wandklokuur bij de najaars-DST-overgang (bv. twee keer

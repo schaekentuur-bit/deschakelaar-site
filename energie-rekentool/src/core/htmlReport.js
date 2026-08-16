@@ -83,10 +83,7 @@ export function buildHtmlReport(input) {
     ? `<div class="ev-hint warn">&#9888; ${esc(coverage.limitationNote)}</div>`
     : '';
 
-  const warningsBox =
-    consumptionWarnings.length > 0
-      ? `<div class="ev-hint warn">&#9888; ${consumptionWarnings.length} waarschuwing(en) bij het inlezen van het verbruiksbestand.</div>`
-      : '';
+  const warningsBox = consumptionWarnings.map((w) => `<div class="ev-hint warn">&#9888; ${esc(w)}</div>`).join('');
 
   const dekkingRows = evGrid([
     ['Periode', `${esc(consumptionSummary.firstTimestamp)} t/m ${esc(consumptionSummary.lastTimestamp)} (${result.periodDays.toFixed(2)} dagen)`],
